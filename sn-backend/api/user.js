@@ -1,7 +1,33 @@
+const { authSecret } = require('../.env')
+const bcrypt = require('bcrypt')
+
 module.exports = app => {
 
-    const save = (req, res) => {
+    const encriptPassword = password => {
+        const salt = bcrypt.genSaltSync(10)
+        return bcrypt.hashSync(password, salt)
+    }
 
+    const save = async (req, res) => {
+        const user = { ...req.body }
+
+        const existentUser = await app.db('users')
+                                        .where({ email: user.email })
+                                        .first()
+
+        if (existentUser) return res.status(400).send('User already exists')
+        if (!user.name) return res.status(400).send('Enter the name')
+        if (!user.email) return res.status(400).send('Enter the email')
+        if (!user.password) return res.status(400).send('Enter the password')
+        if (!user.confirmPassword) return res.status(400).send('Confirm the password')
+
+        delete user.confirmPassword
+        user.password = encriptPassword(req.body.password)
+
+        app.db('users')
+            .insert(user)
+            .then( _ => res.status(204).send())
+            .catch( err => res.status(500).send(err))
     }
 
     const get = (req, res) => {
