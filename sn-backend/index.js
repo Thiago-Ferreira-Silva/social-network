@@ -6,6 +6,7 @@ const port = 8081
 app.db = db
 
 consign()
+    .then('./config/middlewares.js')
     .then('./api')
     .then('./config/routes.js')
     .into(app)

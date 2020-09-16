@@ -11,8 +11,10 @@ module.exports = app => {
     const save = async (req, res) => {
         const user = { ...req.body }
 
+        //implemente  parte de atualizar o usuário
+
         const existentUser = await app.db('users')
-                                        .where({ email: user.email })
+                                        .where({ email: req.body.email })
                                         .first()
 
         if (existentUser) return res.status(400).send('User already exists')
