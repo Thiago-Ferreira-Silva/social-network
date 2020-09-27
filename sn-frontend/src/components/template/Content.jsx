@@ -1,2 +1,7 @@
+import /*React,*/ { Component } from 'react'
+
 import './Template.css'
-import React from 'react'
+
+export default class Content extends Component {
+    
+}

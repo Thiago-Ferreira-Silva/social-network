@@ -1,2 +1,6 @@
 import './Home.css'
-import React from 'react'
+import /*React,*/ { Component } from 'react'
+
+export default class Home extends Component {
+
+}
