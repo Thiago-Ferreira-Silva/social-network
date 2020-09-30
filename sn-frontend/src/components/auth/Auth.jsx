@@ -17,11 +17,11 @@ export default class Auth extends Component {
     }
 
     signUp() {
-
+        console.log('signup')
     }
 
     signIn() {
-
+        console.log('signin')
     }
 
     render() {
