@@ -14,6 +14,7 @@ export default class Auth extends Component {
         super(props)
         this.signIn = this.signIn.bind(this)
         this.signUp = this.signUp.bind(this)
+        this.altShowSignUp = this.altShowSignUp.bind(this)
     }
 
     signUp() {
@@ -24,17 +25,25 @@ export default class Auth extends Component {
         console.log('signin')
     }
 
+    altShowSignUp() {
+        const showSignUp = !this.state.showSignUp
+        this.setState({showSignUp})
+    }
+
     render() {
         return (
             <div className="auth">
                 <div className="auth-form">
-                    <input type="text" placeholder="Name"/>
-                    <input type="text" placeholder="Email"/>
-                    <input type="password" placeholder="Password"/>
-                    <input type="password" placeholder="Confirm password"/>
-                    <button onClick={this.signUp} >Signup</button>
-                    <button onClick={this.signIn} >Signin</button>
-                    <a href></a>
+                    {this.state.showSignUp && <input type="text" placeholder="Name" />}
+                    <input type="text" placeholder="Email" />
+                    <input type="password" placeholder="Password" />
+                    {this.state.showSignUp && <input type="password" placeholder="Confirm password" />}
+                    {this.state.showSignUp && <button onClick={this.signUp} >Signup</button>}
+                    {!this.state.showSignUp && <button onClick={this.signIn} >Signin</button>}
+                    <a href onClick={this.altShowSignUp}>
+                        {this.state.showSignUp && <span>Already have an account? Signin</span>}
+                        {!this.state.showSignUp && <span>Don't have an account? Signup</span>}
+                    </a>
                 </div>
             </div>
         )
