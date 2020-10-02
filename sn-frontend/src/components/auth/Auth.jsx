@@ -34,6 +34,8 @@ export default class Auth extends Component {
         return (
             <div className="auth">
                 <div className="auth-form">
+                    {this.state.showSignUp && <div className="auth-title">Signup</div>}
+                    {!this.state.showSignUp && <div className="auth-title">Signin</div>}
                     {this.state.showSignUp && <input type="text" placeholder="Name" />}
                     <input type="text" placeholder="Email" />
                     <input type="password" placeholder="Password" />
