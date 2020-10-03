@@ -40,8 +40,8 @@ export default class Auth extends Component {
                     <input type="text" placeholder="Email" />
                     <input type="password" placeholder="Password" />
                     {this.state.showSignUp && <input type="password" placeholder="Confirm password" />}
-                    {this.state.showSignUp && <button onClick={this.signUp} >Signup</button>}
-                    {!this.state.showSignUp && <button onClick={this.signIn} >Signin</button>}
+                    {this.state.showSignUp && <button className="btn btn-primary" onClick={this.signUp} >Signup</button>}
+                    {!this.state.showSignUp && <button className="btn btn-primary" onClick={this.signIn} >Signin</button>}
                     <a href onClick={this.altShowSignUp}>
                         {this.state.showSignUp && <span>Already have an account? Signin</span>}
                         {!this.state.showSignUp && <span>Don't have an account? Signup</span>}

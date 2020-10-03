@@ -8,7 +8,36 @@
 }
 
 .auth-form {
+    background-color: #fff;
+    width: 350px;
+    padding: 35px;
+    box-shadow: 0 1px 5px #00000026;
+
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.auth-title {
+    font-size: 1.5rem;
+    font-weight: 100;
+    margin-bottom: 15px;
+}
+
+.auth-form input {
+    border: 1px solid #bbb;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 3px 8px;
+    outline: none;
+}
+
+.btn {
+    align-self: flex-end;
+    padding: 5px 15px;
+}
+
+.auth-form a {
+    margin-top: 35px;
+    cursor: pointer;
 }
