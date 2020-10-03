@@ -1,11 +1,13 @@
 import './Auth.css'
 import React, { Component } from 'react'
 import axios from 'axios'
+import { Redirect } from 'react-router'
 
-import { baseApiUrl } from '../../global'
+import { userKey, baseApiUrl } from '../../global'
 
 const initialState = {
     showSignUp: false,
+    toHome: false,
     user: {}
 }
 
@@ -32,6 +34,13 @@ export default class Auth extends Component {
 
     signIn() {
         console.log('signin')
+        axios.post(`${baseApiUrl}/signin`, this.state.user)
+            .then(res => {
+                //mande o usuário para a store com o redux
+                localStorage.setItem(userKey, JSON.stringify(res.data))
+                this.setState({ toHome: true })
+            })
+            .catch( err => console.log(err))
     }
 
     altShowSignUp() {
@@ -40,6 +49,9 @@ export default class Auth extends Component {
     }
 
     render() {
+        if (this.state.toHome) {
+            return <Redirect to='/home' />
+        }
         return (
             <div className="auth">
                 <div className="auth-form">
