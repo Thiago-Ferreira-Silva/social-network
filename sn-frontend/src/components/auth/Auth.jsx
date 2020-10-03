@@ -1,5 +1,8 @@
 import './Auth.css'
 import React, { Component } from 'react'
+import axios from 'axios'
+
+import { baseApiUrl } from '../../global'
 
 const initialState = {
     showSignUp: false,
@@ -19,6 +22,12 @@ export default class Auth extends Component {
 
     signUp() {
         console.log('signup')
+        axios.post(`${baseApiUrl}/signup`, this.state.user)
+            .then(() => {
+                this.setState({ user: {} })
+                this.setState({ showSignUp: false })
+            })
+            .catch( err => console.log(err))
     }
 
     signIn() {
