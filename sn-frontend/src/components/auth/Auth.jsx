@@ -24,7 +24,6 @@ export default class Auth extends Component {
     }
 
     signUp() {
-        console.log('signup')
         axios.post(`${baseApiUrl}/signup`, this.state.user)
             .then(() => {
                 this.setState({ user: {} })
@@ -34,8 +33,6 @@ export default class Auth extends Component {
     }
 
     signIn() {
-        // dê um jeito de pegar o user dos inputs
-        console.log('signin')
         axios.post(`${baseApiUrl}/signin`, this.state.user)
             .then(res => {
                 //mande o usuário para a store com o redux
@@ -52,21 +49,21 @@ export default class Auth extends Component {
 
     onInput(event) {
         const user = this.state.user
-        switch (event.name) {
+        switch (event.target.name) {
             case 'name' :
-                user.name = event.value
+                user.name = event.target.value
                 this.setState({ user })
                 break
             case 'email' :
-                user.email = event.value
+                user.email = event.target.value
                 this.setState({ user })
                 break
             case 'password' :
-                user.password = event.value
+                user.password = event.target.value
                 this.setState({ user })
                 break
             case 'confirmPassword' :
-                user.confirmPassword = event.value
+                user.confirmPassword = event.target.value
                 this.setState({ user })
                 break
             default:
@@ -83,8 +80,8 @@ export default class Auth extends Component {
                     {this.state.showSignUp && <div className="auth-title">Signup</div>}
                     {!this.state.showSignUp && <div className="auth-title">Signin</div>}
                     {this.state.showSignUp && <input name="name" type="text" placeholder="Name" onChange={this.onInput} value={this.state.user.name} />}
-                    <input name="email" type="text" placeholder="Email" onChange={this.onInput} value={this.state.user.email} />
-                    <input name="password" type="password" placeholder="Password" onChange={this.onInput} value={this.state.user.password} />
+                    <input name="email" id="email" type="text" placeholder="Email" onChange={this.onInput} value={this.state.user.email || ''} />
+                    <input name="password" type="password" placeholder="Password" onChange={this.onInput} value={this.state.user.password || ''} />
                     {this.state.showSignUp && <input name="confirmPassword" type="password" placeholder="Confirm password" onChange={this.onInput} value={this.state.user.confirmPassword} />}
                     {this.state.showSignUp && <button className="btn btn-primary" onClick={this.signUp} >Signup</button>}
                     {!this.state.showSignUp && <button className="btn btn-primary" onClick={this.signIn} >Signin</button>}

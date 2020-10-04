@@ -11,10 +11,10 @@ module.exports = app => {
     const save = async (req, res) => {
         const user = { ...req.body }
 
-        if (!user.name) return res.status(401).send('Enter the name')
-        if (!user.email) return res.status(401).send('Enter the email')
-        if (!user.password) return res.status(401).send('Enter the password')
-        if (!user.confirmPassword) return res.status(401).send('Confirm the password')
+        if (!user.name) return res.status(400).send('Enter the name')
+        if (!user.email) return res.status(400).send('Enter the email')
+        if (!user.password) return res.status(400).send('Enter the password')
+        if (!user.confirmPassword) return res.status(400).send('Confirm the password')
 
         const existentUser = await app.db('users')
                                         .where({ email: req.body.email })
