@@ -20,6 +20,7 @@ export default class Auth extends Component {
         this.signIn = this.signIn.bind(this)
         this.signUp = this.signUp.bind(this)
         this.altShowSignUp = this.altShowSignUp.bind(this)
+        this.onInput = this.onInput.bind(this)
     }
 
     signUp() {
@@ -49,6 +50,29 @@ export default class Auth extends Component {
         this.setState({showSignUp})
     }
 
+    onInput(event) {
+        const user = this.state.user
+        switch (event.name) {
+            case 'name' :
+                user.name = event.value
+                this.setState({ user })
+                break
+            case 'email' :
+                user.email = event.value
+                this.setState({ user })
+                break
+            case 'password' :
+                user.password = event.value
+                this.setState({ user })
+                break
+            case 'confirmPassword' :
+                user.confirmPassword = event.value
+                this.setState({ user })
+                break
+            default:
+        }
+    }
+
     render() {
         if (this.state.toHome) {
             return <Redirect to='/home' />
@@ -58,10 +82,10 @@ export default class Auth extends Component {
                 <div className="auth-form">
                     {this.state.showSignUp && <div className="auth-title">Signup</div>}
                     {!this.state.showSignUp && <div className="auth-title">Signin</div>}
-                    {this.state.showSignUp && <input type="text" placeholder="Name" />}
-                    <input type="text" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
-                    {this.state.showSignUp && <input type="password" placeholder="Confirm password" />}
+                    {this.state.showSignUp && <input name="name" type="text" placeholder="Name" onChange={this.onInput} value={this.state.user.name} />}
+                    <input name="email" type="text" placeholder="Email" onChange={this.onInput} value={this.state.user.email} />
+                    <input name="password" type="password" placeholder="Password" onChange={this.onInput} value={this.state.user.password} />
+                    {this.state.showSignUp && <input name="confirmPassword" type="password" placeholder="Confirm password" onChange={this.onInput} value={this.state.user.confirmPassword} />}
                     {this.state.showSignUp && <button className="btn btn-primary" onClick={this.signUp} >Signup</button>}
                     {!this.state.showSignUp && <button className="btn btn-primary" onClick={this.signIn} >Signin</button>}
                     <a href onClick={this.altShowSignUp}>
