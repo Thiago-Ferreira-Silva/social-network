@@ -33,6 +33,7 @@ export default class Auth extends Component {
     }
 
     signIn() {
+        // dê um jeito de pegar o user dos inputs
         console.log('signin')
         axios.post(`${baseApiUrl}/signin`, this.state.user)
             .then(res => {
