@@ -1,0 +1,17 @@
+import { SAVE_USER } from '../actions/actionTypes'
+
+const initialState = {
+    user: {}
+}
+
+export const saveUser = ( state = initialState, action) => {
+    switch (action.type) {
+        case SAVE_USER:
+            return {
+                ...state,
+                user: action.newValue
+            }
+        default:
+            return state
+    }
+}
