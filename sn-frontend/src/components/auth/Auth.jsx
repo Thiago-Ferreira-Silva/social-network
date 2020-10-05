@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router'
 
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+//import { connect } from 'react-redux'
+//import { bindActionCreators } from 'redux'
 import { saveUser } from '../../redux/actions'
 
 import { userKey, baseApiUrl } from '../../global'
@@ -89,7 +89,7 @@ export default class Auth extends Component {
                     {this.state.showSignUp && <input name="confirmPassword" type="password" placeholder="Confirm password" onChange={this.onInput} value={this.state.user.confirmPassword} />}
                     {this.state.showSignUp && <button className="btn btn-primary" onClick={this.signUp} >Signup</button>}
                     {!this.state.showSignUp && <button className="btn btn-primary" onClick={this.signIn} >Signin</button>}
-                    <a href onClick={this.altShowSignUp}>
+                    <a href="true" onClick={this.altShowSignUp}>
                         {this.state.showSignUp && <span>Already have an account? Signin</span>}
                         {!this.state.showSignUp && <span>Don't have an account? Signup</span>}
                     </a>
@@ -101,6 +101,7 @@ export default class Auth extends Component {
 
 //o que vem daqui pra frente é necessário?
 
+/*
 const mapStateToProps = store => ({
     user: store.userState.user
 })
@@ -109,3 +110,6 @@ const mapDispatchToProps = dispatch =>
     bindActionCreators({ saveUser }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth)
+
+*/
+//veja se está funcionando
