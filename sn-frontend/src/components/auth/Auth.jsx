@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router'
 
-//import { connect } from 'react-redux'
-//import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { saveUser } from '../../redux/actions'
 
 import { userKey, baseApiUrl } from '../../global'
@@ -15,7 +15,7 @@ const initialState = {
     user: {}
 }
 
-export default class Auth extends Component {
+class Auth extends Component {
 
     state = { ...initialState }
 
@@ -99,9 +99,7 @@ export default class Auth extends Component {
     }
 }
 
-//o que vem daqui pra frente é necessário?
 
-/*
 const mapStateToProps = store => ({
     user: store.userState.user
 })
@@ -110,6 +108,3 @@ const mapDispatchToProps = dispatch =>
     bindActionCreators({ saveUser }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth)
-
-*/
-//veja se está funcionando
