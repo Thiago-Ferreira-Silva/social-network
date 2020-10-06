@@ -1,25 +1,18 @@
 import './Home.css'
 import React, { Component } from 'react'
 
-import { connect } from 'react-redux'
+/*import { Store } from '../../redux/store'
+const storeState = Store.getState()
+*/
 
-class Home extends Component {
-    state = { user: {} }
+export default class Home extends Component {
+    state = { users }
 
     render() {
-
-        const { user } = this.state
-        console.log(user)
         return (
             <div>
-                <input type="text" placeholder={this.state.user}/>
+                home
             </div>
         )
     }
 }
-
- const mapStateToProps = store => ({
-     user: store.userState.user
- })
-
-export default connect(mapStateToProps)(Home)
