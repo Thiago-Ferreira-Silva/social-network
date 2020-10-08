@@ -4,7 +4,6 @@ import axios from 'axios'
 import { Redirect } from 'react-router'
 
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { saveUser } from '../../redux/actions'
 
 import { userKey, baseApiUrl } from '../../global'
@@ -40,7 +39,7 @@ class Auth extends Component {
         axios.post(`${baseApiUrl}/signin`, this.state.user)
             .then(res => {
                 localStorage.setItem(userKey, JSON.stringify(res.data))
-                saveUser(this.state.user)
+                this.props.dispatch(saveUser(this.state.user))
                 this.setState({ toHome: true })
             })
             .catch( err => console.log(err))
@@ -104,7 +103,4 @@ const mapStateToProps = store => ({
     user: store.userState.user
 })
 
-const mapDispatchToProps = dispatch =>
-    bindActionCreators({ saveUser }, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Auth)
+export default connect(mapStateToProps)(Auth)
