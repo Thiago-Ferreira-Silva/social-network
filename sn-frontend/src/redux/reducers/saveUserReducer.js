@@ -4,7 +4,7 @@ const initialState = {
     user: {}
 }
 
-export const saveUser = ( state = initialState, action) => {
+export const saveUserReducer = ( state = initialState, action) => {
     switch (action.type) {
         case SAVE_USER:
             return {

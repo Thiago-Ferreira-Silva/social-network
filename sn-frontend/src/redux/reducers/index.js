@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
-import { saveUser } from './saveUser'
+import { saveUserReducer } from './saveUserReducer'
 
 export const Reducers = combineReducers({
-    userState: saveUser
+    userState: saveUserReducer
 })
