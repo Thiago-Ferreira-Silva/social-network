@@ -9,6 +9,17 @@
     height: 10vh;
 }
 
+.title {
+    color: #333;
+    font-weight: 100;
+}
+
+.title:hover {
+    color: #333;
+    font-weight: 100;
+    outline: none;
+}
+
 .content {
     background-color: #a0a0a0;
 
