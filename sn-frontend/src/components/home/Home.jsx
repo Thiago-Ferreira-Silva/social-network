@@ -20,5 +20,6 @@ class Home extends Component {
 const mapStateToProps = store => ({
     user: store.userState.user
 })
+//temporário
 
 export default connect(mapStateToProps)(Home)

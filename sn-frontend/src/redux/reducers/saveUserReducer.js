@@ -5,7 +5,6 @@ const initialState = {
 }
 
 export const saveUserReducer = ( state = initialState, action) => {
-    console.log(action)
     switch (action.type) {
         case SAVE_USER:
             return {
