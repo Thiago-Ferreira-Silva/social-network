@@ -9,15 +9,15 @@
     height: 10vh;
 }
 
-.title {
+.link {
     color: #333;
     font-weight: 100;
 }
 
-.title:hover {
+.link:hover {
     color: #333;
     font-weight: 100;
-    outline: none;
+    text-decoration: none;
 }
 
 .content {

@@ -9,12 +9,10 @@ export default class Header extends Component {
             <div className="header">
                 <h1 className="title">
                     <BrowserRouter>
-                        <Link to='/'>Social Network</Link>
+                        <Link className='link' to='/'>Social Network</Link>
                     </BrowserRouter>
                 </h1>
             </div>
         )
     }
 }
-
-//o css não está funcionando direito e o router não está funcionando nem um pouco
