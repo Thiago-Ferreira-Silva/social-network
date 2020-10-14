@@ -9,6 +9,11 @@
     height: 10vh;
 }
 
+.user-dropdown {
+    padding: 10px;
+    justify-self: flex-end;
+}
+
 .link {
     color: #333;
     font-weight: 100;
