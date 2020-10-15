@@ -10,7 +10,7 @@ export default class UserDropDown extends Component {
         return (
             <div className="user-dropdown">
                 <div className="user-button">
-                    <span>name</span>
+                    <span className="name">name</span>
                     <FontAwesomeIcon icon={faAngleDown} />
                 </div>
                 <div className="user-dropdown-content">
