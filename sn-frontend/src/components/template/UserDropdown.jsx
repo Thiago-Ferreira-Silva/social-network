@@ -1,16 +1,18 @@
 import './Template.css'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faCogs } from '@fortawesome/free-solid-svg-icons'
 
-export default class UserDropDown extends Component {
+class UserDropDown extends Component {
     render () {
+        const name = this.props.user.name
         return (
             <div className="user-dropdown">
                 <div className="user-button">
-                    <span className="name">name</span>
+                    <span className="name">{name}</span>
                     <FontAwesomeIcon icon={faAngleDown} />
                 </div>
                 <div className="user-dropdown-content">
@@ -21,4 +23,10 @@ export default class UserDropDown extends Component {
     }
 }
 
-//mude os nomes i ícones e veja se o redux funciona como o mapState do vuex
+const mapStateToProps = store => ({
+    user: store.userState.user
+})
+
+export default connect(mapStateToProps)(UserDropDown)
+
+//está sumindo quando atualiza a página

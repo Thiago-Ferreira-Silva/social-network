@@ -39,7 +39,7 @@ class Auth extends Component {
         axios.post(`${baseApiUrl}/signin`, this.state.user)
             .then(res => {
                 localStorage.setItem(userKey, JSON.stringify(res.data))
-                this.props.dispatch(saveUser(this.state.user))
+                this.props.dispatch(saveUser(res.data))
                 this.setState({ toHome: true })
             })
             .catch( err => console.log(err))
