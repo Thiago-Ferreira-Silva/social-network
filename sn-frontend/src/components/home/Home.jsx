@@ -6,12 +6,12 @@ import { connect } from 'react-redux'
 class Home extends Component {
 
     render() {
-        const user = JSON.stringify(this.props.user)
+        const user = this.props.user
         return (
             <div>
                 home
                 <br />
-                {user}
+                {user.name}
             </div>
         )
     }
