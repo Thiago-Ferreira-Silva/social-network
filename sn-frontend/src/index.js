@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
 
 import { Provider } from 'react-redux'
-import { Store } from './redux/store'
+import { PersistGate } from 'redux-persist/integration/react'
+import { Store, persistor } from './redux/store'
 
 import './index.css'
 import Header from './components/template/Header'
@@ -15,13 +16,15 @@ import { BrowserRouter } from 'react-router-dom'
 
 ReactDOM.render(
   <Provider store={Store}>
-    <BrowserRouter>
-      <React.StrictMode>
-        <Header />
-        <Content />
-        <Footer />
-      </React.StrictMode>
-    </BrowserRouter>
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+        <React.StrictMode>
+          <Header />
+          <Content />
+          <Footer />
+        </React.StrictMode>
+      </BrowserRouter>
+    </PersistGate>
   </Provider>,
   document.getElementById('root')
 );

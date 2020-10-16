@@ -6,6 +6,7 @@ import { Reducers } from './reducers'
 const persistConfig = {
     key: 'root',
     storage
+    // whitelist: ;blacklist:
 }
 
 const persistedReducer = persistReducer(persistConfig, Reducers)
@@ -13,4 +14,4 @@ const persistedReducer = persistReducer(persistConfig, Reducers)
 const Store = createStore(persistedReducer)
 const persistor = persistStore(Store)
 
-export default { Store, persistor }
+export { Store, persistor }
