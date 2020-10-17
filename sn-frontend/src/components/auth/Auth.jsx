@@ -75,7 +75,7 @@ class Auth extends Component {
 
     render() {
         if (this.state.toHome) {
-            return <Redirect to='/home' />
+            return <Redirect to='/' />
         }
         return (
             <div className="auth">

@@ -7,6 +7,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { Store, persistor } from './redux/store'
 
 import './index.css'
+import './axios'
 import Header from './components/template/Header'
 import Content from './components/template/Content'
 import Footer from './components/template/Footer'
