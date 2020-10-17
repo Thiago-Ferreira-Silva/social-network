@@ -2,12 +2,20 @@ import './Template.css'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { saveUser } from '../../redux/actions'
+import { userKey } from '../../global'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown, faCogs } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faCogs, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 class UserDropDown extends Component {
-    render () {
+    logout = () => {
+        localStorage.removeItem(userKey)
+        this.props.dispatch(saveUser({}))
+        window.location = '/auth'
+    }
+
+    render() {
         const name = this.props.user.name
         return (
             <div className="user-dropdown">
@@ -16,7 +24,8 @@ class UserDropDown extends Component {
                     <FontAwesomeIcon icon={faAngleDown} />
                 </div>
                 <div className="user-dropdown-content">
-            <Link to='/profile'><FontAwesomeIcon icon={faCogs} /> My profile</Link>
+                    <Link to='/profile'><FontAwesomeIcon icon={faCogs} />    My profile</Link>
+                    <a href onClick={this.logout}><FontAwesomeIcon icon={faSignOutAlt} />    Logout</a>
                 </div>
             </div>
         )
@@ -28,5 +37,3 @@ const mapStateToProps = store => ({
 })
 
 export default connect(mapStateToProps)(UserDropDown)
-
-//está sumindo quando atualiza a página
