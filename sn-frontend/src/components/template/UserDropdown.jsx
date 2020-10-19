@@ -24,8 +24,8 @@ class UserDropDown extends Component {
                     <FontAwesomeIcon icon={faAngleDown} />
                 </div>
                 <div className="user-dropdown-content">
-                    <Link to='/profile'><FontAwesomeIcon icon={faCogs} />    My profile</Link>
-                    <a href onClick={this.logout}><FontAwesomeIcon icon={faSignOutAlt} />    Logout</a>
+                    <Link to='/profile' className="dropdown-link" ><FontAwesomeIcon icon={faCogs} />    My profile</Link>
+                    <div className="dropdown-link" onClick={this.logout}><FontAwesomeIcon icon={faSignOutAlt} />    Logout</div>
                 </div>
             </div>
         )
