@@ -15,3 +15,6 @@ const Store = createStore(persistedReducer)
 const persistor = persistStore(Store)
 
 export { Store, persistor }
+
+// faça com que redirecione para o /auth sempre que não estiver autenticado e 
+// faça o profile
