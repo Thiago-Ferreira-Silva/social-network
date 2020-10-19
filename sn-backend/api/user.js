@@ -1,4 +1,3 @@
-const { authSecret } = require('../.env')
 const bcrypt = require('bcrypt')
 
 module.exports = app => {
@@ -63,5 +62,26 @@ module.exports = app => {
             .catch( err => res.status(500).send(err))
     }
 
-    return { save, get, getById, remove }
+    const addProfilePicture = async (req, res) => {
+        const picture = { ...req.body }
+
+        const update = await app.db('profile_pictures')
+                                .where({ user_id: picture.user_id})
+                                .first()
+
+        if (update) {
+            app.db('profile_pictures')
+                .where({ user_id: picture.user_id })
+                .update(picture)
+                .then( _ => res.status(204).send())
+                .catch( err => res.status(500).send(err))
+        } else {
+            app.db('profile_pictures')
+                .insert(picture)
+                .then( _ => res.status(204).send())
+                .catch( err => res.status(500).send(err))
+        }
+    }
+
+    return { save, get, getById, remove, addProfilePicture }
 }
