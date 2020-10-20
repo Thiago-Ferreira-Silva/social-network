@@ -64,10 +64,12 @@ module.exports = app => {
 
     const addProfilePicture = async (req, res) => {
         const picture = { ...req.body }
+        picture.user_id = req.params.id
 
         const update = await app.db('profile_pictures')
                                 .where({ user_id: picture.user_id})
                                 .first()
+                                .catch( err => res.status(500).send(err))
 
         if (update) {
             app.db('profile_pictures')
@@ -83,5 +85,12 @@ module.exports = app => {
         }
     }
 
-    return { save, get, getById, remove, addProfilePicture }
+    const getProfilePicture = async (req, res) => {
+        const picture = await app.db('profile_pictures')
+                                .where({ user_id: req.params.id })
+                                .first()
+                                .catch( err => res.status(500).send(err))
+    }
+
+    return { save, get, getById, remove, addProfilePicture, getProfilePicture }
 }

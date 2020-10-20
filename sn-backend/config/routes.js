@@ -13,4 +13,10 @@ module.exports = app => {
         .put(app.api.user.save)
         .get(app.api.user.getById)
         .delete(app.api.user.remove)
+
+    app.route('/users/:id/picture')
+        .all(app.config.passport.authenticate())
+        .post(app.api.user.addProfilePicture)
+        .put(app.api.user.addProfilePicture)
+        .get(app.api.user.getProfilePicture)
 }
