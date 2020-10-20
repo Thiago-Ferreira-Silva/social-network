@@ -83,7 +83,7 @@ class Auth extends Component {
                     {this.state.showSignUp && <div className="auth-title">Signup</div>}
                     {!this.state.showSignUp && <div className="auth-title">Signin</div>}
                     {this.state.showSignUp && <input name="name" type="text" placeholder="Name" onChange={this.onInput} value={this.state.user.name} />}
-                    <input name="email" id="email" type="text" placeholder="Email" onChange={this.onInput} value={this.state.user.email || ''} />
+                    <input name="email" id="email" type="email" placeholder="Email" onChange={this.onInput} value={this.state.user.email || ''} />
                     <input name="password" type="password" placeholder="Password" onChange={this.onInput} value={this.state.user.password || ''} />
                     {this.state.showSignUp && <input name="confirmPassword" type="password" placeholder="Confirm password" onChange={this.onInput} value={this.state.user.confirmPassword} />}
                     {this.state.showSignUp && <button className="btn btn-primary" onClick={this.signUp} >Signup</button>}
