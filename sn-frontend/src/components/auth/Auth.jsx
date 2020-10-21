@@ -6,7 +6,7 @@ import { Redirect } from 'react-router'
 import { connect } from 'react-redux'
 import { saveUser } from '../../redux/actions'
 
-import { userKey, baseApiUrl } from '../../global'
+import { baseApiUrl } from '../../global'
 
 const initialState = {
     showSignUp: false,
@@ -38,7 +38,6 @@ class Auth extends Component {
     signIn() {
         axios.post(`${baseApiUrl}/signin`, this.state.user)
             .then(res => {
-                localStorage.setItem(userKey, JSON.stringify(res.data))
                 this.props.dispatch(saveUser(res.data))
                 this.setState({ toHome: true })
             })

@@ -16,7 +16,7 @@ export default class Profile extends Component {
     uploadPicture = () => {
         const formData = new FormData()
         formData.append('picture', this.state.profilePicture)
-        axios.post(`${baseApiUrl}/users/id/picture`, formData)
+        axios.post(`${baseApiUrl}/users/:id/picture`, formData)
     }
 
     render () {

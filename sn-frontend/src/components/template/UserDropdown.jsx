@@ -3,14 +3,12 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { saveUser } from '../../redux/actions'
-import { userKey } from '../../global'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faCogs, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 class UserDropDown extends Component {
     logout = () => {
-        localStorage.removeItem(userKey)
         this.props.dispatch(saveUser({}))
         window.location = '/auth'
     }
