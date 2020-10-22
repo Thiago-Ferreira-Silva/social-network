@@ -63,7 +63,8 @@ module.exports = app => {
     }
 
     const addProfilePicture = async (req, res) => {
-        const picture = { ...req.body }
+        console.log(req.body)
+        /*const picture = { ...req.body }
         picture.user_id = req.params.id
 
         const update = await app.db('profile_pictures')
@@ -82,7 +83,7 @@ module.exports = app => {
                 .insert(picture)
                 .then( _ => res.status(204).send())
                 .catch( err => res.status(500).send(err))
-        }
+        }*/
     }
 
     const getProfilePicture = async (req, res) => {

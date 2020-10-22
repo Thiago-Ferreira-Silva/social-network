@@ -2,11 +2,12 @@ import './Profile.css'
 
 import React, { Component } from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
 import { baseApiUrl } from '../../global'
 
 const initialState = { profilePicture: null }
 
-export default class Profile extends Component {
+class Profile extends Component {
     state = { ...initialState }
 
     selectPicture = event => {
@@ -16,7 +17,13 @@ export default class Profile extends Component {
     uploadPicture = () => {
         const formData = new FormData()
         formData.append('picture', this.state.profilePicture)
-        axios.post(`${baseApiUrl}/users/:id/picture`, formData)
+        //axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, formData)
+        axios({
+            method: 'post',
+            url: `${baseApiUrl}/users/${this.props.user.id}/picture`,
+            data: formData,
+            headers: {'Content-Type': 'multipart/form-data' }
+            })
     }
 
     render () {
@@ -29,5 +36,10 @@ export default class Profile extends Component {
         )
     }
 }
+
+const mapStateToProps = store => ({ user: store.userState.user })
+
+export default connect(mapStateToProps)(Profile)
+
 //acho que talvez seja melhor criar um componente separado para o upload da foto; e adicione uma bio à tabela users
 //e também achp que é melhor usar o bind do this
