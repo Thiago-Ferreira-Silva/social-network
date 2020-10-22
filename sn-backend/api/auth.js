@@ -20,11 +20,11 @@ module.exports = app => {
             id: user.id,
             name: user.name,
             iat: now,
-            exp: now + (60*60) // mude isso
+            exp: now + (60*60*5) // mude isso
         }
 
         res.json({
-            ...payload, //isso é necessário?
+            ...payload,
             token: jwt.encode(payload, authSecret)
         })
     }

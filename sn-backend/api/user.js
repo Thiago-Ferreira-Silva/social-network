@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt')
+const formidable = require('formidable')
 
 module.exports = app => {
 
@@ -63,7 +64,13 @@ module.exports = app => {
     }
 
     const addProfilePicture = async (req, res) => {
-        console.log(req.body)
+        const form = new formidable.IncomingForm()
+        
+        form.parse(req, (err, fields, files) => {
+            const file = files.file
+            console.log(file)
+        })
+        //ainda não
         /*const picture = { ...req.body }
         picture.user_id = req.params.id
 
