@@ -17,13 +17,7 @@ class Profile extends Component {
     uploadPicture = () => {
         const formData = new FormData()
         formData.append('picture', this.state.profilePicture)
-        //axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, formData)
-        axios({
-            method: 'post',
-            url: `${baseApiUrl}/users/${this.props.user.id}/picture`,
-            data: formData,
-            headers: {'Content-Type': 'multipart/form-data' }
-            })
+        axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, formData, { headers: {'Content-Type': 'multipart/form-data' } })
     }
 
     render () {
