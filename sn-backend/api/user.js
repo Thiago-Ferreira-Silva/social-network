@@ -63,12 +63,25 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
+    const getBinaryFromFile = file => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader()
+
+            reader.addEventListener('load', () => resolve(reader.result))
+            reader.addEventListener('error', err => reject(err))
+
+            reader.readAsBinaryString(file)
+        })
+    }
+
     const addProfilePicture = async (req, res) => {
         const form = new formidable.IncomingForm()
 
         form.parse(req, async (err, fields, files) => {
             const profilePicture = {}
-            profilePicture.picture = files.picture
+            const picture = files.picture
+            const pictureBinary = await getBinaryFromFile(picture)
+            profilePicture.image = pictureBinary
 
             profilePicture.user_id = req.params.id
 
@@ -81,13 +94,20 @@ module.exports = app => {
                 app.db('profile_pictures')
                     .where({ user_id: profilePicture.user_id })
                     .update(profilePicture)
-                    .then(_ => res.status(204).send())
-                    .catch(err => res.status(500).send(err))
+                    .then(_ => {
+                        console.log('Update com sucesso')
+                        res.status(204).send()})
+                    .catch(err => {
+                        console.log('Erro no update')
+                        res.status(500).send(err)})
             } else {
                 app.db('profile_pictures')
                     .insert(profilePicture)
-                    .then(_ => res.status(204).send())
-                    .catch(err => res.status(500).send(err))
+                    .then(_ => {
+                        console.log('sucesso')
+                        res.status(204).send()})
+                    .catch(err => {console.log('erro', err)
+                        res.status(500).send(err)})
             }
         })
     }
@@ -103,3 +123,5 @@ module.exports = app => {
 
     return { save, get, getById, remove, addProfilePicture, getProfilePicture }
 }
+
+//talvez mover tudo relacionado a upload de arquivos para outro arquivo
