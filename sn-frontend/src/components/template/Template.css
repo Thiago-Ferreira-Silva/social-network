@@ -104,3 +104,7 @@
 .footer span {
     padding: 15px;
 }
+
+.hidden {
+    display: hidden;
+}

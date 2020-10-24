@@ -16,7 +16,7 @@ class UserDropDown extends Component {
     render() {
         const name = this.props.user.name
         return (
-            <div className="user-dropdown">
+            <div className={`user-dropdown ${name ? '': 'hidden'} `}>
                 <div className="user-button">
                     <span className="name">{name}</span>
                     <FontAwesomeIcon icon={faAngleDown} />
