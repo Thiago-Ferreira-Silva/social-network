@@ -5,19 +5,31 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import { baseApiUrl } from '../../global'
 
-const initialState = { profilePicture: null }
+const initialState = { image: null }
 
 class Profile extends Component {
     state = { ...initialState }
 
-    selectPicture = event => {
-        this.setState({ profilePicture: event.target.files[0] })
+    selectPicture = async event => {
+        const PictureBinary = await this.getBinaryFromFile(event.target.files[0])
+        this.setState({ image: PictureBinary })
+    }
+
+    getBinaryFromFile = file => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader()
+
+            reader.addEventListener('load', () => {console.log('done')
+                resolve(reader.result)})
+            reader.addEventListener('error', err => reject(err))
+
+            reader.readAsDataURL(file)
+        })
     }
 
     uploadPicture = () => {
-        const formData = new FormData()
-        formData.append('picture', this.state.profilePicture)
-        axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, formData, { headers: {'Content-Type': 'multipart/form-data' } })
+        const pic = { 'image': this.state.image }
+        axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, pic )
     }
 
     render () {

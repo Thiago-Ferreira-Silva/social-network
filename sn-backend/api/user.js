@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt')
-const formidable = require('formidable')
 
 module.exports = app => {
 
@@ -63,54 +62,28 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    const getBinaryFromFile = file => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader()
-
-            reader.addEventListener('load', () => {console.log('done')
-                resolve(reader.result)})
-            reader.addEventListener('error', err => reject(err))
-
-            reader.readAsBinaryString(file)
-        })
-    }
-
     const addProfilePicture = async (req, res) => {
-        const form = new formidable.IncomingForm()
+        const profilePicture = {}
+        profilePicture.image = req.body.image
+        profilePicture.user_id = req.params.id
 
-        form.parse(req, async (err, fields, files) => {
-            const profilePicture = {}
-            const picture = files.picture
-            const pictureBinary = await getBinaryFromFile(picture)
-            profilePicture.image = pictureBinary
+        const update = await app.db('profile_pictures')
+            .where({ user_id: profilePicture.user_id })
+            .first()
+            .catch(err => res.status(500).send(err))
 
-            profilePicture.user_id = req.params.id
-
-            const update = await app.db('profile_pictures')
+        if (update) {
+            app.db('profile_pictures')
                 .where({ user_id: profilePicture.user_id })
-                .first()
-                .catch(err => res.status(500).send(err))
-
-            if (update) {
-                app.db('profile_pictures')
-                    .where({ user_id: profilePicture.user_id })
-                    .update(profilePicture)
-                    .then(_ => {
-                        console.log('Update com sucesso')
-                        res.status(204).send()})
-                    .catch(err => {
-                        console.log('Erro no update')
-                        res.status(500).send(err)})
-            } else {
-                app.db('profile_pictures')
-                    .insert(profilePicture)
-                    .then(_ => {
-                        console.log('sucesso')
-                        res.status(204).send()})
-                    .catch(err => {console.log('erro', err)
-                        res.status(500).send(err)})
-            }
-        })
+                .update(profilePicture)
+                .then(_ => {res.status(204).send()})
+                .catch(err => {res.status(500).send(err)})
+        } else {
+            app.db('profile_pictures')
+                .insert(profilePicture)
+                .then(_ => {res.status(204).send()})
+                .catch(err => {res.status(500).send(err)})
+        }
     }
 
     const getProfilePicture = async (req, res) => {
