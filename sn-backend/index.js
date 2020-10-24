@@ -16,6 +16,6 @@ app.listen(port, () => {
     console.log('Running on port: ' + port)
 })
 
-//está na hora de trabalhar no backend; veja o resto das aulas do curso de bancos de dados e estruture tudo para receber fotos de perfil e post de fotos
+//estruture tudo para receber fotos de perfil e post de fotos
 //talvez videos também
-//faça algo como uma fusão do twitter com o instagram (porém muito mais simples)
+//gbdb bmhp dpnp vmb gvtbp ep uxjuufs dpn p jotubhsbn
