@@ -10,12 +10,19 @@ const initialState = { image: null }
 class Profile extends Component {
     state = { ...initialState }
 
-    selectPicture = async event => {
+    constructor(props) {
+        super(props)
+        this.selectPicture = this.selectPicture.bind(this)
+        this.getBinaryFromFile = this.getBinaryFromFile.bind(this)
+        this.uploadPicture = this.uploadPicture.bind(this)
+    }
+
+    async selectPicture (event) {
         const PictureBinary = await this.getBinaryFromFile(event.target.files[0])
         this.setState({ image: PictureBinary })
     }
 
-    getBinaryFromFile = file => {
+    getBinaryFromFile(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader()
 
@@ -27,7 +34,7 @@ class Profile extends Component {
         })
     }
 
-    uploadPicture = () => {
+    uploadPicture() {
         const pic = { 'image': this.state.image }
         axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, pic )
     }
@@ -35,7 +42,11 @@ class Profile extends Component {
     render () {
         return (
             <div className="profile">
-                <h1>Profile</h1>
+                <div className="profile-picture"></div>
+                <div className="name"></div>
+                <div className="your-posts"></div>
+                <div className="bio"></div>
+                <div className="friends"></div>
                 <input type="file" onChange={this.selectPicture}/>
                 <button onClick={this.uploadPicture}>Upload</button>
             </div>
@@ -47,5 +58,6 @@ const mapStateToProps = store => ({ user: store.userState.user })
 
 export default connect(mapStateToProps)(Profile)
 
-//acho que talvez seja melhor criar um componente separado para o upload da foto; e adicione uma bio à tabela users
-//e também achp que é melhor usar o bind do this
+//adicione bio à tabela users, e talvez uma friends também, a não ser que tenha uma forma mais adequada;
+//a foto de perfil e a bio podem ser editados; a bio pode ser no componente profile, mas a foto é em um 
+//componente separado; deve ser possível visualizar os amigos, cancelar a amizade, entrar no perfil, e mandar mensagem

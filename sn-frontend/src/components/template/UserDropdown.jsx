@@ -8,6 +8,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faCogs, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 class UserDropDown extends Component {
+    constructor(props) {
+        super(props)
+        this.logout = this.logout.bind(this)
+    }
+
     logout = () => {
         this.props.dispatch(saveUser({}))
         window.location = '/auth'
