@@ -99,3 +99,4 @@ module.exports = app => {
 }
 
 //talvez mover tudo relacionado a upload de arquivos para outro arquivo
+//criar os métodos para as colunas bio e friends

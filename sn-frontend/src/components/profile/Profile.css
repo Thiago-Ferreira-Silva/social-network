@@ -1,0 +1,45 @@
+.profile {
+    width: 95%;
+    min-height: 74vh;
+
+    align-self: flex-start;
+    margin: 1rem 0 ;
+
+    display: grid;
+    grid-template-columns: 180px 1fr 100px;
+    grid-template-rows: 40px 140px 1fr;
+
+    grid-template-areas: " picture name posts "
+                         " picture bio bio "
+                         " friends friends friends";
+}
+
+.profile .profile-picture {
+    grid-area: picture;
+    overflow: hidden;
+}
+
+.profile .image {
+    min-height: 100%;
+    min-width: 100%;
+}
+
+.profile .name {
+    grid-area: name;
+    padding: 8px;
+}
+
+.profile .your-posts {
+    grid-area: posts;
+    display: flex;
+    align-items: center;
+}
+
+.profile .bio {
+    grid-area: bio;
+    border: solid;
+}
+
+.profile .friends {
+    grid-area: friends;
+}

@@ -44,9 +44,10 @@ class Profile extends Component {
         return (
             <div className="profile">
                 <div className="profile-picture">
-                    <img src={require('../../assets/profile_default.png')} alt="profile_picture"/>
+                    <img className="image" src={require('../../assets/profile_default.png')} alt="profile_picture"
+                        height='130'/>
                 </div>
-        <div className="name">{ user.name }</div>
+                <div className="name">{ user.name }</div>
                 <div className="your-posts">Yours posts</div>
                 <div className="bio">Bio</div>
                 <div className="friends">Your friends</div>
@@ -64,6 +65,7 @@ const mapStateToProps = store => ({ user: store.userState.user })
 
 export default connect(mapStateToProps)(Profile)
 
-//adicione bio à tabela users, e talvez uma friends também, a não ser que tenha uma forma mais adequada;
+//adicione bio à tabela users, e talvez friends também, a não ser que tenha uma forma mais adequada;
 //a foto de perfil e a bio podem ser editados; a bio pode ser no componente profile, mas a foto é em um 
 //componente separado; deve ser possível visualizar os amigos, cancelar a amizade, entrar no perfil, e mandar mensagem
+//tente deixar o design mais responsivo
