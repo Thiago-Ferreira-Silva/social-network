@@ -20,7 +20,7 @@ module.exports = app => {
             id: user.id,
             name: user.name,
             iat: now,
-            exp: now + (60 * 60 * 5) // mude isso
+            exp: now + (60*60*5) // mude isso
         }
 
         res.json({
@@ -37,11 +37,11 @@ module.exports = app => {
                 if (new Date(token.exp * 1000) > new Date()) {
                     return res.send(true)
                 }
-            } catch (err) {
-                res.status(500).send(err)
+            }
+            catch (err) {
+                res.send(false)
             }
         }
-
         res.send(false)
     }
 
