@@ -62,7 +62,7 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    const addProfilePicture = async (req, res) => {
+    const saveProfilePicture = async (req, res) => {
         const profilePicture = {}
         profilePicture.image = req.body.image
         profilePicture.user_id = req.params.id
@@ -76,13 +76,13 @@ module.exports = app => {
             app.db('profile_pictures')
                 .where({ user_id: profilePicture.user_id })
                 .update(profilePicture)
-                .then(_ => {res.status(204).send()})
-                .catch(err => {res.status(500).send(err)})
+                .then(_ => { res.status(204).send() })
+                .catch(err => { res.status(500).send(err) })
         } else {
             app.db('profile_pictures')
                 .insert(profilePicture)
-                .then(_ => {res.status(204).send()})
-                .catch(err => {res.status(500).send(err)})
+                .then(_ => { res.status(204).send() })
+                .catch(err => { res.status(500).send(err) })
         }
     }
 
@@ -90,12 +90,19 @@ module.exports = app => {
         const picture = await app.db('profile_pictures')
             .where({ user_id: req.params.id })
             .first()
+            .then(picture => res.send(picture))
             .catch(err => res.status(500).send(err))
-
-        res.send(picture)
     }
 
-    return { save, get, getById, remove, addProfilePicture, getProfilePicture }
+    const saveBio = async (req, res) => {
+        app.db('users')
+            .where({ id: req.params.id })
+            .update({ bio: user.bio })
+            .then(_ => res.status(204).send())
+            .catch(err => res.status(500).send(err))
+    }
+
+    return { save, get, getById, remove, saveProfilePicture, getProfilePicture, saveBio }
 }
 
 //talvez mover tudo relacionado a upload de arquivos para outro arquivo

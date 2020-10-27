@@ -16,7 +16,7 @@ module.exports = app => {
 
     app.route('/users/:id/picture')
         .all(app.config.passport.authenticate())
-        .post(app.api.user.addProfilePicture)
-        .put(app.api.user.addProfilePicture)
+        .post(app.api.user.saveProfilePicture)
+        .put(app.api.user.saveProfilePicture)
         .get(app.api.user.getProfilePicture)
 }
