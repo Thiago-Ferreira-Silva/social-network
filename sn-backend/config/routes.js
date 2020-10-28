@@ -19,4 +19,9 @@ module.exports = app => {
         .post(app.api.user.saveProfilePicture)
         .put(app.api.user.saveProfilePicture)
         .get(app.api.user.getProfilePicture)
+
+    app.route('/users/:id/bio')
+        .all(app.config.passport.authenticate())
+        .post(app.api.user.saveBio)
+        .put(app.api.user.saveBio)
 }

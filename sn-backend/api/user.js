@@ -97,7 +97,7 @@ module.exports = app => {
     const saveBio = async (req, res) => {
         app.db('users')
             .where({ id: req.params.id })
-            .update({ bio: user.bio })
+            .update({ bio: req.body.bio })
             .then(_ => res.status(204).send())
             .catch(err => res.status(500).send(err))
     }

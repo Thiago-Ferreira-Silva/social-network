@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { baseApiUrl } from '../../global'
+import { saveUser } from '../../redux/actions'
 
 const initialState = { image: null }
 
@@ -15,9 +16,10 @@ class Profile extends Component {
         this.selectPicture = this.selectPicture.bind(this)
         this.getBinaryFromFile = this.getBinaryFromFile.bind(this)
         this.uploadPicture = this.uploadPicture.bind(this)
+        this.saveBio = this.saveBio.bind(this)
     }
 
-    async selectPicture (event) {
+    async selectPicture(event) {
         const PictureBinary = await this.getBinaryFromFile(event.target.files[0])
         this.setState({ image: PictureBinary })
     }
@@ -26,8 +28,10 @@ class Profile extends Component {
         return new Promise((resolve, reject) => {
             const reader = new FileReader()
 
-            reader.addEventListener('load', () => {console.log('done')
-                resolve(reader.result)})
+            reader.addEventListener('load', () => {
+                console.log('done')
+                resolve(reader.result)
+            })
             reader.addEventListener('error', err => reject(err))
 
             reader.readAsDataURL(file)
@@ -36,20 +40,30 @@ class Profile extends Component {
 
     uploadPicture() {
         const pic = { 'image': this.state.image }
-        axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, pic )
+        axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, pic)
     }
 
-    render () {
+    saveBio() {
+        axios.post(`${baseApiUrl}/users/${this.props.user.id}/bio`, { bio: 'Essa é a minha bio' })
+        const user = { ...this.props.user }
+        user.bio = 'Essa é a minha bio'
+        this.props.dispatch(saveUser(user))
+    }
+
+    render() {
         const user = this.props.user
         return (
             <div className="profile">
                 <div className="profile-picture">
                     <img className="image" src={require('../../assets/profile_default.png')} alt="profile_picture"
-                        height='130'/>
+                        height='130' />
                 </div>
-                <div className="name">{ user.name }</div>
+                <div className="name">{user.name}</div>
                 <div className="your-posts">Yours posts</div>
-                <div className="bio">Bio</div>
+                <div className="bio">
+                    <div>{this.props.user.bio || 'Your bio'}</div>
+                    <button onClick={this.saveBio} >Save bio</button>
+                </div>
                 <div className="friends">Your friends</div>
             </div>
         )

@@ -87,10 +87,10 @@ class Auth extends Component {
                     {this.state.showSignUp && <input name="confirmPassword" type="password" placeholder="Confirm password" onChange={this.onInput} value={this.state.user.confirmPassword} />}
                     {this.state.showSignUp && <button className="btn btn-primary" onClick={this.signUp} >Signup</button>}
                     {!this.state.showSignUp && <button className="btn btn-primary" onClick={this.signIn} >Signin</button>}
-                    <a href="true" onClick={this.altShowSignUp}>
+                    <div  className="link" onClick={this.altShowSignUp}>
                         {this.state.showSignUp && <span>Already have an account? Signin</span>}
                         {!this.state.showSignUp && <span>Don't have an account? Signup</span>}
-                    </a>
+                    </div>
                 </div>
             </div>
         )
