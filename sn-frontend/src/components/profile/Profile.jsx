@@ -45,6 +45,9 @@ class Profile extends Component {
     uploadPicture() {
         const pic = { 'image': this.state.image }
         axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, pic)
+        const user = { ...this.props.user }
+        user.profilePicture = this.state.image
+        this.props.dispatch(saveUser(user))
     }
 
     saveBio() {
