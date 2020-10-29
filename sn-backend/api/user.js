@@ -76,13 +76,13 @@ module.exports = app => {
             app.db('profile_pictures')
                 .where({ user_id: profilePicture.user_id })
                 .update(profilePicture)
-                .then(_ => { res.status(204).send() })
-                .catch(err => { res.status(500).send(err) })
+                .then(_ => res.status(204).send())
+                .catch(err => res.status(500).send(err))
         } else {
             app.db('profile_pictures')
                 .insert(profilePicture)
-                .then(_ => { res.status(204).send() })
-                .catch(err => { res.status(500).send(err) })
+                .then(_ => res.status(204).send() )
+                .catch(err => res.status(500).send(err))
         }
     }
 

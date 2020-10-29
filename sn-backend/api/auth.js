@@ -14,11 +14,18 @@ module.exports = app => {
         const isMatch = bcrypt.compareSync(req.body.password, user.password)
         if (!isMatch) return res.status(400).send('Incorrect password')
 
+        const picture = await app.db('profile_pictures')
+                                .where({ user_id: user.id })
+                                .first()
+
         const now = Math.floor(Date.now() / 1000)
 
         const payload = {
             id: user.id,
             name: user.name,
+            bio: user.bio,
+            friends: user.friends,
+            profilePicture: picture.image,
             iat: now,
             exp: now + (60*60*5) // mude isso
         }

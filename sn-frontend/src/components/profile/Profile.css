@@ -46,13 +46,25 @@
 
 .profile .bio {
     grid-area: bio;
-    border: solid;
+    margin-left: 10px;
+}
+
+.bio-text, .bio-text:focus {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    top: -30px;   
+    border: none;
+    background-color: transparent;
+    resize: none;
+    outline: none;
 }
 
 .bio-button {
     position: relative;
-    top: 75px;
-    left: 1030px;
+    top: 100px;
+    left: 1025px;
+    z-index: 1;
 }
 
 .profile .friends {

@@ -6,7 +6,10 @@ import { connect } from 'react-redux'
 import { baseApiUrl } from '../../global'
 import { saveUser } from '../../redux/actions'
 
-const initialState = { image: null }
+const initialState = { 
+        image: null,
+        changingBio: false 
+    }
 
 class Profile extends Component {
     state = { ...initialState }
@@ -17,11 +20,13 @@ class Profile extends Component {
         this.getBinaryFromFile = this.getBinaryFromFile.bind(this)
         this.uploadPicture = this.uploadPicture.bind(this)
         this.saveBio = this.saveBio.bind(this)
+        this.changeBio = this.changeBio.bind(this)
     }
 
     async selectPicture(event) {
         const PictureBinary = await this.getBinaryFromFile(event.target.files[0])
         this.setState({ image: PictureBinary })
+        this.uploadPicture()
     }
 
     getBinaryFromFile(file) {
@@ -29,7 +34,6 @@ class Profile extends Component {
             const reader = new FileReader()
 
             reader.addEventListener('load', () => {
-                console.log('done')
                 resolve(reader.result)
             })
             reader.addEventListener('error', err => reject(err))
@@ -44,10 +48,18 @@ class Profile extends Component {
     }
 
     saveBio() {
-        axios.post(`${baseApiUrl}/users/${this.props.user.id}/bio`, { bio: 'Essa é a minha bio' })
+        const bio = document.getElementById('bio')
+
+        axios.post(`${baseApiUrl}/users/${this.props.user.id}/bio`, { bio: bio.value })
         const user = { ...this.props.user }
-        user.bio = 'Essa é a minha bio'
+        user.bio = bio.value
         this.props.dispatch(saveUser(user))
+
+        this.setState({ changingBio: false })
+    }
+
+    changeBio() {
+        this.setState({ changingBio: true })
     }
 
     render() {
@@ -55,16 +67,20 @@ class Profile extends Component {
         return (
             <div className="profile">
                 <div className="profile-picture">
-                    <button className="img-button" onClick={this.uploadPicture}>Upload</button>
-                    <img className="image" src={require('../../assets/profile_default.png')} alt="profile_picture"
-                        height='130' />
-                    <input type="file" className="input-file" onChange={this.selectPicture} />
+                    <button className="img-button" onClick={() => this.imageInput.click()}>Upload</button>
+                    <img className="image" src={require('../../assets/profile_default.png')} 
+                        alt="profile_picture" height='130' />
+                    <input type="file" className="input-file" onChange={this.selectPicture} 
+                        ref={imageInput => this.imageInput = imageInput} />
                 </div>
                 <div className="name">{user.name}</div>
                 <div className="your-posts">Yours posts</div>
                 <div className="bio">
-                    <div className="bio-text" >{this.props.user.bio || 'Your bio'}</div>
-                    <button className="bio-button" onClick={this.saveBio} >Save bio</button>
+                    { this.state.changingBio ? 
+                        <button className="bio-button" onClick={this.saveBio} >Save bio</button> :
+                        <button className="bio-button" onClick={this.changeBio} >Change bio</button>
+                    }
+                    <textarea type="text"  id="bio" disabled={this.state.changingBio ? false : true } className="bio-text" defaultValue={this.props.user.bio || 'Your bio'} />
                 </div>
                 <div className="friends">Your friends</div>
             </div>
@@ -77,6 +93,6 @@ const mapStateToProps = store => ({ user: store.userState.user })
 export default connect(mapStateToProps)(Profile)
 
 //router link no your post passando informações para o componente posts mostrar apenas os do usuário
-//a foto de perfil e a bio podem ser editados; a bio pode ser no componente profile, mas a foto é em um 
-//componente separado; deve ser possível visualizar os amigos, cancelar a amizade, entrar no perfil, e mandar mensagem
+//deve ser possível visualizar os amigos, cancelar a amizade, entrar no perfil, e mandar mensagem
+//pegue a imagem de perfil do db
 //tente deixar o design mais responsivo
