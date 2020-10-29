@@ -55,25 +55,22 @@ class Profile extends Component {
         return (
             <div className="profile">
                 <div className="profile-picture">
+                    <button className="img-button" onClick={this.uploadPicture}>Upload</button>
                     <img className="image" src={require('../../assets/profile_default.png')} alt="profile_picture"
                         height='130' />
+                    <input type="file" className="input-file" onChange={this.selectPicture} />
                 </div>
                 <div className="name">{user.name}</div>
                 <div className="your-posts">Yours posts</div>
                 <div className="bio">
-                    <div>{this.props.user.bio || 'Your bio'}</div>
-                    <button onClick={this.saveBio} >Save bio</button>
+                    <div className="bio-text" >{this.props.user.bio || 'Your bio'}</div>
+                    <button className="bio-button" onClick={this.saveBio} >Save bio</button>
                 </div>
                 <div className="friends">Your friends</div>
             </div>
         )
     }
 }
-
-/*
-<input type="file" onChange={this.selectPicture}/>
-<button onClick={this.uploadPicture}>Upload</button>
-*/
 
 const mapStateToProps = store => ({ user: store.userState.user })
 
