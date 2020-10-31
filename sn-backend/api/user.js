@@ -66,6 +66,7 @@ module.exports = app => {
         const profilePicture = {}
         profilePicture.image = req.body.image
         profilePicture.user_id = req.params.id
+        console.log(profilePicture)
 
         const update = await app.db('profile_pictures')
             .where({ user_id: profilePicture.user_id })

@@ -12,8 +12,6 @@ class Home extends Component {
                 <h1>Home</h1>
                 <br />
                 {user.name}
-                <br />
-                {user.token}
             </div>
         )
     }

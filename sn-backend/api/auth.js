@@ -18,6 +18,8 @@ module.exports = app => {
                                 .where({ user_id: user.id })
                                 .first()
 
+        console.log(typeof picture.image.data)
+
         const now = Math.floor(Date.now() / 1000)
 
         const payload = {
