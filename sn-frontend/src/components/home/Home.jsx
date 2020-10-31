@@ -9,9 +9,11 @@ class Home extends Component {
         const user = this.props.user
         return (
             <div>
-                home
+                <h1>Home</h1>
                 <br />
                 {user.name}
+                <br />
+                {user.token}
             </div>
         )
     }

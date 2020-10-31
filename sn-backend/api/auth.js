@@ -23,15 +23,15 @@ module.exports = app => {
         const payload = {
             id: user.id,
             name: user.name,
-            bio: user.bio,
-            friends: user.friends,
-            profilePicture: picture.image,
             iat: now,
             exp: now + (60*60*5) // mude isso
         }
 
         res.json({
             ...payload,
+            bio: user.bio,
+            friends: user.friends,
+            profilePicture: picture ? picture.image : null,
             token: jwt.encode(payload, authSecret)
         })
     }
