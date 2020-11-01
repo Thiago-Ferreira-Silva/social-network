@@ -3,6 +3,9 @@ import './Profile.css'
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCamera, faSave, faEdit } from '@fortawesome/free-solid-svg-icons'
+
 import { baseApiUrl } from '../../global'
 import { saveUser } from '../../redux/actions'
 
@@ -70,7 +73,7 @@ class Profile extends Component {
         return (
             <div className="profile">
                 <div className="profile-picture">
-                    <button className="img-button" onClick={() => this.imageInput.click()}>Upload</button>
+                    <button className="img-button" onClick={() => this.imageInput.click()}><FontAwesomeIcon icon={ faCamera } /></button>
                     {this.props.user.profilePicture ?
                         <img className="image" src={this.props.user.profilePicture}
                             alt="profile_picture" height='130' /> :
@@ -83,8 +86,8 @@ class Profile extends Component {
                 <div className="your-posts">Yours posts</div>
                 <div className="bio">
                     {this.state.changingBio ?
-                        <button className="bio-button" onClick={this.saveBio} >Save bio</button> :
-                        <button className="bio-button" onClick={this.changeBio} >Change bio</button>
+                        <button className="bio-button" onClick={this.saveBio} ><FontAwesomeIcon icon={ faSave } /></button> :
+                        <button className="bio-button" onClick={this.changeBio} ><FontAwesomeIcon icon={ faEdit } /></button>
                     }
                     <textarea type="text" id="bio" disabled={this.state.changingBio ? false : true} className="bio-text" defaultValue={this.props.user.bio || 'Your bio'} />
                 </div>

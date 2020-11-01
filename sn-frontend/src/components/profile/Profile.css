@@ -26,13 +26,6 @@
     top: -30px;
 }
 
-.img-button {
-    position: relative;
-    top: 145px;
-    left: 110px;
-    z-index: 1;
-}
-
 .profile .name {
     grid-area: name;
     padding: 8px;
@@ -47,6 +40,10 @@
 .profile .bio {
     grid-area: bio;
     margin-left: 10px;
+    padding: 5px;
+
+    background-color: #0001;
+    border-radius: 10px;
 }
 
 .bio-text, .bio-text:focus {
@@ -60,11 +57,29 @@
     outline: none;
 }
 
+.img-button {
+    position: relative;
+    top: 150px;
+    left: 150px;
+    z-index: 1;
+}
+
 .bio-button {
     position: relative;
-    top: 100px;
-    left: 1025px;
+    top: 108px;
+    left: 1075px;
     z-index: 1;
+}
+
+.bio-button, .img-button, .bio-button:focus, .img-button:focus {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.bio-button:hover, .img-button:hover {
+    background-color: #0001;
+    border-radius: 6px;
 }
 
 .profile .friends {
