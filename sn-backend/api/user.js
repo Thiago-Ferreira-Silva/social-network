@@ -66,7 +66,6 @@ module.exports = app => {
         const profilePicture = {}
         profilePicture.image = req.body.image
         profilePicture.user_id = req.params.id
-        console.log(profilePicture)
 
         const update = await app.db('profile_pictures')
             .where({ user_id: profilePicture.user_id })
@@ -85,14 +84,20 @@ module.exports = app => {
                 .then(_ => res.status(204).send() )
                 .catch(err => res.status(500).send(err))
         }
+        //ainda tem problemas com imagens grandes, talvez usar Array.reduce()
     }
 
     const getProfilePicture = async (req, res) => {
         const picture = await app.db('profile_pictures')
             .where({ user_id: req.params.id })
             .first()
-            .then(picture => res.send(picture))
             .catch(err => res.status(500).send(err))
+
+        const tipedArray = new Uint8Array(picture.image)
+        const stringChar = String.fromCharCode.apply(null, tipedArray)
+        picture.image = stringChar
+
+        res.send(picture)
     }
 
     const saveBio = async (req, res) => {
