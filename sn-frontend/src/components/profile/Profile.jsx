@@ -73,7 +73,7 @@ class Profile extends Component {
         return (
             <div className="profile">
                 <div className="profile-picture">
-                    <button className="img-button" onClick={() => this.imageInput.click()}><FontAwesomeIcon icon={ faCamera } /></button>
+                    <button className="img-button" alt="change profile picture" onClick={() => this.imageInput.click()}><FontAwesomeIcon icon={ faCamera } /></button>
                     {this.props.user.profilePicture ?
                         <img className="image" src={this.props.user.profilePicture}
                             alt="profile_picture" height='130' /> :
@@ -86,8 +86,8 @@ class Profile extends Component {
                 <div className="your-posts">Yours posts</div>
                 <div className="bio">
                     {this.state.changingBio ?
-                        <button className="bio-button" onClick={this.saveBio} ><FontAwesomeIcon icon={ faSave } /></button> :
-                        <button className="bio-button" onClick={this.changeBio} ><FontAwesomeIcon icon={ faEdit } /></button>
+                        <button className="bio-button" alt="save bio" onClick={this.saveBio} ><FontAwesomeIcon icon={ faSave } /></button> :
+                        <button className="bio-button" alt="edit bio" onClick={this.changeBio} ><FontAwesomeIcon icon={ faEdit } /></button>
                     }
                     <textarea type="text" id="bio" disabled={this.state.changingBio ? false : true} className="bio-text" defaultValue={this.props.user.bio || 'Your bio'} />
                 </div>
