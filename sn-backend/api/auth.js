@@ -27,7 +27,7 @@ module.exports = app => {
             id: user.id,
             name: user.name,
             iat: now,
-            exp: now + (60 * 60 * 5) // mude isso
+            exp: now + (30) // mude isso
         }
 
         res.json({
@@ -41,20 +41,22 @@ module.exports = app => {
 
     //me parece uma boa fazer todas as requisições de profilePicture pela api correta, não por aqui
 
+    let i = 1
     const validateToken = async (req, res) => {
-        const userData = req.body || null
-        if (userData) {
-            try {
-                const token = jwt.decode(userData.token, authSecret)
-                if (new Date(token.exp * 1000) > new Date()) {
-                    return res.send(true)
-                }
-            }
-            catch (err) {
+        console.log(i)
+        i++
+        const userData = req.body
+        try {
+            const token = jwt.decode(userData.token, authSecret)
+            if (new Date(token.exp * 1000) > new Date()) {
+                return res.send(true)
+            } else {
                 res.send(false)
             }
         }
-        res.send(false)
+        catch (err) {
+            res.send(false)
+        }
     }
 
     return { signin, validateToken }
