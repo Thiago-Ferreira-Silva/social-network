@@ -6,7 +6,7 @@ import { Redirect } from 'react-router'
 import { connect } from 'react-redux'
 import { saveUser } from '../../redux/actions'
 
-import { baseApiUrl } from '../../global'
+import { baseApiUrl, notify } from '../../global'
 
 const initialState = {
     showSignUp: false,
@@ -32,7 +32,7 @@ class Auth extends Component {
                 this.setState({ user: {} })
                 this.setState({ showSignUp: false })
             })
-            .catch( err => console.log(err))
+            .catch( err => notify(err, 'error'))
     }
 
     signIn() {
@@ -41,7 +41,7 @@ class Auth extends Component {
                 this.props.dispatch(saveUser(res.data))
                 this.setState({ toHome: true })
             })
-            .catch( err => console.log(err))
+            .catch( err => notify(err, 'error'))
     }
 
     altShowSignUp() {
