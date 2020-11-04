@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCamera, faSave, faEdit } from '@fortawesome/free-solid-svg-icons'
 
-import { baseApiUrl } from '../../global'
+import { baseApiUrl, notify } from '../../global'
 import { saveUser } from '../../redux/actions'
 
 const initialState = {
@@ -48,6 +48,8 @@ class Profile extends Component {
     uploadPicture() {
         const pic = { 'image': this.state.image }
         axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, pic)
+            .then( _ => notify())
+            .catch( err => notify(err, 'error'))
         const user = { ...this.props.user }
         user.profilePicture = this.state.image
         this.props.dispatch(saveUser(user))
@@ -57,6 +59,8 @@ class Profile extends Component {
         const bio = document.getElementById('bio')
 
         axios.post(`${baseApiUrl}/users/${this.props.user.id}/bio`, { bio: bio.value })
+            .then( _ => notify())
+            .catch( err => notify(err, 'error'))
         const user = { ...this.props.user }
         user.bio = bio.value
         this.props.dispatch(saveUser(user))
