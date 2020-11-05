@@ -48,7 +48,7 @@ class Profile extends Component {
     uploadPicture() {
         const pic = { 'image': this.state.image }
         axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, pic)
-            .then( _ => notify())
+            .then( _ => notify('Image updated'))
             .catch( err => notify(err, 'error'))
         const user = { ...this.props.user }
         user.profilePicture = this.state.image
@@ -59,7 +59,7 @@ class Profile extends Component {
         const bio = document.getElementById('bio')
 
         axios.post(`${baseApiUrl}/users/${this.props.user.id}/bio`, { bio: bio.value })
-            .then( _ => notify())
+            .then( _ => notify('Bio updated'))
             .catch( err => notify(err, 'error'))
         const user = { ...this.props.user }
         user.bio = bio.value

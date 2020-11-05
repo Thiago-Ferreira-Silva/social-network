@@ -96,11 +96,15 @@ module.exports = app => {
             .first()
             .catch(err => res.status(500).send(err))
 
+        if (picture) {
         const tipedArray = new Uint8Array(picture.image)
         const stringChar = String.fromCharCode.apply(null, tipedArray)
         picture.image = stringChar
 
         res.send(picture)
+        } else {
+            res.send(null)
+        }
     }
 
     const saveBio = async (req, res) => {

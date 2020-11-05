@@ -10,16 +10,23 @@ module.exports = app => {
         const user = await app.db('users')
             .where({ email: req.body.email })
             .first()
-
-        const isMatch = bcrypt.compareSync(req.body.password, user.password)
-        if (!isMatch) return res.status(400).send('Incorrect password')
+            .catch(err => res.status(500).send(err))
 
         const picture = await app.db('profile_pictures')
             .where({ user_id: user.id })
             .first()
-        const tipedArray = new Uint8Array(picture.image)
-        const stringChar = String.fromCharCode.apply(null, tipedArray)
-        picture.image = stringChar
+            .catch(err => res.status(500).send(err))
+
+        if (picture) {
+            const tipedArray = new Uint8Array(picture.image)
+            const stringChar = String.fromCharCode.apply(null, tipedArray)
+            image = stringChar
+        } else {
+            image = null
+        }
+
+        const isMatch = bcrypt.compareSync(req.body.password, user.password)
+        if (!isMatch) return res.status(400).send('Incorrect password')
 
         const now = Math.floor(Date.now() / 1000)
 
@@ -27,24 +34,19 @@ module.exports = app => {
             id: user.id,
             name: user.name,
             iat: now,
-            exp: now + (30) // mude isso
+            exp: now + (60 * 60 * 5) // mude isso
         }
 
         res.json({
             ...payload,
             bio: user.bio,
             friends: user.friends,
-            profilePicture: picture ? picture.image : null,
+            profilePicture: image,
             token: jwt.encode(payload, authSecret)
         })
     }
 
-    //me parece uma boa fazer todas as requisições de profilePicture pela api correta, não por aqui
-
-    let i = 1
     const validateToken = async (req, res) => {
-        console.log(i)
-        i++
         const userData = req.body
         try {
             const token = jwt.decode(userData.token, authSecret)
