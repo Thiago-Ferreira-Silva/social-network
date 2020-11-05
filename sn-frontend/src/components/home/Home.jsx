@@ -19,6 +19,6 @@ class Home extends Component {
 const mapStateToProps = store => ({
     user: store.userState.user
 })
-//temporário
+//crie o recurso de fazer posts parecidos com os do twitter
 
 export default connect(mapStateToProps)(Home)

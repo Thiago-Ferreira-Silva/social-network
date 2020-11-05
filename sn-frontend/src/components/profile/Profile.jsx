@@ -1,4 +1,5 @@
 import './Profile.css'
+import pictureDefault from '../../assets/profile_default.png'
 
 import React, { Component } from 'react'
 import axios from 'axios'
@@ -81,7 +82,7 @@ class Profile extends Component {
                     {this.props.user.profilePicture ?
                         <img className="image" src={this.props.user.profilePicture}
                             alt="profile_picture" height='130' /> :
-                        <img className="image" src={require('../../assets/profile_default.png')}
+                        <img className="image" src={pictureDefault}
                             alt="profile_picture" height='130' />}
                     <input type="file" className="input-file" onChange={this.selectPicture}
                         ref={imageInput => this.imageInput = imageInput} />
