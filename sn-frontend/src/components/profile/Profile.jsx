@@ -50,19 +50,24 @@ class Profile extends Component {
         //.match(/.{1,10000}/g)
         const pic = { 'image': this.state.image }
         axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, pic)
-            .then( _ => notify('Image updated'))
-            .catch( err => notify(err, 'error'))
-        const user = { ...this.props.user }
-        user.profilePicture = this.state.image
-        this.props.dispatch(saveUser(user))
+            .then(_ => {
+                notify('Image updated')
+                const user = { ...this.props.user }
+                user.profilePicture = this.state.image
+                this.props.dispatch(saveUser(user))
+            })
+            .catch(err => notify(err, 'error'))
+            //dê um jeito de fazer todas as requisições em chunks
+            //talvez seja melhor fazer o componente de posts e só depois cuidar das imagens
+            //procure uma api de redução do tamanho das imagens
     }
 
     saveBio() {
         const bio = document.getElementById('bio')
 
         axios.post(`${baseApiUrl}/users/${this.props.user.id}/bio`, { bio: bio.value })
-            .then( _ => notify('Bio updated'))
-            .catch( err => notify(err, 'error'))
+            .then(_ => notify('Bio updated'))
+            .catch(err => notify(err, 'error'))
         const user = { ...this.props.user }
         user.bio = bio.value
         this.props.dispatch(saveUser(user))
@@ -79,7 +84,7 @@ class Profile extends Component {
         return (
             <div className="profile">
                 <div className="profile-picture">
-                    <button className="img-button" alt="change profile picture" onClick={() => this.imageInput.click()}><FontAwesomeIcon icon={ faCamera } /></button>
+                    <button className="img-button" alt="change profile picture" onClick={() => this.imageInput.click()}><FontAwesomeIcon icon={faCamera} /></button>
                     {this.props.user.profilePicture ?
                         <img className="image" src={this.props.user.profilePicture}
                             alt="profile_picture" height='130' /> :
@@ -92,8 +97,8 @@ class Profile extends Component {
                 <div className="your-posts">Yours posts</div>
                 <div className="bio">
                     {this.state.changingBio ?
-                        <button className="bio-button" alt="save bio" onClick={this.saveBio} ><FontAwesomeIcon icon={ faSave } /></button> :
-                        <button className="bio-button" alt="edit bio" onClick={this.changeBio} ><FontAwesomeIcon icon={ faEdit } /></button>
+                        <button className="bio-button" alt="save bio" onClick={this.saveBio} ><FontAwesomeIcon icon={faSave} /></button> :
+                        <button className="bio-button" alt="edit bio" onClick={this.changeBio} ><FontAwesomeIcon icon={faEdit} /></button>
                     }
                     <textarea type="text" id="bio" disabled={this.state.changingBio ? false : true} className="bio-text" defaultValue={this.props.user.bio || 'Your bio'} />
                 </div>
