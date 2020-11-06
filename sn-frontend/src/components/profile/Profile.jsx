@@ -47,6 +47,7 @@ class Profile extends Component {
     }
 
     uploadPicture() {
+        //.match(/.{1,10000}/g)
         const pic = { 'image': this.state.image }
         axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, pic)
             .then( _ => notify('Image updated'))
