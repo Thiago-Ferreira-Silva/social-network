@@ -10,6 +10,8 @@ import { faCamera, faSave, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { baseApiUrl, notify } from '../../global'
 import { saveUser } from '../../redux/actions'
 
+import { handleImage } from '../../utils/imageHandler'
+
 const initialState = {
     image: null,
     changingBio: false
@@ -21,19 +23,20 @@ class Profile extends Component {
     constructor(props) {
         super(props)
         this.selectPicture = this.selectPicture.bind(this)
-        this.getDataUrl = this.getDataUrl.bind(this)
-        this.uploadPicture = this.uploadPicture.bind(this)
+        //this.getDataUrl = this.getDataUrl.bind(this)
+        //this.uploadPicture = this.uploadPicture.bind(this)
         this.saveBio = this.saveBio.bind(this)
         this.changeBio = this.changeBio.bind(this)
     }
 
     async selectPicture(event) {
-        const PictureBinary = await this.getDataUrl(event.target.files[0])
+        /*const PictureBinary = await this.getData(event.target.files[0])
         this.setState({ image: PictureBinary })
-        this.uploadPicture()
+        this.uploadPicture()*/
+        await handleImage(event.target.files[0], `${baseApiUrl}/users/${this.props.user.id}/picture`)
     }
 
-    getDataUrl(file) {
+    /*getData(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader()
 
@@ -44,14 +47,14 @@ class Profile extends Component {
 
             reader.readAsDataURL(file)
         })
-    }
+    }*/
 
-    uploadPicture() {
+    /*uploadPicture() {
         //.match(/.{1,10000}/g)
         const pic = { 'image': this.state.image }
         axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, pic)
             .then(_ => {
-                notify('Image updated')
+                notify('Image uploaded')
                 const user = { ...this.props.user }
                 user.profilePicture = this.state.image
                 this.props.dispatch(saveUser(user))
@@ -60,7 +63,7 @@ class Profile extends Component {
             //dê um jeito de fazer todas as requisições em chunks
             //talvez seja melhor fazer o componente de posts e só depois cuidar das imagens
             //procure uma api de redução do tamanho das imagens
-    }
+    }*/
 
     saveBio() {
         const bio = document.getElementById('bio')
