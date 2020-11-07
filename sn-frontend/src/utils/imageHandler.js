@@ -4,19 +4,6 @@ import { notify } from '../global'
 import { Store } from '../redux/store'
 import { saveUser } from '../redux/actions'
 
-function getData(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader()
-
-        reader.addEventListener('load', () => {
-            resolve(reader.result)
-        })
-        reader.addEventListener('error', err => reject(err))
-
-        reader.readAsDataURL(file)
-    })
-}
-
 function uploadPicture( image, url ) {
     //.match(/.{1,10000}/g)
     const pic = { 'image': image }
@@ -32,6 +19,5 @@ function uploadPicture( image, url ) {
 }
 
 export async function handleImage(file, url, maxWidth, maxHeight, minWidth, minHeight ,callback) {
-    const image = await getData(file)
     await Resizer.imageFileResizer(file, maxWidth, maxHeight, 'JPEG', 100, 0, resizedImage => uploadPicture( resizedImage, url ), 'base64', minWidth, minHeight)   
 }
