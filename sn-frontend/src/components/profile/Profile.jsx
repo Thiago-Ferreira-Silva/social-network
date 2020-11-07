@@ -13,7 +13,6 @@ import { saveUser } from '../../redux/actions'
 import { handleImage } from '../../utils/imageHandler'
 
 const initialState = {
-    image: null,
     changingBio: false
 }
 
@@ -23,47 +22,14 @@ class Profile extends Component {
     constructor(props) {
         super(props)
         this.selectPicture = this.selectPicture.bind(this)
-        //this.getDataUrl = this.getDataUrl.bind(this)
-        //this.uploadPicture = this.uploadPicture.bind(this)
         this.saveBio = this.saveBio.bind(this)
         this.changeBio = this.changeBio.bind(this)
     }
 
     async selectPicture(event) {
-        /*const PictureBinary = await this.getData(event.target.files[0])
-        this.setState({ image: PictureBinary })
-        this.uploadPicture()*/
-        await handleImage(event.target.files[0], `${baseApiUrl}/users/${this.props.user.id}/picture`)
+        await handleImage(event.target.files[0], `${baseApiUrl}/users/${this.props.user.id}/picture`, 300, 300, 180, 180)
+        //ainda não está atualizando na hora
     }
-
-    /*getData(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader()
-
-            reader.addEventListener('load', () => {
-                resolve(reader.result)
-            })
-            reader.addEventListener('error', err => reject(err))
-
-            reader.readAsDataURL(file)
-        })
-    }*/
-
-    /*uploadPicture() {
-        //.match(/.{1,10000}/g)
-        const pic = { 'image': this.state.image }
-        axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, pic)
-            .then(_ => {
-                notify('Image uploaded')
-                const user = { ...this.props.user }
-                user.profilePicture = this.state.image
-                this.props.dispatch(saveUser(user))
-            })
-            .catch(err => notify(err, 'error'))
-            //dê um jeito de fazer todas as requisições em chunks
-            //talvez seja melhor fazer o componente de posts e só depois cuidar das imagens
-            //procure uma api de redução do tamanho das imagens
-    }*/
 
     saveBio() {
         const bio = document.getElementById('bio')
@@ -90,9 +56,9 @@ class Profile extends Component {
                     <button className="img-button" alt="change profile picture" onClick={() => this.imageInput.click()}><FontAwesomeIcon icon={faCamera} /></button>
                     {this.props.user.profilePicture ?
                         <img className="image" src={this.props.user.profilePicture}
-                            alt="profile_picture" height='130' /> :
+                            alt="profile_picture" height='180' /> :
                         <img className="image" src={pictureDefault}
-                            alt="profile_picture" height='130' />}
+                            alt="profile_picture" height='180' />}
                     <input type="file" className="input-file" onChange={this.selectPicture}
                         ref={imageInput => this.imageInput = imageInput} />
                 </div>

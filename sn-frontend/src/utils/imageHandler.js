@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Resizer from 'react-image-file-resizer'
 import { notify } from '../global'
 import { Store } from '../redux/store'
 import { saveUser } from '../redux/actions'
@@ -30,8 +31,7 @@ function uploadPicture( image, url ) {
         .catch(err => notify(err, 'error'))
 }
 
-export async function handleImage(file, url, maxWidth, maxHeight ,callback) {
-    const image = getData(file)
-    console.log(image)
-    uploadPicture( image, url )
+export async function handleImage(file, url, maxWidth, maxHeight, minWidth, minHeight ,callback) {
+    const image = await getData(file)
+    await Resizer.imageFileResizer(file, maxWidth, maxHeight, 'JPEG', 100, 0, resizedImage => uploadPicture( resizedImage, url ), 'base64', minWidth, minHeight)   
 }
