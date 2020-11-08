@@ -64,6 +64,10 @@
     z-index: 1;
 }
 
+.input-file {
+    display: none;
+}
+
 .bio-button {
     position: relative;
     top: 108px;
@@ -84,4 +88,9 @@
 
 .profile .friends {
     grid-area: friends;
+}
+
+.loading {
+    position: relative;
+    top: 50px;
 }

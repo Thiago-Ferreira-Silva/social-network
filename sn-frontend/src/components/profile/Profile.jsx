@@ -61,13 +61,15 @@ class Profile extends Component {
             <div className="profile">
                 <div className="profile-picture">
                     <button className="img-button" alt="change profile picture" onClick={() => this.imageInput.click()}><FontAwesomeIcon icon={faCamera} /></button>
-                    { this.state.loadingProfilePicture ? <Loading /> : <div className="image-container">
-                        {this.props.user.profilePicture ?
-                            <img className="image" src={this.props.user.profilePicture}
-                                alt="profile_picture" height='180' /> :
-                            <img className="image" src={pictureDefault}
-                                alt="profile_picture" height='180' />}
-                    </div>}
+                    {this.state.loadingProfilePicture ?
+                        <Loading className="loading" /> :
+                        <div className="image-container">
+                            {this.props.user.profilePicture ?
+                                <img className="image" src={this.props.user.profilePicture}
+                                    alt="profile_picture" height='180' /> :
+                                <img className="image" src={pictureDefault}
+                                    alt="profile_picture" height='180' />}
+                        </div>}
                     <input type="file" className="input-file" onChange={this.selectPicture}
                         ref={imageInput => this.imageInput = imageInput} />
                 </div>

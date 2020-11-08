@@ -114,3 +114,27 @@
     display: hidden;
     display: none;
 }
+
+.loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading {
+    border: 0.5rem solid white;
+    border-radius: 50%;
+    border-top: 0.5rem solid #b9c9ff;
+    height:  3rem;
+    width: 3rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
