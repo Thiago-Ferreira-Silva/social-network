@@ -1,16 +1,14 @@
 import './Profile.css'
 import pictureDefault from '../../assets/profile_default.png'
-
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCamera, faSave, faEdit } from '@fortawesome/free-solid-svg-icons'
-
 import { baseApiUrl, notify } from '../../global'
 import { saveUser } from '../../redux/actions'
-
 import { handleImage } from '../../utils/imageHandler'
+import Loading from '../template/Loading'
 
 const initialState = {
     changingBio: false,
@@ -35,9 +33,9 @@ class Profile extends Component {
     }
 
     updatePicture(image) {
-            const user = { ...this.props.user }
-            user.profilePicture = image
-            this.props.dispatch(saveUser(user))
+        const user = { ...this.props.user }
+        user.profilePicture = image
+        this.props.dispatch(saveUser(user))
     }
 
     saveBio() {
@@ -63,11 +61,13 @@ class Profile extends Component {
             <div className="profile">
                 <div className="profile-picture">
                     <button className="img-button" alt="change profile picture" onClick={() => this.imageInput.click()}><FontAwesomeIcon icon={faCamera} /></button>
-                    {this.props.user.profilePicture ?
-                        <img className="image" src={this.props.user.profilePicture}
-                            alt="profile_picture" height='180' /> :
-                        <img className="image" src={pictureDefault}
-                            alt="profile_picture" height='180' />}
+                    { this.state.loadingProfilePicture ? <Loading /> : <div className="image-container">
+                        {this.props.user.profilePicture ?
+                            <img className="image" src={this.props.user.profilePicture}
+                                alt="profile_picture" height='180' /> :
+                            <img className="image" src={pictureDefault}
+                                alt="profile_picture" height='180' />}
+                    </div>}
                     <input type="file" className="input-file" onChange={this.selectPicture}
                         ref={imageInput => this.imageInput = imageInput} />
                 </div>
@@ -92,5 +92,4 @@ export default connect(mapStateToProps)(Profile)
 
 //router link no your post passando informações para o componente posts mostrar apenas os do usuário
 //deve ser possível visualizar os amigos, cancelar a amizade, entrar no perfil, e mandar mensagem
-//pegue a imagem de perfil do db
 //tente deixar o design mais responsivo
