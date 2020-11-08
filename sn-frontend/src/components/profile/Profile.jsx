@@ -13,7 +13,8 @@ import { saveUser } from '../../redux/actions'
 import { handleImage } from '../../utils/imageHandler'
 
 const initialState = {
-    changingBio: false
+    changingBio: false,
+    loadingProfilePicture: false
 }
 
 class Profile extends Component {
@@ -24,11 +25,19 @@ class Profile extends Component {
         this.selectPicture = this.selectPicture.bind(this)
         this.saveBio = this.saveBio.bind(this)
         this.changeBio = this.changeBio.bind(this)
+        this.updatePicture = this.updatePicture.bind(this)
     }
 
     async selectPicture(event) {
-        await handleImage(event.target.files[0], `${baseApiUrl}/users/${this.props.user.id}/picture`, 300, 300, 180, 180)
-        //ainda não está atualizando na hora
+        this.setState({ loadingProfilePicture: true })
+        await handleImage(event.target.files[0], `${baseApiUrl}/users/${this.props.user.id}/picture`, 300, 300, 180, 180, this.updatePicture)
+        this.setState({ loadingProfilePicture: false })
+    }
+
+    updatePicture(image) {
+            const user = { ...this.props.user }
+            user.profilePicture = image
+            this.props.dispatch(saveUser(user))
     }
 
     saveBio() {
