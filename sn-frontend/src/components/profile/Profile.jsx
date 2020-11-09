@@ -8,6 +8,7 @@ import { faCamera, faSave, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { baseApiUrl, notify } from '../../global'
 import { saveUser } from '../../redux/actions'
 import { handleImage } from '../../utils/imageHandler'
+import { Link } from 'react-router-dom'
 import Loading from '../template/Loading'
 
 const initialState = {
@@ -74,7 +75,7 @@ class Profile extends Component {
                         ref={imageInput => this.imageInput = imageInput} />
                 </div>
                 <div className="name">{user.name}</div>
-                <div className="your-posts">Yours posts</div>
+                <div className="your-posts"><Link to='/'>Yours posts</Link></div>
                 <div className="bio">
                     {this.state.changingBio ?
                         <button className="bio-button" alt="save bio" onClick={this.saveBio} ><FontAwesomeIcon icon={faSave} /></button> :
