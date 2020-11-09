@@ -32,6 +32,7 @@ class Profile extends Component {
         await handleImage(event.target.files[0], `${baseApiUrl}/users/${this.props.user.id}/picture`, 300, 300, 180, 180, this.updatePicture)
         this.setState({ loadingProfilePicture: false })
     }
+    //o componente loading me parece desnecessário
 
     updatePicture(image) {
         const user = { ...this.props.user }
