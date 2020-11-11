@@ -24,4 +24,17 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .post(app.api.user.saveBio)
         .put(app.api.user.saveBio)
+
+    app.route('/posts')
+        .all(app.config.passport.authenticate())
+        .post(app.api.post.save)
+
+    app.route('/posts/:id')
+        .all(app.config.passport.authenticate())
+        .get(app.api.post.getById)
+        .put(app.api.post.save)
+
+    app.route('/posts/:userId')
+        .all(app.config.passport.authenticate())
+        .get(app.api.post.getByUserId)
 }
