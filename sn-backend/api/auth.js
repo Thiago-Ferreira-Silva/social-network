@@ -12,6 +12,8 @@ module.exports = app => {
             .first()
             .catch(err => res.status(500).send(err))
 
+        if (!user) return res.status(400).send('User does not exist')
+
         const picture = await app.db('profile_pictures')
             .where({ user_id: user.id })
             .first()
