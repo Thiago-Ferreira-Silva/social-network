@@ -82,7 +82,7 @@ class Profile extends Component {
                         <button className="bio-button" alt="save bio" onClick={this.saveBio} ><FontAwesomeIcon icon={faSave} /></button> :
                         <button className="bio-button" alt="edit bio" onClick={this.changeBio} ><FontAwesomeIcon icon={faEdit} /></button>
                     }
-                    <textarea type="text" id="bio" disabled={this.state.changingBio ? false : true} className="bio-text" defaultValue={this.props.user.bio || 'Your bio'} />
+                    <textarea maxLength="500" id="bio" disabled={this.state.changingBio ? false : true} className="bio-text" defaultValue={this.props.user.bio || 'Your bio'} />
                 </div>
                 <div className="friends">Your friends</div>
             </div>
