@@ -84,10 +84,6 @@ module.exports = app => {
                 .then(_ => res.status(204).send() )
                 .catch(err => res.status(500).send(err))
         }
-        //ainda tem problemas com imagens grandes, talvez usar:
-        /*Array.reduce((data, byte) => {
-            return data + String.fromCharCode(byte)
-        })*/
     }
 
     const getProfilePicture = async (req, res) => {
@@ -100,6 +96,10 @@ module.exports = app => {
         const tipedArray = new Uint8Array(picture.image)
         const stringChar = String.fromCharCode.apply(null, tipedArray)
         picture.image = stringChar
+
+        /*Array.reduce((data, byte) => {
+            return data + String.fromCharCode(byte)
+        })*/
 
         res.send(picture)
         } else {

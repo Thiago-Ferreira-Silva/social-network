@@ -1,4 +1,4 @@
-// se clicar em comentários aparecem em popup e podem sem fechados
+// se clicar em comentários aparecem em popup e podem ser fechados
 //estude a adição de like e unlike nos posts e comentários, e também a adição de vídeos
 import React, { Component } from 'react'
 import { connect } from 'react-redux'

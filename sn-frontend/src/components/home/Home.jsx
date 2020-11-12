@@ -2,15 +2,14 @@ import './Home.css'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import NewPost from '../post/NewPost'
+
 class Home extends Component {
 
     render() {
-        const user = this.props.user
         return (
             <div>
-                <h1>Home</h1>
-                <br />
-                {user.name}
+                <NewPost />
             </div>
         )
     }
@@ -19,6 +18,8 @@ class Home extends Component {
 const mapStateToProps = store => ({
     user: store.userState.user
 })
-//crie o recurso de fazer posts parecidos com os do twitter
 
 export default connect(mapStateToProps)(Home)
+
+//isso vai precisar de uma lógica bem complexa para mostrar os posts
+//e também deve ter meios de selecionar quais irão aparecer
