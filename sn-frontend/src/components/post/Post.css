@@ -1,0 +1,5 @@
+.new-post-text, .new-post-text:focus {
+    outline: none;
+    resize: none;
+    border: none;
+}

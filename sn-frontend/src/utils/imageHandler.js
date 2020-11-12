@@ -16,3 +16,5 @@ function uploadPicture( image, url, callback ) {
 export async function handleImage(file, url, maxWidth, maxHeight, minWidth, minHeight ,callback) {
     await Resizer.imageFileResizer(file, maxWidth, maxHeight, 'JPEG', 100, 0, resizedImage => uploadPicture( resizedImage, url, callback ), 'base64', minWidth, minHeight)   
 }
+
+//precisa mudar
