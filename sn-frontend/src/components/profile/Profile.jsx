@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCamera, faSave, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { baseApiUrl, notify } from '../../global'
 import { saveUser } from '../../redux/actions'
-import { handleImage } from '../../utils/imageHandler'
+import { resizeImage } from '../../utils/imageHandler'
 import { Link } from 'react-router-dom'
 import Loading from '../template/Loading'
 
@@ -24,20 +24,25 @@ class Profile extends Component {
         this.selectPicture = this.selectPicture.bind(this)
         this.saveBio = this.saveBio.bind(this)
         this.changeBio = this.changeBio.bind(this)
-        this.updatePicture = this.updatePicture.bind(this)
+        this.uploadPicture = this.uploadPicture.bind(this)
     }
 
     async selectPicture(event) {
         this.setState({ loadingProfilePicture: true })
-        await handleImage(event.target.files[0], `${baseApiUrl}/users/${this.props.user.id}/picture`, 300, 300, 180, 180, this.updatePicture)
+        await resizeImage(event.target.files[0], 300, 300, 180, 180, this.uploadPicture)
         this.setState({ loadingProfilePicture: false })
     }
     //o componente loading me parece desnecessário
 
-    updatePicture(image) {
-        const user = { ...this.props.user }
-        user.profilePicture = image
-        this.props.dispatch(saveUser(user))
+    uploadPicture(image) {
+        axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, { image })
+            .then(_ => {
+                const user = { ...this.props.user }
+                user.profilePicture = image
+                this.props.dispatch(saveUser(user))
+                notify('Image uploaded')
+            })
+            .catch(err => notify(err, 'error'))
     }
 
     saveBio() {
