@@ -47,7 +47,7 @@ class NewPost extends Component {
         return (
             <div className="new-post">
                 <textarea maxLength="600" id="text" className="new-post-text" onChange={this.addText} defaultValue={ this.state.text || 'Escreva algo aqui'} ></textarea>
-                { this.state.image && <img src={this.state.image.image} alt="" className="image"/> }
+                { this.state.image && <img src={this.state.image} alt="" className="image"/> }
                 <input type="file" className="input-file" onChange={this.addImage}
                         ref={imageInput => this.imageInput = imageInput} />
                 { this.state.image ? 
