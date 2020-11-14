@@ -25,7 +25,7 @@ class NewPost extends Component {
     }
 
     async addImage(event) {
-        await resizeImage(event.target.files[0], 1000, 1000, 100, 100, ( image ) => {
+        await resizeImage(event.target.files[0],100, 100, 0, 0, ( image ) => {
             this.setState({ image })
         })
     }

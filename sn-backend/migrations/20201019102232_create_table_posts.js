@@ -5,7 +5,7 @@ exports.up = function(knex) {
         table.integer('user_id').unsigned()
         table.foreign('user_id').references('id').inTable('users')
         table.string('text', 600).notNull()
-        table.string('image')
+        table.binary('image')
         table.json('comments')
     })
 };
