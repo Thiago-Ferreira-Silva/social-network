@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 
 import { resizeImage } from '../../utils/imageHandler'
-import { baseApiUrl } from '../../global'
+import { baseApiUrl, notify } from '../../global'
 
 const initialState = {
     text: null,
@@ -40,7 +40,12 @@ class NewPost extends Component {
 
     post() {
         axios.post(`${baseApiUrl}/posts`, { ...this.state, user_id: this.props.user.id })
-        //isso deve ser mudado quando adicionar as outras funcionalidades
+            .then(_ => {
+                this.setState({ ...initialState })
+                notify()
+            })
+            .catch(err => notify(err, 'error'))
+        //isso deve ser mudado quando adicionar as outras funcionalidades 
     }
 
     render () {
