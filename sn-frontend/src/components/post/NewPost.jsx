@@ -3,6 +3,8 @@ import './Post.css'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faImage, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import { resizeImage } from '../../utils/imageHandler'
 import { baseApiUrl, notify } from '../../global'
@@ -25,7 +27,7 @@ class NewPost extends Component {
     }
 
     async addImage(event) {
-        await resizeImage(event.target.files[0],100, 100, 0, 0, ( image ) => {
+        await resizeImage(event.target.files[0], 800, 800, 100, 100, (image) => {
             this.setState({ image })
         })
     }
@@ -48,21 +50,23 @@ class NewPost extends Component {
         //isso deve ser mudado quando adicionar as outras funcionalidades 
     }
 
-    render () {
+    render() {
         return (
             <div className="new-post">
-                <textarea maxLength="600" id="text" className="new-post-text" onChange={this.addText} defaultValue={ this.state.text || 'Escreva algo aqui'} ></textarea>
-                { this.state.image && <img src={this.state.image} alt="" className="image"/> }
-                <input type="file" className="input-file" onChange={this.addImage}
+                <textarea maxLength="600" id="text" className="new-post-text" onChange={this.addText} value={this.state.text} placeholder='Write something here...' ></textarea>
+                <div className="image-container">
+                    <input type="file" className="input-file" onChange={this.addImage}
                         ref={imageInput => this.imageInput = imageInput} />
-                { this.state.image ? 
-                <button className="trocar-por-icone" onClick={this.removeImage}>Ícone de remover imagem</button> :
-                <button className="trocar-por-icone" onClick={() => this.imageInput.click()}>Ícone de adicionar imagem</button>
-                }
-                <button className="btn btn-primary" onClick={this.post}>Post</button>
+                    {this.state.image ?
+                        <button className="btn image-button" onClick={this.removeImage}><FontAwesomeIcon icon={faTrash} /></button> :
+                        <button className="btn image-button" onClick={() => this.imageInput.click()}><FontAwesomeIcon icon={faImage} /></button>
+                    }
+                    <button className="btn btn-primary post-button" onClick={this.post}>Post</button>
+                    {this.state.image && <img src={this.state.image} alt="" className="image" />}
+                </div>
             </div>
         )
-    } 
+    }
 }
 
 const mapStateToProps = store => ({ user: store.userState.user })
