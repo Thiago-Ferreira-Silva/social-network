@@ -1,7 +1,8 @@
 .new-post {
-    width: 70vw;
+    width: 60vw;
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 8px;
 }
 
 .new-post-text, .new-post-text:focus {
@@ -17,6 +18,10 @@
 .image-container {
     width: 100%;
     background-color: #fffc;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
 }
 
 .image {
@@ -24,16 +29,18 @@
     max-height: 48vh;
 }
 
-.image-button {
-    position: relative;
-    z-index: 1;
-    bottom: 5px;
-    left: 5px;
+.image-button, .image-button:focus {
+    background-color: transparent;
+    border: none;
+    outline: none;
 }
 
-.post-button {
-    position: relative;
-    z-index: 1;
-    bottom: 0px;
+.image-button:hover {
+    background-color: #0001;
 }
-/*arrume isso*/
+
+.image-button, .post-button {
+    margin: 10px;
+}
+
+
