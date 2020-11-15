@@ -6,7 +6,14 @@ import { connect } from 'react-redux'
 class Post extends Component {
     render() {
         return (
-            <h1>Post</h1>
+            <div className="post">
+                <div className="text">
+                    {this.props.text}
+                </div>
+                <div className="image">
+                    {this.props.image && <img src={this.props.image} alt="" />}
+                </div>
+            </div>
         )
     }
 }
