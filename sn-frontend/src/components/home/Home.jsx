@@ -4,7 +4,13 @@ import { connect } from 'react-redux'
 
 import NewPost from '../post/NewPost'
 
+const initialState = {
+    posts: []
+}
+
 class Home extends Component {
+
+    state = { ...initialState }
 
     render() {
         return (

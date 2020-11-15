@@ -11,11 +11,21 @@ module.exports = app => {
     } //também deve ser possível atualizar um post
 
     const getById = (req, res) => {
+        const id = req.params.id
 
+        app.db('posts')
+            .where({ id: id })
+            .then(posts => res.json(posts))
+            .catch(err => res.status(500).send(err))
     }
 
     const getByUserId = (req, res) => {
+        const id = req.params.id
 
+        app.db('posts')
+            .where({ user_id: id })
+            .then(posts => res.json(posts))
+            .catch(err => res.status(500).send(err))
     }
 
     return { save, getById, getByUserId }

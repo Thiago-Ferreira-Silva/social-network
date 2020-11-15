@@ -47,13 +47,12 @@ class NewPost extends Component {
                 notify()
             })
             .catch(err => notify(err, 'error'))
-        //isso deve ser mudado quando adicionar as outras funcionalidades 
     }
 
     render() {
         return (
             <div className="new-post">
-                <textarea maxLength="600" id="text" className="new-post-text" onChange={this.addText} value={this.state.text} placeholder='Write something here...' ></textarea>
+                <textarea maxLength="600" id="text" className="new-post-text" onChange={this.addText} value={this.state.text || ''} placeholder='Write something here...' ></textarea>
                 <div className="image-container">
                     <input type="file" className="input-file" onChange={this.addImage}
                         ref={imageInput => this.imageInput = imageInput} />
