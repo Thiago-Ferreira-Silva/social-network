@@ -93,7 +93,7 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
 
         if (picture) {
-        picture.image = app.arrayToStringChar(picture.image)
+        picture.image = app.api.imageHandler.arrayToStringChar(picture.image)
 
         /*Array.reduce((data, byte) => { 
             return data + String.fromCharCode(byte)

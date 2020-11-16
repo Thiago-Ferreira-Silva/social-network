@@ -7,3 +7,5 @@ module.exports = app => {
 
     return { arrayToStringChar }
 }
+
+//problema com imagem grande

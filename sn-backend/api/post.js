@@ -10,13 +10,19 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     } //também deve ser possível atualizar um post
 
-    const getById = (req, res) => {
+    const getById = async (req, res) => {
         const id = req.params.id
 
-        app.db('posts')
+        const post = await app.db('posts')
             .where({ id: id })
-            .then(posts => res.json(posts))
+            .first()
             .catch(err => res.status(500).send(err))
+
+        if (post.image) {
+            post.image = app.api.imageHandler.arrayToStringChar(post.image)
+        }
+
+        res.send(post)
     }
 
     const getByUserId = async (req, res) => {
@@ -28,7 +34,7 @@ module.exports = app => {
 
         posts = posts.map((post) => {
             if (post.image) {
-                post.image = app.arrayToStringChar(post.image)
+                post.image = app.api.imageHandler.arrayToStringChar(post.image)
             }
         })
 
