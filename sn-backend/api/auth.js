@@ -20,9 +20,7 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
 
         if (picture) {
-            const tipedArray = new Uint8Array(picture.image)
-            const stringChar = String.fromCharCode.apply(null, tipedArray)
-            image = stringChar
+            image = app.arrayToStringChar(picture.image)
         } else {
             image = null
         }
