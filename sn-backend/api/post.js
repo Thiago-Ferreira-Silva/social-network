@@ -28,13 +28,13 @@ module.exports = app => {
     const getByUserId = async (req, res) => {
         const id = req.params.userId
 
-        const posts = await app.db('posts')
+        let posts = await app.db('posts')
             .where({ user_id: id })
             .catch(err => res.status(500).send(err))
-
         posts = posts.map((post) => {
             if (post.image) {
-                post.image = app.api.imageHandler.arrayToStringChar(post.image)
+                const image = app.api.imageHandler.arrayToStringChar(post.image)
+                return { ...post, image }
             }
         })
 

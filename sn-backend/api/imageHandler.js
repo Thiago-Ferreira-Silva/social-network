@@ -2,10 +2,10 @@ module.exports = app => {
 
     const arrayToStringChar = (image) => {
         const tipedArray = new Uint8Array(image)
-        return String.fromCharCode.apply(null, tipedArray)
+        let str = ''
+        tipedArray.forEach(value => str += String.fromCodePoint(value))
+        return str
     }
 
     return { arrayToStringChar }
 }
-
-//problema com imagem grande

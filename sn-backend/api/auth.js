@@ -20,7 +20,7 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
 
         if (picture) {
-            image = aapp.api.imageHandler.arrayToStringChar(picture.image)
+            image = app.api.imageHandler.arrayToStringChar(picture.image)
         } else {
             image = null
         }
