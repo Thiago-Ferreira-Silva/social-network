@@ -5,10 +5,12 @@ import axios from 'axios'
 
 import NewPost from '../post/NewPost'
 import Post from '../post/Post'
+import Loading from '../template/Loading'
 import { baseApiUrl, notify } from '../../global'
 
 const initialState = {
-    posts: []
+    posts: [],
+    loading: true
 }
 
 class Home extends Component {
@@ -29,20 +31,26 @@ class Home extends Component {
                     return post ? <Post text={post.text} image={post.image} key={post.id} /> : ''
                 })
                 this.setState({ posts })
+                this.setState({ loading: false })
             })
             .catch(err => notify(err, 'error'))
     }
 
     componentDidMount() {
         this.getPosts()
+        
     }
 
     render() {
         return (
-            <div className="home">
-                <NewPost />
-                <ul>{this.state.posts}</ul>
-                {/*colocar o componente de loading enquanto os posts não chegam*/}
+            <div className="home-container">
+                {this.state.loading ?
+                    <Loading /> :
+                    <div className="home">
+                        <NewPost />
+                        <ul>{this.state.posts}</ul>
+                    </div>
+                }
             </div>
         )
     }
