@@ -42,6 +42,7 @@ class Home extends Component {
             <div className="home">
                 <NewPost />
                 <ul>{this.state.posts}</ul>
+                {/*colocar o componente de loading enquanto os posts não chegam*/}
             </div>
         )
     }

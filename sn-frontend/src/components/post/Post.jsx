@@ -10,8 +10,8 @@ class Post extends Component {
                 <div className="text">
                     {this.props.text}
                 </div>
-                <div className="image">
-                    {this.props.image && <img src={this.props.image} alt="" />}
+                <div className="image-container">
+                    {this.props.image && <img src={this.props.image} alt="" className="image" />}
                 </div>
             </div>
         )

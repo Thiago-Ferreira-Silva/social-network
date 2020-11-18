@@ -15,7 +15,7 @@
     background-color: #fffc;
 }
 
-.image-container {
+.new-post-image-container {
     width: 100%;
     background-color: #fffc;
 
@@ -43,4 +43,23 @@
     margin: 10px;
 }
 
+.post {
+    
+    border: solid;
+    width: 80vw;
+    margin-bottom: 10px;
+}
 
+.post .text {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.post .image-container {
+    max-height: 60vh;
+
+    display: flex;
+    justify-content: center;
+}
+
+/*pense em alguma coisa para deixar o post bonito, ou ao menos, apresentável*/
