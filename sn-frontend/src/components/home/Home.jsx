@@ -37,7 +37,6 @@ class Home extends Component {
 
     componentDidMount() {
         this.getPosts()
-        
     }
 
     render() {
@@ -46,7 +45,7 @@ class Home extends Component {
                 {this.state.loading ?
                     <Loading /> :
                     <div className="home">
-                        <NewPost />
+                        <NewPost update={this.getPosts} />
                         <ul>{this.state.posts}</ul>
                     </div>
                 }
@@ -61,5 +60,6 @@ const mapStateToProps = store => ({
 
 export default connect(mapStateToProps)(Home)
 
+//use o redux para alguma coisa e faça o chat com socket logo
 //isso vai precisar de uma lógica bem complexa para mostrar os posts
 //e também deve ter meios de selecionar quais irão aparecer

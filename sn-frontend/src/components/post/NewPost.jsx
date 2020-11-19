@@ -45,6 +45,7 @@ class NewPost extends Component {
             .then(_ => {
                 this.setState({ ...initialState })
                 notify()
+                this.props.update && this.props.update()
             })
             .catch(err => notify(err, 'error'))
     }
