@@ -53,6 +53,7 @@
 .post .text {
     font-size: 1.2rem;
     margin-bottom: 5px;
+    word-wrap: break-word;
 }
 
 .post .image-container {

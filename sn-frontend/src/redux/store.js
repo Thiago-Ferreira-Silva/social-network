@@ -5,8 +5,8 @@ import { Reducers } from './reducers'
 
 const persistConfig = {
     key: 'root',
-    storage
-    // whitelist: ;blacklist:
+    storage,
+    whitelist: ['userState']
 }
 
 const persistedReducer = persistReducer(persistConfig, Reducers)

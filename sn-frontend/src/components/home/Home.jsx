@@ -27,7 +27,6 @@ class Home extends Component {
         axios.get(`${baseApiUrl}/posts/${this.props.user.id}`)
             .then(res => {
                 const posts = res.data.map(post => {
-                    console.log(post)
                     return post ? <Post text={post.text} image={post.image} key={post.id} /> : ''
                 })
                 this.setState({ posts })
