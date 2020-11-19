@@ -36,6 +36,7 @@ module.exports = app => {
                 const image = app.api.imageHandler.arrayToStringChar(post.image)
                 return { ...post, image }
             }
+            return post
         })
 
         res.json(posts)
