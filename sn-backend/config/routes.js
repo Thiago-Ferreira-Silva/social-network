@@ -25,6 +25,13 @@ module.exports = app => {
         .post(app.api.user.saveBio)
         .put(app.api.user.saveBio)
 
+    app.route('users/:id/friends')
+        .all(app.config.passport.authenticate())
+        .post(app.api.user.saveFriend)
+        .put(app.api.user.saveFriend)
+        .get(app.api.user.getFriends)
+
+
     app.route('/posts')
         .all(app.config.passport.authenticate())
         .post(app.api.post.save)
