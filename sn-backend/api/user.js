@@ -43,11 +43,11 @@ module.exports = app => {
             .select('id', 'name', 'email', 'password')
             .then(users => res.json(users))
             .catch(err => res.status(500).send(err))
-    }
+    }//tirar isso
 
     const getById = (req, res) => {
         app.db('users')
-            .select('id', 'name', 'email', 'password')
+            .select('id', 'name', 'bio', 'profilePicture')
             .where({ id: req.params.id })
             .first()
             .then(user => res.json(user))
@@ -94,11 +94,6 @@ module.exports = app => {
 
         if (picture) {
         picture.image = app.api.imageHandler.arrayToStringChar(picture.image)
-
-        /*Array.reduce((data, byte) => { 
-            return data + String.fromCharCode(byte)
-        })*/
-
         res.send(picture)
         } else {
             res.send(null)
@@ -114,16 +109,19 @@ module.exports = app => {
     }
 
     const saveFriend = async(req, res) => {
-        const friend = req.body.id
+        const friend = req.body.friendId
 
-        const friendsJSON = await app.db('users')
+        const friends = await app.db('users')
                                     .select('friends')
                                     .where({ id: req.params.id })
+                                    .first()
                                     .catch(err => res.status(500).send(err))
 
-        const friends = friendsJSON ? JSON.parse(friendsJSON) : []
+        if(!friends.friends) {
+            friends.friends = []
+        }
 
-        friends.push(friend)
+        friends.friends.push(friend)
 
         app.db('users')
             .where({ id: req.params.id })
@@ -133,8 +131,15 @@ module.exports = app => {
     }
 
     const getFriends = (req, res) => {
-        res.send('Get friends')
-    }
+        app.db('users')
+            .select('friends')
+            .where({ id: req.params.id })
+            .then(data => {
+                res.send(data)
+                //data.friends ? res.send(data.friends) : res.send([])
+            })
+            .catch(err => res.status(500).send(err))
+    }//ficou estranho, refaça tudo
 
     //criar uma checagem para que o usuário que fez o request não tenha acesso indevido a informacões de outros usuários
     //melhore o tratamento de erros
