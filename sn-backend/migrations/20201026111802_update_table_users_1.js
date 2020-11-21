@@ -1,7 +1,7 @@
 exports.up = function(knex) {
     return knex.schema.table('users', table => {
         table.text('bio')
-        table.json('friends')
+        table.text('friends')
     })
 };
 

@@ -111,40 +111,40 @@ module.exports = app => {
     const saveFriend = async(req, res) => {
         const friend = req.body.friendId
 
-        const friends = await app.db('users')
+        const data = await app.db('users')
                                     .select('friends')
                                     .where({ id: req.params.id })
                                     .first()
                                     .catch(err => res.status(500).send(err))
 
-        if(!friends.friends) {
-            friends.friends = []
+        const friends = JSON.parse(data.friends)
+
+        if(!friends) {
+            friends = []
         }
 
-        friends.friends.push(friend)
+        friends.push(friend)
 
         app.db('users')
             .where({ id: req.params.id })
-            .update({ friends })
+            .update({ friends: JSON.stringify(friends) })
             .then(_ => res.status(204).send())
             .catch(err => res.status(500).send(err))
+        //talvez mudar o nome para follower
     }
 
     const getFriends = (req, res) => {
         app.db('users')
             .select('friends')
             .where({ id: req.params.id })
+            .first()
             .then(data => {
-                res.send(data)
-                //data.friends ? res.send(data.friends) : res.send([])
+                data.friends ? res.send(JSON.parse(data.friends)) : res.send([])
             })
             .catch(err => res.status(500).send(err))
-    }//ficou estranho, refaça tudo
-
+    }
     //criar uma checagem para que o usuário que fez o request não tenha acesso indevido a informacões de outros usuários
     //melhore o tratamento de erros
 
     return { save, get, getById, remove, saveProfilePicture, getProfilePicture, saveBio, saveFriend, getFriends }
 }
-
-//talvez mover tudo relacionado a upload de arquivos para outro arquivo
