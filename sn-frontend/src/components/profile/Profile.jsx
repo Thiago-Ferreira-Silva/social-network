@@ -13,7 +13,8 @@ import Loading from '../template/Loading'
 
 const initialState = {
     changingBio: false,
-    loadingProfilePicture: false
+    loadingProfilePicture: false,
+    friends: null
 }
 
 class Profile extends Component {
@@ -60,6 +61,16 @@ class Profile extends Component {
 
     changeBio() {
         this.setState({ changingBio: true })
+    }
+
+    getFriends() {
+        axios.get(`${baseApiUrl}/users/${this.props.user.id}/friends`)
+            .then(res => this.setState({ friends: res.data }))
+            .catch(err => notify(err, 'error'))
+    }
+
+    componentDidMount() {
+        this.getFriends()
     }
 
     render() {

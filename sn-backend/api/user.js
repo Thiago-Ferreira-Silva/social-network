@@ -81,7 +81,7 @@ module.exports = app => {
         } else {
             app.db('profile_pictures')
                 .insert(profilePicture)
-                .then(_ => res.status(204).send() )
+                .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         }
     }
@@ -93,8 +93,8 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
 
         if (picture) {
-        picture.image = app.api.imageHandler.arrayToStringChar(picture.image)
-        res.send(picture)
+            picture.image = app.api.imageHandler.arrayToStringChar(picture.image)
+            res.send(picture)
         } else {
             res.send(null)
         }
@@ -108,18 +108,18 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    const saveFriend = async(req, res) => {
+    const saveFriend = async (req, res) => {
         const friend = req.body.friendId
 
         const data = await app.db('users')
-                                    .select('friends')
-                                    .where({ id: req.params.id })
-                                    .first()
-                                    .catch(err => res.status(500).send(err))
+            .select('friends')
+            .where({ id: req.params.id })
+            .first()
+            .catch(err => res.status(500).send(err))
 
         const friends = JSON.parse(data.friends)
 
-        if(!friends) {
+        if (!friends) {
             friends = []
         }
 
@@ -133,15 +133,27 @@ module.exports = app => {
         //talvez mudar o nome para follower
     }
 
-    const getFriends = (req, res) => {
-        app.db('users')
+    const getFriends = async (req, res) => {
+        const data = await app.db('users')
             .select('friends')
             .where({ id: req.params.id })
             .first()
-            .then(data => {
-                data.friends ? res.send(JSON.parse(data.friends)) : res.send([])
-            })
             .catch(err => res.status(500).send(err))
+
+        const friends = JSON.parse(data.friends)
+        const aaa = []
+        friends.forEach(async friend => {
+            await app.db('users')
+                .select('id', 'name')
+                .where({ id: friend })
+                .first()
+                .then(friend => aaa.push(friend))
+                .catch(err => res.status(500).send(err))
+                //resolva isso e crie um método para pegar a profile picture, coloque-o em imageHandler
+            console.log('1', aaa)
+        })
+        console.log('2', aaa)
+        res.status(204).send()
     }
     //criar uma checagem para que o usuário que fez o request não tenha acesso indevido a informacões de outros usuários
     //melhore o tratamento de erros
