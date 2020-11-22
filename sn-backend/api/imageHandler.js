@@ -7,5 +7,19 @@ module.exports = app => {
         return str
     }
 
-    return { arrayToStringChar }
+    const pickProfilePicture = async (user_id) => {
+        const picture = await app.db('profile_pictures')
+            .where({ user_id: req.params.id })
+            .first()
+            .catch(err => res.status(500).send(err))
+
+        if (picture) {
+            picture.image = arrayToStringChar(picture.image)
+            return picture
+        } else {
+            return null
+        }
+    }
+
+    return { arrayToStringChar, pickProfilePicture }
 }

@@ -2,15 +2,16 @@ import './Auth.css'
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router'
-
 import { connect } from 'react-redux'
 import { saveUser } from '../../redux/actions'
 
 import { baseApiUrl, notify } from '../../global'
+import Loading from '../template/Loading'
 
 const initialState = {
     showSignUp: false,
     toHome: false,
+    loading: false,
     user: {}
 }
 
@@ -35,12 +36,14 @@ class Auth extends Component {
     }
 
     signIn() {
+        this.setState({ loading: true })
         axios.post(`${baseApiUrl}/signin`, this.state.user)
             .then(res => {
                 this.props.dispatch(saveUser(res.data))
                 this.setState({ toHome: true })
             })
             .catch( err => notify(err, 'error'))
+            this.setState({ loading: false })
     }
 
     altShowSignUp() {
@@ -77,6 +80,8 @@ class Auth extends Component {
         }
         return (
             <div className="auth">
+                { this.state.loading ?
+                <Loading /> :
                 <div className="auth-form">
                     {this.state.showSignUp && <div className="auth-title">Signup</div>}
                     {!this.state.showSignUp && <div className="auth-title">Signin</div>}
@@ -90,7 +95,7 @@ class Auth extends Component {
                         {this.state.showSignUp && <span>Already have an account? Signin</span>}
                         {!this.state.showSignUp && <span>Don't have an account? Signup</span>}
                     </div>
-                </div>
+                </div>}
             </div>
         )
     }
