@@ -73,7 +73,7 @@ class Profile extends Component {
         this.getFriends()
     }
 
-    render() {
+    render() {//colocar os amigos aqui com um loop for
         const user = this.props.user
         return (
             <div className="profile">

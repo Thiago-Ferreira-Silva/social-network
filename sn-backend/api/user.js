@@ -131,20 +131,23 @@ module.exports = app => {
             .first()
             .catch(err => res.status(500).send(err))
 
-        const friends = JSON.parse(data.friends)
-        const aaa = []
-        friends.forEach(async friend => {
-            await app.db('users')
-                .select('id', 'name')
-                .where({ id: friend })
-                .first()
-                .then(friend => aaa.push(friend))
-                .catch(err => res.status(500).send(err))
-                //resolva isso e crie um método para pegar a profile picture, coloque-o em imageHandler
-            console.log('1', aaa)
+        const friendsId = JSON.parse(data.friends)
+
+        const promises = friendsId.map(async id => {
+            const friend = await app.db('users')
+                    .select('id', 'name', 'bio')
+                    .where({ id })
+                    .first()
+                    .catch(err => res.status(500).send(err))
+            const picture = await app.api.imageHandler.pickProfilePicture(id)
+
+            if (picture) friend.profilePicture = picture
+            return friend
         })
-        console.log('2', aaa)
-        res.status(204).send()
+
+        const friends = await Promise.all(promises)
+
+        res.send(friends)
     }
     //criar uma checagem para que o usuário que fez o request não tenha acesso indevido a informacões de outros usuários
     //melhore o tratamento de erros

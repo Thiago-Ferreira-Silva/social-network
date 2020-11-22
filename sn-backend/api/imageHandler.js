@@ -9,13 +9,13 @@ module.exports = app => {
 
     const pickProfilePicture = async (user_id) => {
         const picture = await app.db('profile_pictures')
-            .where({ user_id: req.params.id })
+            .where({ user_id })
             .first()
             .catch(err => res.status(500).send(err))
 
         if (picture) {
             picture.image = arrayToStringChar(picture.image)
-            return picture
+            return picture.image
         } else {
             return null
         }
