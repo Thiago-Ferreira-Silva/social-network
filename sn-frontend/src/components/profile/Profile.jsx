@@ -10,11 +10,13 @@ import { saveUser } from '../../redux/actions'
 import { resizeImage } from '../../utils/imageHandler'
 import { Link } from 'react-router-dom'
 import Loading from '../template/Loading'
+import AnotherUserProfile from './AnotherUseProfile'
 
 const initialState = {
     changingBio: false,
     loadingProfilePicture: false,
-    friends: null
+    friends: null,
+    bio: null
 }
 
 class Profile extends Component {
@@ -26,6 +28,7 @@ class Profile extends Component {
         this.saveBio = this.saveBio.bind(this)
         this.changeBio = this.changeBio.bind(this)
         this.uploadPicture = this.uploadPicture.bind(this)
+        this.updateBio = this.updateBio.bind(this)
     }
 
     async selectPicture(event) {
@@ -47,13 +50,11 @@ class Profile extends Component {
     }
 
     saveBio() {
-        const bio = document.getElementById('bio')
-
-        axios.post(`${baseApiUrl}/users/${this.props.user.id}/bio`, { bio: bio.value })
+        axios.post(`${baseApiUrl}/users/${this.props.user.id}/bio`, { bio: this.state.bio })
             .then(_ => notify('Bio updated'))
             .catch(err => notify(err, 'error'))
         const user = { ...this.props.user }
-        user.bio = bio.value
+        user.bio = this.state.bio
         this.props.dispatch(saveUser(user))
 
         this.setState({ changingBio: false })
@@ -61,6 +62,10 @@ class Profile extends Component {
 
     changeBio() {
         this.setState({ changingBio: true })
+    }
+
+    updateBio(event) {
+        this.setState({ bio: event.target.value })
     }
 
     getFriends() {
@@ -71,6 +76,7 @@ class Profile extends Component {
 
     componentDidMount() {
         this.getFriends()
+        this.setState({ bio: this.props.user.bio })
     }
 
     render() {//colocar os amigos aqui com um loop for
@@ -98,9 +104,13 @@ class Profile extends Component {
                         <button className="bio-button" alt="save bio" onClick={this.saveBio} ><FontAwesomeIcon icon={faSave} /></button> :
                         <button className="bio-button" alt="edit bio" onClick={this.changeBio} ><FontAwesomeIcon icon={faEdit} /></button>
                     }
-                    <textarea maxLength="500" id="bio" disabled={this.state.changingBio ? false : true} className="bio-text" value={this.props.user.bio} placeholder='Your bio' />
+                    <textarea maxLength="500" id="bio" disabled={this.state.changingBio ? false : true} className="bio-text" value={this.state.bio} onChange={this.updateBio} placeholder='Your bio' />
                 </div>
-                <div className="friends">Your friends</div>
+                <div className="friends">
+                    {this.state.friends &&
+                        <AnotherUserProfile id={this.state.friends[0].id} name={this.state.friends[0].name} bio={this.state.friends[0].bio} profilePicture={this.state.friends[0].profilePicture} />
+                    }
+                </div>
             </div>
         )
     }
