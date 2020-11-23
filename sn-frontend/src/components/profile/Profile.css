@@ -1,4 +1,4 @@
-.profile {
+.user {
     width: 95%;
     min-height: 74vh;
 
@@ -14,30 +14,32 @@
                          " friends friends friends";
 }
 
-.profile .profile-picture {
+.user
+
+.user .profile-picture {
     grid-area: picture;
     overflow: hidden;
 }
 
-.profile .image {
+.user .image {
     min-height: 100%;
     min-width: 100%;
     position: relative;
     top: -25px;
 }
 
-.profile .name {
+.user .name {
     grid-area: name;
     padding: 8px;
 }
 
-.profile .your-posts {
+.user .your-posts {
     grid-area: posts;
     display: flex;
     align-items: center;
 }
 
-.profile .bio {
+.user .bio {
     grid-area: bio;
     margin-left: 10px;
     padding: 5px;
@@ -86,7 +88,7 @@
     border-radius: 6px;
 }
 
-.profile .friends {
+.user .friends {
     grid-area: friends;
 }
 

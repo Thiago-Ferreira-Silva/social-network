@@ -82,7 +82,7 @@ class Profile extends Component {
     render() {//colocar os amigos aqui com um loop for
         const user = this.props.user
         return (
-            <div className="profile">
+            <div className="user">
                 <div className="profile-picture">
                     <button className="img-button" alt="change profile picture" onClick={() => this.imageInput.click()}><FontAwesomeIcon icon={faCamera} /></button>
                     {this.state.loadingProfilePicture ?
@@ -108,7 +108,7 @@ class Profile extends Component {
                 </div>
                 <div className="friends">
                     {this.state.friends &&
-                        <AnotherUserProfile id={this.state.friends[0].id} name={this.state.friends[0].name} bio={this.state.friends[0].bio} profilePicture={this.state.friends[0].profilePicture} />
+                        <AnotherUserProfile id={this.state.friends[0].id} name={this.state.friends[0].name} bio={this.state.friends[0].bio} profilePicture={this.state.friends[0].profilePicture} small={true} />
                     }
                 </div>
             </div>
