@@ -9,12 +9,14 @@
     grid-template-columns: 180px 1fr 100px;
     grid-template-rows: 40px 140px 1fr;
 
-    grid-template-areas: " picture name posts "
+    grid-template-areas: " picture name aside "
                          " picture bio bio "
                          " friends friends friends";
 }
 
-.user
+.user-small {
+    display: grid;
+}
 
 .user .profile-picture {
     grid-area: picture;
@@ -28,15 +30,31 @@
     top: -25px;
 }
 
+.user-small .image-small {
+    background-color: green;
+}
+
 .user .name {
     grid-area: name;
     padding: 8px;
 }
 
+.user-small .name-small {
+    background-color: green;
+}
+
 .user .your-posts {
-    grid-area: posts;
+    grid-area: aside;
     display: flex;
     align-items: center;
+}
+
+.user .friend-button {
+    background-color: green;
+}
+
+.user-small .friend-button {
+    background-color: green;
 }
 
 .user .bio {
@@ -48,11 +66,22 @@
     border-radius: 10px;
 }
 
+.user-small .bio-small {
+    background-color: green;
+}
+
 .bio-text, .bio-text:focus {
     height: 100%;
     width: 100%;
     position: relative;
     top: -30px;   
+    border: none;
+    background-color: transparent;
+    resize: none;
+    outline: none;
+}
+
+.bio-text-small, .bio-text-small:focus {
     border: none;
     background-color: transparent;
     resize: none;
