@@ -149,8 +149,22 @@ module.exports = app => {
 
         res.send(friends)
     }
-    //criar uma checagem para que o usuário que fez o request não tenha acesso indevido a informacões de outros usuários
-    //melhore o tratamento de erros
 
-    return { save, get, getById, remove, saveProfilePicture, getProfilePicture, saveBio, saveFriend, getFriends }
+    const removeFriend = async (req, res) => {
+        const data = await app.db('users')
+                        .select('friends')
+                        .where({id: req.params.id})
+                        .first()
+                        .catch(err => res.status(500).send())
+        const friends = JSON.parse(data.friends)
+        console.log(req.body)
+        console.log(req.data)
+        console.log(req.config)
+        res.status(204).send()
+    }
+    //criar uma checagem para que o usuário que fez o request não tenha acesso indevido a informacões de outros usuários
+    //melhore o tratamento de erros e as mensagens de sucesso
+    //vai precisar de paginação para os amigos
+
+    return { save, get, getById, remove, saveProfilePicture, getProfilePicture, saveBio, saveFriend, getFriends, removeFriend }
 }
