@@ -29,7 +29,7 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .post(app.api.user.saveFriend)
         .get(app.api.user.getFriends)
-        .delete(app.api.user.removeFriend)
+        .put(app.api.user.removeFriend)
 
     app.route('/posts')
         .all(app.config.passport.authenticate())

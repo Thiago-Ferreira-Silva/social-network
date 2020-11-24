@@ -77,6 +77,7 @@ class Profile extends Component {
     componentDidMount() {
         this.getFriends()
         this.setState({ bio: this.props.user.bio })
+        //arrume o display de friends aqui para depois cuidar do design do AnotherUserProfile
     }
 
     render() {//colocar os amigos aqui com um loop for

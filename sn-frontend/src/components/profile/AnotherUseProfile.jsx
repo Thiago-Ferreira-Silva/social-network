@@ -22,7 +22,7 @@ class AnotherUserProfile extends Component {
         axios.post(`${baseApiUrl}/users/${this.props.user.id}/friends`, this.props.id)
             .then(_ => {
                 const friends = this.props.user.friends
-                friends.push(this.props.id)
+                friends[this.props.id] = this.props.id
                 this.props.dispatch(saveUser({ ...this.props.user, friends }))
                 notify()
             })
@@ -30,9 +30,14 @@ class AnotherUserProfile extends Component {
     }
 
     removeFriend() {
-        axios.delete(`${baseApiUrl}/users/${this.props.user.id}/friends`, { data: { friendId: this.props.id }})
-        .then(_ => notify())
-        .catch(err => notify(err, 'error'))
+        axios.put(`${baseApiUrl}/users/${this.props.user.id}/friends`, { friendId: this.props.id })
+            .then(_ => {
+                const friends = this.props.user.friends
+                delete friends[this.props.id]
+                this.props.dispatch(saveUser({ ...this.props.user, friends }))
+                notify()
+            })
+            .catch(err => notify(err, 'error'))
     }
 
     goToProfile() {

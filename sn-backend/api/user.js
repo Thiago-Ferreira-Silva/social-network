@@ -108,13 +108,13 @@ module.exports = app => {
             .first()
             .catch(err => res.status(500).send(err))
 
-        const friends = JSON.parse(data.friends)
+        let friends = JSON.parse(data.friends)
 
         if (!friends) {
-            friends = []
+            friends = {}
         }
 
-        friends.push(friend)
+        friends[friend] = friend
 
         app.db('users')
             .where({ id: req.params.id })
@@ -133,19 +133,23 @@ module.exports = app => {
 
         const friendsId = JSON.parse(data.friends)
 
-        const promises = friendsId.map(async id => {
-            const friend = await app.db('users')
-                    .select('id', 'name', 'bio')
-                    .where({ id })
-                    .first()
-                    .catch(err => res.status(500).send(err))
-            const picture = await app.api.imageHandler.pickProfilePicture(id)
-
-            if (picture) friend.profilePicture = picture
-            return friend
-        })
-
-        const friends = await Promise.all(promises)
+        if(friendsId) {
+            const promises = Object.keys(friendsId).map(async id => {
+                const friend = await app.db('users')
+                        .select('id', 'name', 'bio')
+                        .where({ id })
+                        .first()
+                        .catch(err => res.status(500).send(err))
+                const picture = await app.api.imageHandler.pickProfilePicture(id)
+    
+                if (picture) friend.profilePicture = picture
+                return friend
+            })
+    
+            var friends = await Promise.all(promises)
+        } else {
+            var friends = {}
+        }
 
         res.send(friends)
     }
@@ -157,10 +161,16 @@ module.exports = app => {
                         .first()
                         .catch(err => res.status(500).send())
         const friends = JSON.parse(data.friends)
-        console.log(req.body)
-        console.log(req.data)
-        console.log(req.config)
-        res.status(204).send()
+
+        const friendId = req.body.friendId
+
+        delete friends[friendId]
+
+        app.db('users')
+            .where({ id: req.params.id })
+            .update({ friends })
+            .then(_ => res.status(204).send())
+            .catch(err => res.status(500).send(err))
     }
     //criar uma checagem para que o usuário que fez o request não tenha acesso indevido a informacões de outros usuários
     //melhore o tratamento de erros e as mensagens de sucesso
