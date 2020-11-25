@@ -15,6 +15,7 @@ import AnotherUserProfile from './AnotherUseProfile'
 const initialState = {
     changingBio: false,
     loadingProfilePicture: false,
+    loadingFriends: false,
     friends: null,
     bio: null
 }
@@ -69,18 +70,27 @@ class Profile extends Component {
     }
 
     getFriends() {
+        this.setState({ loadingFriends: true })
         axios.get(`${baseApiUrl}/users/${this.props.user.id}/friends`)
-            .then(res => this.setState({ friends: res.data }))
-            .catch(err => notify(err, 'error'))
+            .then(res => {
+                const friends = res.data.map(friend => {
+                    return friend ? <AnotherUserProfile id={friend.id} name={friend.name} bio={friend.bio}
+                        profilePicture={friend.profilePicture} small={true} remove={this.getFriends} /> : ''
+                })
+                this.setState({ friends, loadingFriends: false })
+            })
+            .catch(err => {
+                notify(err, 'error')
+                this.setState({ loadingFriends: false })
+            })
     }
 
     componentDidMount() {
         this.getFriends()
         this.setState({ bio: this.props.user.bio })
-        //arrume o display de friends aqui para depois cuidar do design do AnotherUserProfile
     }
 
-    render() {//colocar os amigos aqui com um loop for
+    render() {
         const user = this.props.user
         return (
             <div className="user">
@@ -105,11 +115,11 @@ class Profile extends Component {
                         <button className="bio-button" alt="save bio" onClick={this.saveBio} ><FontAwesomeIcon icon={faSave} /></button> :
                         <button className="bio-button" alt="edit bio" onClick={this.changeBio} ><FontAwesomeIcon icon={faEdit} /></button>
                     }
-                    <textarea maxLength="500" id="bio" disabled={this.state.changingBio ? false : true} className="bio-text" value={this.state.bio} onChange={this.updateBio} placeholder='Your bio' />
+                    <textarea maxLength="500" id="bio" disabled={this.state.changingBio ? false : true} className="bio-text" value={this.state.bio || ''} onChange={this.updateBio} placeholder='Your bio' />
                 </div>
                 <div className="friends">
-                    {this.state.friends &&
-                        <AnotherUserProfile id={this.state.friends[0].id} name={this.state.friends[0].name} bio={this.state.friends[0].bio} profilePicture={this.state.friends[0].profilePicture} small={true} />
+                    {this.state.loadingFriends ? <Loading /> :
+                        <ul>{this.state.friends}</ul>
                     }
                 </div>
             </div>
