@@ -32,12 +32,16 @@ class AnotherUserProfile extends Component {
     removeFriend() {
         axios.put(`${baseApiUrl}/users/${this.props.user.id}/friends`, { friendId: this.props.id })
             .then(_ => {
-                const friends = this.props.user.friends
-                delete friends[this.props.id]
+                const friends = { ...JSON.parse(this.props.user.friends) }
+                const friend = this.props.id
+
+                delete friends[friend]
+                
                 this.props.dispatch(saveUser({ ...this.props.user, friends }))
-                this.props.remove && this.props.remove()
-                //a parte do remove não está funcionando; faça uma animação para remover
-                //quando small for false os botões de remove a add devem de alternar
+
+                //this.props.remove && this.props.remove()
+                //problemas ao chamar o método no outro componente
+                //faça uma animação para remover
                 //cuide do design
                 notify()
             })
@@ -46,6 +50,10 @@ class AnotherUserProfile extends Component {
 
     goToProfile() {
         if (this.props.small) {
+            console.log(this.props.user.friends)
+            console.log(this.props.user.friends[this.props.id])
+            console.log(this.props.id)
+            console.log(typeof this.props.id)
             //use o react router dom
         }
     }
@@ -63,12 +71,12 @@ class AnotherUserProfile extends Component {
                     </div>
                 </div>
                 <div className={this.props.small ? 'name-small' : 'name'} onClick={this.goToProfile} >{this.props.name}</div>
-                { this.props.user.friends.includes(this.props.id) ?
+                { this.props.user.friends[this.props.id] ?
                     <button className="friends-button btn btn-danger" onClick={this.removeFriend}>Remove friend</button> :
                     <button className="friends-button btn btn-primary" onClick={this.addFriend} >Add friend</button>
                 }
                 <div className={this.props.small ? 'bio-small' : 'bio'}>
-                    <textarea maxLength="500" disabled={true} className={this.props.small ? 'bio-text-small' : 'bio-text'} value={this.props.bio} placeholder='Bio' />
+                    <textarea maxLength="500" disabled={true} className={this.props.small ? 'bio-text-small' : 'bio-text'} value={this.props.bio || ''} placeholder='Bio' />
                 </div>
             </div>
         )//arrumar o estilo, deixar tudo responsivo, mesmo no celular, e implementar os métodos

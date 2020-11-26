@@ -156,7 +156,7 @@ module.exports = app => {
 
     const removeFriend = async (req, res) => {
         const data = await app.db('users')
-                        .select('friends')
+                        .select('friends') 
                         .where({id: req.params.id})
                         .first()
                         .catch(err => res.status(500).send())

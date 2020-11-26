@@ -75,7 +75,7 @@ class Profile extends Component {
             .then(res => {
                 const friends = res.data.map(friend => {
                     return friend ? <AnotherUserProfile id={friend.id} name={friend.name} bio={friend.bio}
-                        profilePicture={friend.profilePicture} small={true} remove={this.getFriends} /> : ''
+                        profilePicture={friend.profilePicture} small={true} remove={this.getFriends} key={friend.id} /> : ''
                 })
                 this.setState({ friends, loadingFriends: false })
             })
