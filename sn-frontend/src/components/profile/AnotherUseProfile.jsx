@@ -39,8 +39,7 @@ class AnotherUserProfile extends Component {
                 
                 this.props.dispatch(saveUser({ ...this.props.user, friends }))
 
-                //this.props.remove && this.props.remove()
-                //problemas ao chamar o método no outro componente
+                this.props.remove && this.props.remove()
                 //faça uma animação para remover
                 //cuide do design
                 notify()
@@ -60,7 +59,7 @@ class AnotherUserProfile extends Component {
 
     render() {
         return (
-            <div className={this.props.small ? 'user-small' : 'user'}>
+            <div className={this.props.small ? 'user-small' : 'user'} >
                 <div className={this.props.small ? '' : 'profile-picture'}>
                     <div className={this.props.small ? 'image-container-small' : 'image-container'}>
                         {this.props.profilePicture ?

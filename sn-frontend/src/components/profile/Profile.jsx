@@ -30,6 +30,7 @@ class Profile extends Component {
         this.changeBio = this.changeBio.bind(this)
         this.uploadPicture = this.uploadPicture.bind(this)
         this.updateBio = this.updateBio.bind(this)
+        this.getFriends = this.getFriends.bind(this)
     }
 
     async selectPicture(event) {
