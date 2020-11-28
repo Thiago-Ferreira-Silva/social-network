@@ -74,7 +74,7 @@ class Profile extends Component {
         this.setState({ loadingFriends: true })
         axios.get(`${baseApiUrl}/users/${this.props.user.id}/friends`)
             .then(res => {
-                const friends = res.data.map(friend => {
+                const friends = Object.entries(res.data).length === 0 ? null : res.data.map(friend => {
                     return friend ? <AnotherUserProfile id={friend.id} name={friend.name} bio={friend.bio}
                         profilePicture={friend.profilePicture} small={true} remove={this.getFriends} key={friend.id} /> : ''
                 })
@@ -120,7 +120,7 @@ class Profile extends Component {
                 </div>
                 <div className="friends">
                     {this.state.loadingFriends ? <Loading /> :
-                        <ul>{this.state.friends}</ul>
+                        <ul>{this.state.friends || <div>Your friends</div>}</ul>
                     }
                 </div>
             </div>
