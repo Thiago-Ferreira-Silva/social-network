@@ -7,6 +7,7 @@ import NewPost from '../post/NewPost'
 import Post from '../post/Post'
 import Loading from '../template/Loading'
 import { baseApiUrl, notify } from '../../global'
+import AnotherUseProfile from '../profile/AnotherUseProfile'
 
 const initialState = {
     posts: [],
@@ -24,7 +25,8 @@ class Home extends Component {
 
     getPosts() {
         //temporário
-        axios.get(`${baseApiUrl}/posts/${this.props.user.id}`)
+        const id = this.props.anotherUser ? this.props.location.state.id : this.props.user.id
+        axios.get(`${baseApiUrl}/posts/${id}`)
             .then(res => {
                 const posts = res.data.map(post => {
                     return post ? <Post text={post.text} image={post.image} key={post.id} /> : ''
@@ -45,7 +47,10 @@ class Home extends Component {
                 {this.state.loading ?
                     <Loading /> :
                     <div className="home">
+                        {this.props.anotherUser ?
+                        <AnotherUseProfile { ...this.props.location.state } />:
                         <NewPost update={this.getPosts} />
+                        }
                         <ul>{this.state.posts}</ul>
                     </div>
                 }
