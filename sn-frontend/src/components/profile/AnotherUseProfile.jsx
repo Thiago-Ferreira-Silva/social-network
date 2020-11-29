@@ -41,7 +41,6 @@ class AnotherUserProfile extends Component {
 
                 this.props.remove && this.props.remove()
                 //faça uma animação para remover
-                //cuide do design
                 notify()
             })
             .catch(err => notify(err, 'error'))
@@ -68,22 +67,24 @@ class AnotherUserProfile extends Component {
                         profilePicture: this.props.profilePicture,
                         small: false
                     }
-                }}>
+                }} className='name-small' >
                     {this.props.name}</Link> :
-                    <div className={this.props.small ? 'name-small' : 'name'}>{this.props.name}</div>}
+                    <div className='name'>{this.props.name}</div>}
                 { this.props.user.friends[this.props.id] ?
                     <div className="friends-button">
-                        <button className="btn btn-danger" onClick={this.removeFriend}>Remove</button> 
+                        <button className="btn btn-danger" onClick={this.removeFriend}>Remove</button>
                     </div> :
                     <div className="friends-button">
                         <button className="btn btn-primary" onClick={this.addFriend} >Add</button>
                     </div>
                 }
-                <div className={this.props.small ? 'bio-small' : 'bio'}>
-                    <textarea maxLength="500" disabled={true} className={this.props.small ? 'bio-text-small' : 'bio-text'} value={this.props.bio || ''} placeholder='Bio' />
-                </div>
+                { this.props.small ? '' :
+                    <div className='bio'>
+                        <textarea maxLength="500" disabled={true} className='bio-text' value={this.props.bio || ''} placeholder='Bio' />
+                    </div>
+                }
             </div>
-        )//arrumar o estilo, deixar tudo responsivo, mesmo no celular, e implementar os métodos
+        )//deixar tudo responsivo, mesmo no celular, e implementar o estilo para user-small de forma que fique compacto e caibam vários na mesma linha
     }
 }
 

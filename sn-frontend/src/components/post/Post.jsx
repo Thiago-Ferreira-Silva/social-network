@@ -14,7 +14,7 @@ class Post extends Component {
                     {this.props.image && <img src={this.props.image} alt="" className="image" />}
                 </div>
             </div>
-        )
+        )// deve ter o nome e a foto de perfil de quem fez o post, podendo ir para o perfil da pessoa
     }
 }
 
