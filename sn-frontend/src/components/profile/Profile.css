@@ -1,17 +1,19 @@
+.user-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .user {
-    width: 95%;
-    min-height: 74vh;
-
-    align-self: flex-start;
-    margin: 1rem 0 ;
-
+    width: 90%;
+    
     display: grid;
     grid-template-columns: 180px 1fr 100px;
-    grid-template-rows: 40px 140px 1fr;
+    grid-template-rows: 50px 130px;
 
     grid-template-areas: " picture name aside "
-                         " picture bio bio "
-                         " friends friends friends";
+                         " picture bio bio ";
 }
 
 .user-small {
@@ -37,16 +39,19 @@
 .user .name {
     grid-area: name;
     padding: 8px;
+    margin-left: 20px;
 }
 
 .user-small .name-small {
     background-color: green;
 }
 
-.user .your-posts {
+.user .your-posts, .user .friends-button {
     grid-area: aside;
     display: flex;
     align-items: center;
+    justify-content: center;
+    padding: 8px;
 }
 
 .user .friend-button {
@@ -64,6 +69,8 @@
 
     background-color: #0001;
     border-radius: 10px;
+
+    position: relative;
 }
 
 .user-small .bio-small {
@@ -72,9 +79,7 @@
 
 .bio-text, .bio-text:focus {
     height: 100%;
-    width: 100%;
-    position: relative;
-    top: -30px;   
+    width: 100%;  
     border: none;
     background-color: transparent;
     resize: none;
@@ -100,9 +105,9 @@
 }
 
 .bio-button {
-    position: relative;
-    top: 108px;
-    left: 1075px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
     z-index: 1;
 }
 
@@ -118,7 +123,7 @@
 }
 
 .user .friends {
-    grid-area: friends;
+    display: flex;
 }
 
 .loading {

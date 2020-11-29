@@ -72,8 +72,12 @@ class AnotherUserProfile extends Component {
                     {this.props.name}</Link> :
                     <div className={this.props.small ? 'name-small' : 'name'}>{this.props.name}</div>}
                 { this.props.user.friends[this.props.id] ?
-                    <button className="friends-button btn btn-danger" onClick={this.removeFriend}>Remove</button> :
-                    <button className="friends-button btn btn-primary" onClick={this.addFriend} >Add</button>
+                    <div className="friends-button">
+                        <button className="btn btn-danger" onClick={this.removeFriend}>Remove</button> 
+                    </div> :
+                    <div className="friends-button">
+                        <button className="btn btn-primary" onClick={this.addFriend} >Add</button>
+                    </div>
                 }
                 <div className={this.props.small ? 'bio-small' : 'bio'}>
                     <textarea maxLength="500" disabled={true} className={this.props.small ? 'bio-text-small' : 'bio-text'} value={this.props.bio || ''} placeholder='Bio' />

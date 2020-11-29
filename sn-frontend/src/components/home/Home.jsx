@@ -34,7 +34,7 @@ class Home extends Component {
                 this.setState({ posts })
                 this.setState({ loading: false })
             })
-            .catch(err => notify(err, 'error'))
+            .catch(err => notify(err, 'error')) //corrija isso de fazer logout sempre que atualiza a página
     }
 
     componentDidMount() {

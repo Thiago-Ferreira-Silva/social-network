@@ -94,29 +94,32 @@ class Profile extends Component {
     render() {
         const user = this.props.user
         return (
-            <div className="user">
-                <div className="profile-picture">
-                    <button className="img-button" alt="change profile picture" onClick={() => this.imageInput.click()}><FontAwesomeIcon icon={faCamera} /></button>
-                    {this.state.loadingProfilePicture ?
-                        <Loading className="loading" /> :
-                        <div className="image-container">
-                            {this.props.user.profilePicture ?
-                                <img className="image" src={this.props.user.profilePicture}
-                                    alt="profile_picture" height='180' /> :
-                                <img className="image" src={pictureDefault}
-                                    alt="profile_picture" height='180' />}
-                        </div>}
-                    <input type="file" className="input-file" onChange={this.selectPicture}
-                        ref={imageInput => this.imageInput = imageInput} />
-                </div>
-                <div className="name">{user.name}</div>
-                <div className="your-posts"><Link to='/'>Yours posts</Link></div>
-                <div className="bio">
-                    {this.state.changingBio ?
-                        <button className="bio-button" alt="save bio" onClick={this.saveBio} ><FontAwesomeIcon icon={faSave} /></button> :
-                        <button className="bio-button" alt="edit bio" onClick={this.changeBio} ><FontAwesomeIcon icon={faEdit} /></button>
-                    }
-                    <textarea maxLength="500" id="bio" disabled={this.state.changingBio ? false : true} className="bio-text" value={this.state.bio || ''} onChange={this.updateBio} placeholder='Your bio' />
+            <div className="user-container">
+
+                <div className="user">
+                    <div className="profile-picture">
+                        <button className="img-button" alt="change profile picture" onClick={() => this.imageInput.click()}><FontAwesomeIcon icon={faCamera} /></button>
+                        {this.state.loadingProfilePicture ?
+                            <Loading className="loading" /> :
+                            <div className="image-container">
+                                {this.props.user.profilePicture ?
+                                    <img className="image" src={this.props.user.profilePicture}
+                                        alt="profile_picture" height='180' /> :
+                                    <img className="image" src={pictureDefault}
+                                        alt="profile_picture" height='180' />}
+                            </div>}
+                        <input type="file" className="input-file" onChange={this.selectPicture}
+                            ref={imageInput => this.imageInput = imageInput} />
+                    </div>
+                    <div className="name">{user.name}</div>
+                    <div className="your-posts"><Link to='/'>Yours posts</Link></div>
+                    <div className="bio">
+                        {this.state.changingBio ?
+                            <button className="bio-button" alt="save bio" onClick={this.saveBio} ><FontAwesomeIcon icon={faSave} /></button> :
+                            <button className="bio-button" alt="edit bio" onClick={this.changeBio} ><FontAwesomeIcon icon={faEdit} /></button>
+                        }
+                        <textarea maxLength="500" id="bio" disabled={this.state.changingBio ? false : true} className="bio-text" value={this.state.bio || ''} onChange={this.updateBio} placeholder='Your bio' />
+                    </div>
                 </div>
                 <div className="friends">
                     {this.state.loadingFriends ? <Loading /> :
