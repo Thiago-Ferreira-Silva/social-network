@@ -15,10 +15,11 @@ import Footer from './components/template/Footer'
 
 
 import { BrowserRouter } from 'react-router-dom'
+import Loading from './components/template/Loading'
 
 ReactDOM.render(
   <Provider store={Store}>
-    <PersistGate loading={null} persistor={persistor}>
+    <PersistGate loading={<Loading />} persistor={persistor}>
       <BrowserRouter>
         <React.StrictMode>
           <Header />
