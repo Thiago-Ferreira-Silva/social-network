@@ -49,6 +49,14 @@ class AnotherUserProfile extends Component {
     render() {
         return (
             <div className={this.props.small ? 'user-small' : 'user'} >
+                { this.props.user.friends[this.props.id] ?
+                    <div className="friends-button">
+                        <button className="btn btn-danger" onClick={this.removeFriend}>Remove</button>
+                    </div> :
+                    <div className="friends-button">
+                        <button className="btn btn-primary" onClick={this.addFriend} >Add</button>
+                    </div>
+                }
                 <div className={this.props.small ? '' : 'profile-picture'}>
                     <div className={this.props.small ? 'image-container-small' : 'image-container'}>
                         {this.props.profilePicture ?
@@ -58,26 +66,20 @@ class AnotherUserProfile extends Component {
                                 alt="profile_picture" height='180' />}
                     </div>
                 </div>
-                { this.props.small ? <Link to={{
-                    pathname: '/user',
-                    state: {
-                        id: this.props.id,
-                        name: this.props.name,
-                        bio: this.props.bio,
-                        profilePicture: this.props.profilePicture,
-                        small: false
-                    }
-                }} className='name-small' >
-                    {this.props.name}</Link> :
+                { this.props.small ? <div className="name-small">
+                    <Link className='name-small-link' to={{
+                        pathname: '/user',
+                        state: {
+                            id: this.props.id,
+                            name: this.props.name,
+                            bio: this.props.bio,
+                            profilePicture: this.props.profilePicture,
+                            small: false
+                        }
+                    }} >
+                        {this.props.name}</Link>
+                </div> :
                     <div className='name'>{this.props.name}</div>}
-                { this.props.user.friends[this.props.id] ?
-                    <div className="friends-button">
-                        <button className="btn btn-danger" onClick={this.removeFriend}>Remove</button>
-                    </div> :
-                    <div className="friends-button">
-                        <button className="btn btn-primary" onClick={this.addFriend} >Add</button>
-                    </div>
-                }
                 { this.props.small ? '' :
                     <div className='bio'>
                         <textarea maxLength="500" disabled={true} className='bio-text' value={this.props.bio || ''} placeholder='Bio' />
