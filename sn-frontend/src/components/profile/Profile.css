@@ -26,6 +26,12 @@
     background-color: #0002;
 }
 
+.user-small:hover {
+    background-color: black;
+    /* criar uma sombre, talvez sempre ativa mas que muda com o hover */
+    /* talvez transformar o componente inteiro em um link (menos o botão) */
+}
+
 .user .profile-picture {
     grid-area: picture;
     overflow: hidden;
@@ -68,8 +74,9 @@
     z-index: 1;
 }
 
-.name-small-link  .name-small-link:hover {
+.name-small-link, .name-small-link:hover {
     font-size: 1.2rem;
+    font-weight: 100;
     color: #000;
     text-decoration: none;
 }
