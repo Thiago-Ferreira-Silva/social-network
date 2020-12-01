@@ -15,7 +15,3 @@ consign()
 app.listen(port, () => {
     console.log('Running on port: ' + port)
 })
-
-//estruture tudo para receber fotos de perfil e post de fotos
-//talvez videos também
-//gbdb bmhp dpnp vmb gvtbp ep uxjuufs dpn p jotubhsbn

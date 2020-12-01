@@ -12,6 +12,5 @@ const persistedReducer = persistReducer(persistConfig, Reducers)
 
 const Store = createStore(persistedReducer)
 const persistor = persistStore(Store)
-//arrume o redux-persirst
 
 export { Store, persistor }
