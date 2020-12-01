@@ -20,13 +20,10 @@
 
 .user-small {
     width: 190px;
-    height: 200px;
+    height: 215px;
     margin: 15px;
-    padding: 5px;
-    border: solid;
-
-    display: flex;
-    flex-direction: column;
+    position: relative;
+    background-color: #0002;
 }
 
 .user .profile-picture {
@@ -44,8 +41,9 @@
 
 .image-container-small {
     width: 100%;
-    position: relative;
-    top: 0px;
+    position: absolute;
+    top: 5px;
+    left: 5px;
 }
 
 .image-small {
@@ -63,17 +61,17 @@
 
 .name-small {
     width: 100%;
+    position: absolute;
+    bottom: 4px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    border: solid yellow;
+    z-index: 1;
 }
 
 .name-small-link  .name-small-link:hover {
     font-size: 1.2rem;
     color: #000;
     text-decoration: none;
-    order: solid white;
 }
 
 .user .your-posts, .user .friends-button {
@@ -85,10 +83,13 @@
 }
 
 .user-small .friends-button {
-    position: relative;
-    top: 30px;
+    position: absolute;
+    top: 0px;
     z-index: 1;
-    border: solid goldenrod;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
 }
 
 .user .bio {
