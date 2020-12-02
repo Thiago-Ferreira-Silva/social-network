@@ -18,18 +18,26 @@
                          " picture bio bio ";
 }
 
-.user-small {
+.user-container-small {
     width: 190px;
     height: 215px;
     margin: 15px;
+}
+
+.user-small {
+    width: 100%;
+    height: 100%;
     position: relative;
-    background-color: #0002;
+    border-radius: 4px;
+    background-color: #0005;
+    box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.4);
 }
 
 .user-small:hover {
-    background-color: black;
-    /* criar uma sombre, talvez sempre ativa mas que muda com o hover */
+    background-color: #0007;
+    box-shadow: 0px 0px 14px 3px rgba(0,0,0,0.6);
     /* talvez transformar o componente inteiro em um link (menos o botão) */
+    /* veja se o window.location funciona no firefox */
 }
 
 .user .profile-picture {
@@ -65,20 +73,17 @@
 
 }
 
-.name-small {
+.name-small-link, .name-small-link:hover {
     width: 100%;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #111;
+    text-decoration: none;
     position: absolute;
     bottom: 4px;
+    z-index: 1;
     display: flex;
     justify-content: center;
-    z-index: 1;
-}
-
-.name-small-link, .name-small-link:hover {
-    font-size: 1.2rem;
-    font-weight: 100;
-    color: #000;
-    text-decoration: none;
 }
 
 .user .your-posts, .user .friends-button {
@@ -149,11 +154,11 @@
     border-radius: 6px;
 }
 
-.user .friends {
+.user-container .friends {
+    margin-top: 10vh;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
-    border: solid red;
 }
 
 .loading {

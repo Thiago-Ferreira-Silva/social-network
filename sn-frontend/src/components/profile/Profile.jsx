@@ -121,11 +121,10 @@ class Profile extends Component {
                         <textarea maxLength="500" id="bio" disabled={this.state.changingBio ? false : true} className="bio-text" value={this.state.bio || ''} onChange={this.updateBio} placeholder='Your bio' />
                     </div>
                 </div>
-                <div className="friends">
-                    {this.state.loadingFriends ? <Loading /> :
-                        <ul>{this.state.friends || <div>Your friends</div>}</ul>
-                    }
-                </div>
+                {this.state.loadingFriends ? <Loading /> :
+                    <div className="friends">{this.state.friends || <div>Your friends</div>}</div>
+                }
+
             </div>
         )
     }

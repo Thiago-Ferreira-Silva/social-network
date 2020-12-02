@@ -48,43 +48,47 @@ class AnotherUserProfile extends Component {
 
     render() {
         return (
-            <div className={this.props.small ? 'user-small' : 'user'} >
-                { this.props.user.friends[this.props.id] ?
-                    <div className="friends-button">
-                        <button className="btn btn-danger" onClick={this.removeFriend}>Remove</button>
-                    </div> :
-                    <div className="friends-button">
-                        <button className="btn btn-primary" onClick={this.addFriend} >Add</button>
+            <div className={this.props.small ? 'user-container-small' : ''}>
+                <div className={this.props.small ? 'user-small' : 'user'} >
+                    {this.props.user.friends[this.props.id] ?
+                        <div className="friends-button">
+                            <button className="btn btn-danger" onClick={this.removeFriend}>Remove</button>
+                        </div> :
+                        <div className="friends-button">
+                            <button className="btn btn-primary" onClick={this.addFriend} >Add</button>
+                        </div>
+                    }
+                    <div className={this.props.small ? '' : 'profile-picture'}>
+                        <div className={this.props.small ? 'image-container-small' : 'image-container'}>
+                            {this.props.profilePicture ?
+                                <img className={this.props.small ? 'image-small' : 'image'} src={this.props.profilePicture}
+                                    alt="profile_picture" height='180' /> :
+                                <img className={this.props.small ? 'image-small' : 'image'} src={pictureDefault}
+                                    alt="profile_picture" height='180' />}
+                        </div>
                     </div>
-                }
-                <div className={this.props.small ? '' : 'profile-picture'}>
-                    <div className={this.props.small ? 'image-container-small' : 'image-container'}>
-                        {this.props.profilePicture ?
-                            <img className={this.props.small ? 'image-small' : 'image'} src={this.props.profilePicture}
-                                alt="profile_picture" height='180' /> :
-                            <img className={this.props.small ? 'image-small' : 'image'} src={pictureDefault}
-                                alt="profile_picture" height='180' />}
-                    </div>
+                    {this.props.small ?
+                        <Link className='name-small-link' to={{
+                            pathname: '/user',
+                            state: {
+                                id: this.props.id,
+                                name: this.props.name,
+                                bio: this.props.bio,
+                                profilePicture: this.props.profilePicture,
+                                small: false
+                            }
+                        }} >
+                            <div className="name-small">
+                                {this.props.name}
+                            </div></Link>
+                        :
+                        <div className='name'>{this.props.name}</div>}
+                    {this.props.small ? '' :
+                        <div className='bio'>
+                            <textarea maxLength="500" disabled={true} className='bio-text' value={this.props.bio || ''} placeholder='Bio' />
+                        </div>
+                    }
                 </div>
-                { this.props.small ? <div className="name-small">
-                    <Link className='name-small-link' to={{
-                        pathname: '/user',
-                        state: {
-                            id: this.props.id,
-                            name: this.props.name,
-                            bio: this.props.bio,
-                            profilePicture: this.props.profilePicture,
-                            small: false
-                        }
-                    }} >
-                        {this.props.name}</Link>
-                </div> :
-                    <div className='name'>{this.props.name}</div>}
-                { this.props.small ? '' :
-                    <div className='bio'>
-                        <textarea maxLength="500" disabled={true} className='bio-text' value={this.props.bio || ''} placeholder='Bio' />
-                    </div>
-                }
             </div>
         )//deixar tudo responsivo, mesmo no celular, e implementar o estilo para user-small de forma que fique compacto e caibam vários na mesma linha
     }
