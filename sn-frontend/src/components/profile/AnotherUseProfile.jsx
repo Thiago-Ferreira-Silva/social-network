@@ -48,7 +48,7 @@ class AnotherUserProfile extends Component {
 
     render() {
         return (
-            <div className={this.props.small ? 'user-container-small' : ''}>
+            <div className={this.props.small ? 'user-container-small' : 'another-user-container'}>
                 <div className={this.props.small ? 'user-small' : 'user'} >
                     {this.props.user.friends[this.props.id] ?
                         <div className="friends-button">

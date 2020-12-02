@@ -134,6 +134,6 @@ const mapStateToProps = store => ({ user: store.userState.user })
 
 export default connect(mapStateToProps)(Profile)
 
-//router link no your post passando informações para o componente posts mostrar apenas os do usuário
-//deve ser possível visualizar os amigos, cancelar a amizade, entrar no perfil, e mandar mensagem
+//deve ser possível mandar mensagem
 //tente deixar o design mais responsivo
+//faça com que não tenha mensagens de erro desnecessárias, por exemplo, quando está o token é inválido mas ocorre um erro antes de redirecionar para o /auth

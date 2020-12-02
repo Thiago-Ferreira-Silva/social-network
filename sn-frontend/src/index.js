@@ -9,6 +9,7 @@ import axios from 'axios'
 
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import './axios'
 import Header from './components/template/Header'
 import Content from './components/template/Content'
 import Footer from './components/template/Footer'

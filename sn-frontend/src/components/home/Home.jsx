@@ -24,7 +24,7 @@ class Home extends Component {
     }
 
     getPosts() {
-        //temporário
+        //faça as alterações aqui primeiro e só depois no componente post
         const id = this.props.anotherUser ? this.props.location.state.id : this.props.user.id
         axios.get(`${baseApiUrl}/posts/${id}`)
             .then(res => {
@@ -34,7 +34,7 @@ class Home extends Component {
                 this.setState({ posts })
                 this.setState({ loading: false })
             })
-            .catch(err => notify(err, 'error')) //corrija isso de fazer logout sempre que atualiza a página
+            .catch(err => notify(err, 'error'))
     }
 
     componentDidMount() {
