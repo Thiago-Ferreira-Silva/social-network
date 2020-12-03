@@ -1,3 +1,7 @@
+.home-container {
+    width: 100%;
+}
+
 .home {
     width: 100%;
     min-height: 80vh;
