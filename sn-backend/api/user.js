@@ -87,12 +87,14 @@ module.exports = app => {
     }
 
     const getProfilePicture = async (req, res) => {
-        const picture = app.api.imageHandler.pickProfilePicture(req.params.id)
-        const name = await app.db('users')
+        const picture = await app.api.imageHandler.pickProfilePicture(req.params.id)
+        const userName = await app.db('users')
                             .select('name')
                             .where({ id: req.params.id })
                             .first()
                             .catch(err => res.status(500).send(err))
+        const name = userName.name
+        console.log(picture)
         res.send({ picture, name })
     }
 

@@ -29,7 +29,7 @@ class Home extends Component {
         axios.get(`${baseApiUrl}/posts/${id}`)
             .then(res => {
                 const posts = res.data.map(post => {
-                    return post ? <Post text={post.text} image={post.image} key={post.id} /> : ''
+                    return post ? <Post text={post.text} image={post.image} userId={id} key={post.id} /> : ''
                 })
                 this.setState({ posts })
                 this.setState({ loading: false })

@@ -3,6 +3,7 @@ module.exports = app => {
     const save = (req, res) => {
         const post = { ...req.body }
         if (!post.text) return res.status(400).send('Write something')
+        post.date = new Date().toISOString()
 
         app.db('posts')
             .insert(post)

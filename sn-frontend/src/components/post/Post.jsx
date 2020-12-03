@@ -5,7 +5,14 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import { baseApiUrl, notify } from '../../global'
 
+const initialState = {
+    username: null,
+    profilePicture: null
+}
+
 class Post extends Component {
+
+    state = { ...initialState }
 
     constructor(props) {
         super(props)
@@ -13,8 +20,8 @@ class Post extends Component {
     }
 
     getUserData() {
-        axios.get(`${baseApiUrl}/users/${this.props.user_id}/picture`)
-            .then(res => console.log(res.data))
+        axios.get(`${baseApiUrl}/users/${this.props.userId}/picture`)
+            .then(res => this.setState({ username: res.data.name, profilePicture: res.data.picture }))
             .catch(err => notify(err, 'error'))
     }
 
