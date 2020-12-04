@@ -43,5 +43,31 @@ module.exports = app => {
         res.json(posts)
     }
 
-    return { save, getById, getByUserId }
+    const likePost = async (req, res) => {
+        const likes = await app.db('posts')
+                            .select('likes')
+                            .where({ id: req.params.id })
+                            .first()
+                            .catch(err => res.status(500).send(err))
+
+        let likesNumber = likes.likes
+
+        if (req.params.addOrRemove === 'add') {
+            likesNumber++
+        } else if (req.params.addOrRemove === 'remove') {
+            likesNumber === 0 ? '' : likesNumber--
+        } else {
+            res.status(404).send()
+        }
+
+        app.db('posts')
+            .where({ id: req.params.id })
+            .update({ likes: likesNumber })
+            .then(_ => res.status(204).send())
+            .catch(err => res.status(500).send(err))
+        //e se dois usuários derem like no exato mesmo momento?
+        //adicionar uma verificação para saber se o usuário já deu like; em qual tabela isso deve ficar armazenado?
+    }
+
+    return { save, getById, getByUserId, likePost }
 }

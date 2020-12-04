@@ -46,6 +46,16 @@ class Post extends Component {
                 <div className="image-container">
                     {this.props.image && <img src={this.props.image} alt="post" className="image" />}
                 </div>
+                <div className="likes-container">
+                    <button className="like-button">Like</button>
+                    <div className="likes">
+                        { this.props.likes }
+                    </div>
+                </div>
+                <div className="open-comments">
+                    Comments
+                    {/* Abrir os comentários em popup, talvez, só talvez, criar um componente para os comentários */}
+                </div>
             </div>
         )// deve ter o nome e a foto de perfil de quem fez o post, podendo ir para o perfil da pessoa, e também a data
     }
