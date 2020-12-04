@@ -94,7 +94,6 @@ module.exports = app => {
                             .first()
                             .catch(err => res.status(500).send(err))
         const name = userName.name
-        console.log(picture)
         res.send({ picture, name })
     }
 

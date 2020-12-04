@@ -28,8 +28,11 @@ class Home extends Component {
         const id = this.props.anotherUser ? this.props.location.state.id : this.props.user.id
         axios.get(`${baseApiUrl}/posts/${id}`)
             .then(res => {
+                //talvez colocar isso como um método separado
+                //ajustar o quanto da data vai aparecer
                 const posts = res.data.map(post => {
-                    return post ? <Post text={post.text} image={post.image} userId={id} key={post.id} /> : ''
+                    const date = new Date(post.date).toLocaleString()
+                    return post ? <Post text={post.text} image={post.image} date={date} userId={post.user_id} key={post.id} /> : ''
                 })
                 this.setState({ posts })
                 this.setState({ loading: false })
@@ -56,7 +59,7 @@ class Home extends Component {
                 }
             </div>
         )
-    }
+    }//não está buscando os posts quando vai do perfil de alguém para a home
 }
 
 const mapStateToProps = store => ({
@@ -68,3 +71,4 @@ export default connect(mapStateToProps)(Home)
 //use o redux para alguma coisa e faça o chat com socket logo
 //isso vai precisar de uma lógica bem complexa para mostrar os posts
 //e também deve ter meios de selecionar quais irão aparecer
+//crie um schdule para atualizar periodicamente likes e comentários nos posts, os posts no home, ou qualquer outra coisa na qual isso pareça caber
