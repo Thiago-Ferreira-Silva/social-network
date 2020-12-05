@@ -44,10 +44,30 @@
 }
 
 .post {
-    
-    border: solid;
+    background-color: #fff5;
+    box-shadow: 0px 0px 16px 4px rgba(0,0,0,0.4);
     width: 80vw;
     margin-bottom: 10px;
+    padding: 10px;
+
+    display: grid;
+    grid-template-columns: 25% 75% ;
+    grid-template-rows: auto 1fr;
+
+    grid-template-areas: 'picture main'
+                         'aside main';
+}
+
+.profile-picture {
+    grid-area: picture;
+}
+
+.aside {
+    grid-area: aside;
+}
+
+.main {
+    grid-area: main;
 }
 
 .post .text {
@@ -63,4 +83,9 @@
     justify-content: center;
 }
 
+.like-button, .like-button:focus {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
 /*pense em alguma coisa para deixar o post bonito, ou ao menos, apresentável*/
