@@ -47,11 +47,12 @@
     background-color: #fff5;
     box-shadow: 0px 0px 16px 4px rgba(0,0,0,0.4);
     width: 80vw;
+    min-height: 250px;
     margin-bottom: 10px;
     padding: 10px;
 
     display: grid;
-    grid-template-columns: 25% 75% ;
+    grid-template-columns: 20% 1fr ;
     grid-template-rows: auto 1fr;
 
     grid-template-areas: 'picture main'
@@ -62,12 +63,49 @@
     grid-area: picture;
 }
 
+.profile-picture img {
+    width: 100px;
+    border-radius: 50%;
+}
+
 .aside {
     grid-area: aside;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.name, .name:hover {
+    font-size: 1.2rem;
+    color: #111;
+    text-decoration: none;
+}
+
+.interactions {
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-end;
+}
+
+.likes-container {
+    display: flex;
+}
+
+.likes {
+    font-size: 1.25rem;
+}
+
+.open-comments {
+    border: solid wheat;
+    /*coloque isso na direita e decida se vai usar um ícone*/
 }
 
 .main {
     grid-area: main;
+
+    border-left: solid 1px #555;
+    padding-left: 5px;
+    /*cuide disso agora*/
 }
 
 .post .text {
@@ -89,3 +127,4 @@
     outline: none;
 }
 /*pense em alguma coisa para deixar o post bonito, ou ao menos, apresentável*/
+/* deve mudar para ficar responsivo */

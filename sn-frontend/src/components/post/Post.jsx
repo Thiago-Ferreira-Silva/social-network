@@ -51,17 +51,20 @@ class Post extends Component {
                 <div className="aside">
                     <Link className="name" to='/'>{this.state.username}</Link>{/* como passar todas as informações necessárias? */}
                     <div className="date">{this.props.date}</div>
-                    <div className="likes-container">
-                        <button className='like-button' onClick={this.like} >
-                            <FontAwesomeIcon icon={this.state.liked ? thumbsUpSolid : thumbsUpRegular} size='lg' />
-                        </button>
-                        <div className="likes">
-                            {this.props.likes}
+                    <div className="interactions">
+                        <div className="likes-container">
+                            <div className="likes">
+                                {this.props.likes}
+                            </div>
+                            <button className='like-button' onClick={this.like} >
+                                <FontAwesomeIcon icon={this.state.liked ? thumbsUpSolid : thumbsUpRegular} size='lg' />
+                            </button>
                         </div>
-                    </div>
-                    <div className="open-comments">
-                        Comments
-                    {/* Abrir os comentários em popup, talvez, só talvez, criar um componente para os comentários */}
+                        <div className="open-comments">
+                            Comments
+                    {/* Abrir os comentários em popup, talvez, só talvez, criar um componente para os comentários 
+                        talvez colocar um ícone no lugar do texto*/}
+                        </div>
                     </div>
                 </div>
                 <div className="main">
