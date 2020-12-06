@@ -13,7 +13,8 @@ import pictureDefault from '../../assets/profile_default.png'
 const initialState = {
     username: null,
     profilePicture: null,
-    liked: false //essa informação provavelmente não vai ficar aqui, talvez em user na store
+    liked: false, //essa informação provavelmente não vai ficar aqui, talvez em user na store
+    showComments: false
 }
 
 class Post extends Component {
@@ -24,6 +25,7 @@ class Post extends Component {
         super(props)
         this.getUserData = this.getUserData.bind(this)
         this.like = this.like.bind(this)
+        this.altShowComments = this.altShowComments.bind(this)
     }
 
     like() {
@@ -34,6 +36,10 @@ class Post extends Component {
         axios.get(`${baseApiUrl}/users/${this.props.userId}/picture`)
             .then(res => this.setState({ username: res.data.name, profilePicture: res.data.picture }))
             .catch(err => notify(err, 'error'))
+    }
+
+    altShowComments() {
+        this.setState({ showComments: !this.state.showComments })
     }
 
     componentDidMount() {
@@ -60,23 +66,19 @@ class Post extends Component {
                                 <FontAwesomeIcon icon={this.state.liked ? thumbsUpSolid : thumbsUpRegular} size='lg' />
                             </button>
                         </div>
-                        <div className="open-comments">
-                            Comments
-                    {/* Abrir os comentários em popup, talvez, só talvez, criar um componente para os comentários 
-                        talvez colocar um ícone no lugar do texto*/}
-                        </div>
+                        <button className="open-comments" onClick={this.altShowComments} >Comments</button>
                     </div>
                 </div>
                 <div className="main">
-                    <div className="image-container">
-                        {this.props.image && <img src={this.props.image} alt="post" className="image" />}
-                    </div>
                     <div className="text">
                         {this.props.text}
                     </div>
+                    <div className="image-container">
+                        {this.props.image && <img src={this.props.image} alt="post" className="image" />}
+                    </div>
                 </div>
             </div>
-        )// deve ter o nome e a foto de perfil de quem fez o post, podendo ir para o perfil da pessoa, e também a data
+        )// deve ter o nome e a foto de perfil de quem fez o post, podendo ir para o perfil da pessoa
     }//tentar usar as bibliotecas do bootstrap ao invés do link no index.html, se não for usar, remover as dependências
 }
 
