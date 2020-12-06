@@ -9,10 +9,12 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { baseApiUrl, notify } from '../../global'
 import pictureDefault from '../../assets/profile_default.png'
+import Comments from '../comments/Comments'
 
 const initialState = {
     username: null,
     profilePicture: null,
+    likes: 0,
     liked: false, //essa informação provavelmente não vai ficar aqui, talvez em user na store
     showComments: false
 }
@@ -29,7 +31,17 @@ class Post extends Component {
     }
 
     like() {
-        this.setState({ liked: !this.state.liked })
+        const addOrRemove = this.state.liked ? 'remove' : 'add'
+        axios.put(`${baseApiUrl}/posts/post/like/${this.props.id}/${addOrRemove}`)
+            .then(_ => {
+                this.state.liked ?
+                    this.setState({ likes: this.state.likes - 1 }) :
+                    this.setState({ likes: this.state.likes + 1 })
+                this.setState({ liked: !this.state.liked })
+            })
+            .catch(err => notify(err, 'error'))
+        //termine isso armazenando o liked em um local adequado
+        //faça o componente de comments
     }
 
     getUserData() {
@@ -44,6 +56,7 @@ class Post extends Component {
 
     componentDidMount() {
         this.getUserData()
+        this.setState({ likes: this.props.likes })
     }
 
     render() {
@@ -60,7 +73,7 @@ class Post extends Component {
                     <div className="interactions">
                         <div className="likes-container">
                             <div className="likes">
-                                {this.props.likes}
+                                {this.state.likes}
                             </div>
                             <button className='like-button' onClick={this.like} >
                                 <FontAwesomeIcon icon={this.state.liked ? thumbsUpSolid : thumbsUpRegular} size='lg' />
@@ -77,6 +90,7 @@ class Post extends Component {
                         {this.props.image && <img src={this.props.image} alt="post" className="image" />}
                     </div>
                 </div>
+                { this.state.showComments && <Comments close={this.altShowComments} />}
             </div>
         )// deve ter o nome e a foto de perfil de quem fez o post, podendo ir para o perfil da pessoa
     }//tentar usar as bibliotecas do bootstrap ao invés do link no index.html, se não for usar, remover as dependências

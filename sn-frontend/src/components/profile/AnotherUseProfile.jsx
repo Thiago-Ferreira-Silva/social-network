@@ -41,7 +41,6 @@ class AnotherUserProfile extends Component {
 
                 this.props.remove && this.props.remove()
                 //faça uma animação para remover
-                notify()
             })
             .catch(err => notify(err, 'error'))
     }

@@ -65,7 +65,7 @@
     grid-area: picture;
 }
 
-.profile-picture img {
+.post .profile-picture img {
     width: 100px;
     border-radius: 50%;
 }

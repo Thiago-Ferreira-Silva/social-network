@@ -1,0 +1,17 @@
+.comments-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close-button, .close-button:focus {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
