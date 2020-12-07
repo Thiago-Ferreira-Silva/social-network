@@ -12,8 +12,7 @@ import pictureDefault from '../../assets/profile_default.png'
 import Comments from '../comments/Comments'
 
 const initialState = {
-    username: null,
-    profilePicture: null,
+    user: null,
     likes: 0,
     liked: false, //essa informação provavelmente não vai ficar aqui, talvez em user na store
     showComments: false
@@ -45,8 +44,8 @@ class Post extends Component {
     }
 
     getUserData() {
-        axios.get(`${baseApiUrl}/users/${this.props.userId}/picture`)
-            .then(res => this.setState({ username: res.data.name, profilePicture: res.data.picture }))
+        axios.get(`${baseApiUrl}/users/${this.props.userId}`)
+            .then(res => this.setState({ user: res.data }))
             .catch(err => notify(err, 'error'))
     }
 
@@ -63,12 +62,16 @@ class Post extends Component {
         return (
             <div className="post">
                 <div className="profile-picture">
-                    {this.state.profilePicture ?
-                        <img src={this.state.profilePicture} alt="profile" /> :
+                    {this.state.user && this.state.user.profilePicture ?
+                        <img src={this.state.user.profilePicture} alt="profile" /> :
                         <img src={pictureDefault} alt="profile" />}
                 </div>
                 <div className="aside">
-                    <Link className="name" to='/'>{this.state.username}</Link>{/* como passar todas as informações necessárias? */}
+                    {this.state.user && <Link className="name" to={
+                        this.state.user.id === this.props.user.id ? '/profile' : {
+                            pathname: '/user',
+                            state: { ...this.state.user, small: false }
+                        }}>{this.state.user.name}</Link>}
                     <div className="date">{this.props.date}</div>
                     <div className="interactions">
                         <div className="likes-container">

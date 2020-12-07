@@ -45,13 +45,15 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }//tirar isso
 
-    const getById = (req, res) => {
-        app.db('users')
-            .select('id', 'name', 'bio', 'profilePicture')
+    const getById = async (req, res) => {
+        const user = await app.db('users')
+            .select('id', 'name', 'bio')
             .where({ id: req.params.id })
             .first()
-            .then(user => res.json(user))
             .catch(err => res.status(500).send(err))
+
+        user.profilePicture = await app.api.imageHandler.pickProfilePicture(req.params.id)
+        res.send(user)
     }
 
     const remove = (req, res) => {
@@ -95,6 +97,7 @@ module.exports = app => {
                             .catch(err => res.status(500).send(err))
         const name = userName.name
         res.send({ picture, name })
+        //provavelmente não será necessário
     }
 
     const saveBio = async (req, res) => {
