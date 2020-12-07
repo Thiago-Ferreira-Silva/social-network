@@ -40,7 +40,7 @@ module.exports = app => {
         .get(app.api.post.getById)
         .put(app.api.post.save)
 
-    app.route('/posts/post/like/:id/:addOrRemove')
+    app.route('/posts/post/like/:id/:addOrRemove/:userId')
         .all(app.config.passport.authenticate())
         .put(app.api.post.likePost)
 

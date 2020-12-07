@@ -41,6 +41,7 @@ module.exports = app => {
             ...payload,
             bio: user.bio,
             friends: user.friends,
+            likedPosts: JSON.parse(user.likedPosts),
             profilePicture: image,
             token: jwt.encode(payload, authSecret)
         })
