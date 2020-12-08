@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { saveUser } from '../../redux/actions'
+import { saveUser, altShowComments } from '../../redux/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp as thumbsUpSolid } from '@fortawesome/free-solid-svg-icons'
 import { faThumbsUp as thumbsUpRegular } from '@fortawesome/free-regular-svg-icons'
@@ -57,6 +57,7 @@ class Post extends Component {
 
     altShowComments() {
         this.setState({ showComments: !this.state.showComments })
+        this.props.dispatch(altShowComments(!this.props.showComments))
     }
 
     checkIfLiked() {
@@ -112,6 +113,6 @@ class Post extends Component {
     }//tentar usar as bibliotecas do bootstrap ao invés do link no index.html, se não for usar, remover as dependências
 }
 
-const mapStateToProps = store => ({ user: store.userState.user })
+const mapStateToProps = store => ({ user: store.userState.user, showComments: store.showCommentsState.showComments })
 
 export default connect(mapStateToProps)(Post)

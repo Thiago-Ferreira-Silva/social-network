@@ -5,7 +5,8 @@ import { Reducers } from './reducers'
 
 const persistConfig = {
     key: 'root',
-    storage
+    storage,
+    whitelist: [ 'userState' ]
 }
 
 const persistedReducer = persistReducer(persistConfig, Reducers)
@@ -14,3 +15,5 @@ const Store = createStore(persistedReducer)
 const persistor = persistStore(Store)
 
 export { Store, persistor }
+
+//tente melhorar a store; os reducers estão grandes e com apenas uma função para cada

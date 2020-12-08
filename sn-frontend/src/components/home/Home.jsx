@@ -46,7 +46,7 @@ class Home extends Component {
 
     render() {
         return (
-            <div className="home-container">
+            <div className={`home-container ${ this.props.showComments ? 'show-comments' : '' }`}>
                 {this.state.loading ?
                     <Loading /> :
                     <div className="home">
@@ -63,7 +63,8 @@ class Home extends Component {
 }
 
 const mapStateToProps = store => ({
-    user: store.userState.user
+    user: store.userState.user,
+    showComments: store.showCommentsState.showComments
 })
 
 export default connect(mapStateToProps)(Home)

@@ -1,6 +1,6 @@
 .comments-container {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
@@ -10,8 +10,26 @@
     align-items: center;
 }
 
+.comments {
+    border: solid;
+}
+
+.new-comment {
+    border: solid blueviolet;
+}
+
+.comment {
+    border: solid yellowgreen;
+    word-wrap: break-word;
+    font-size: 2rem;
+    width: 60vw;
+    max-height: 60vh;
+    overflow-y: scroll;
+}
+
 .close-button, .close-button:focus {
     background-color: transparent;
     border: none;
     outline: none;
+    border: solid salmon;
 }
