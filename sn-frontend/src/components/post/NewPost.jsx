@@ -53,7 +53,7 @@ class NewPost extends Component {
     render() {
         return (
             <div className="new-post">
-                <textarea maxLength="600" id="text" className="new-post-text" onChange={this.addText} value={this.state.text || ''} placeholder='Write something here...' ></textarea>
+                <textarea maxLength="600" className="new-post-text" onChange={this.addText} value={this.state.text || ''} placeholder='Write something here...' ></textarea>
                 <div className="new-post-image-container">
                     <input type="file" className="input-file" onChange={this.addImage}
                         ref={imageInput => this.imageInput = imageInput} />

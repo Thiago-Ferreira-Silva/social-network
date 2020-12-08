@@ -83,5 +83,9 @@ module.exports = app => {
         //e se dois usuários derem like no exato mesmo momento?
     }
 
-    return { save, getById, getByUserId, likePost }
+    const saveComment = async (req, res) => {
+
+    }
+
+    return { save, getById, getByUserId, likePost, saveComment }
 }
