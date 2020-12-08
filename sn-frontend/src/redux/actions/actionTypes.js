@@ -1,3 +1,1 @@
 export const SAVE_USER = 'SAVE_USER'
-
-export const ALT_SHOW_COMMENTS = 'ALT_SHOW_COMMENTS'
