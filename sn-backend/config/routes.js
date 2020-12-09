@@ -46,7 +46,7 @@ module.exports = app => {
 
     app.route('/posts/post/:id/comment')
         .all(app.config.passport.authenticate())
-        .put(app.api.post.saveComment)
+        .post(app.api.post.saveComment)
 
     app.route('/posts/:userId')
         .all(app.config.passport.authenticate())

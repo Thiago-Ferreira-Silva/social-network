@@ -10,6 +10,8 @@ module.exports = app => {
             .then(_ => res.status(204).send())
             .catch(err => res.status(500).send(err))
     } //também deve ser possível atualizar um post
+    //está atualizando na hora errada
+    //deve ser possível para o autor excluir um post
 
     const getById = async (req, res) => {
         const id = req.params.id
@@ -84,7 +86,26 @@ module.exports = app => {
     }
 
     const saveComment = async (req, res) => {
+        const comment = { ...req.body[0] }
+        const id = comment.id
+        delete comment.id
 
+        if (!comment.text || comment.text.length === 0) return res.status(400).send('Write something')
+
+        const commentsString = await app.db('posts')
+                            .select('comments')
+                            .where({ id })
+                            .first()
+                            .catch(err => res.status(500).send(err))
+
+        const comments = JSON.parse(commentsString.comments)
+        comments.unshift(comment)
+
+        app.db('posts')
+            .where({ id })
+            .update({ comments: JSON.stringify(comments) })
+            .then(_ => res.status(204).send())
+            .catch( err => res.status(500).send(err))
     }
 
     return { save, getById, getByUserId, likePost, saveComment }

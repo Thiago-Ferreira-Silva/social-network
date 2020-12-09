@@ -11,7 +11,7 @@ import Comment from './Comment'
 
 const initialState = {
     newComment: null,
-    commentsJSX: null
+    commentsJSX: []
 }
 
 class Comments extends Component {
@@ -32,27 +32,30 @@ class Comments extends Component {
 
     postComment() {
         const comment = [{}]
+        comment[0].id = this.props.id
         comment[0].userId = this.props.user.id
         comment[0].text = this.state.newComment
         comment[0].date = new Date().toISOString()
         axios.post(`${baseApiUrl}/posts/post/${this.props.id}/comment`, comment)
             .then(_ => {
                 this.getCommentsJSX(comment)
+                this.setState({ newComment: null })
             })
             .catch(err => notify(err, 'error'))
-    }
+    }// arruma para os posts mais recentes aparecerem antes
 
     getCommentsJSX(comments) {
-        const commentsJSX = this.state.commentsJSX || []
+        const commentsJSX = this.state.commentsJSX
         commentsJSX.reverse()
-        comments.foreach(comment => {
+        comments.forEach(comment => {
             axios.get(`${baseApiUrl}/users/${comment.userId}`)
                 .then(res => {
                     const commentJSX = <Comment text={comment.text} date={comments.date} author={res.data} />
                     commentsJSX.unshift(commentJSX)
                 })
                 .catch(err => notify(err, 'error'))
-        })//confira se não precisa de async await
+        })
+        //confira se não precisa de async await
         this.setState({ commentsJSX })
     }
 
@@ -76,7 +79,7 @@ class Comments extends Component {
                         <button className="btn btn-primary post-button" onClick={this.postComment} >Post</button>
                     </div>
                     <ul>
-                        {this.state.commentsJSX || 'Comments'}
+                        {this.state.commentsJSX.length === 0 ? 'Comments' : this.state.commentsJSX}
                     </ul>
                 </div>
             </div>
