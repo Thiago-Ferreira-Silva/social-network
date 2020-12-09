@@ -10,7 +10,8 @@ import { baseApiUrl, notify } from '../../global'
 import Comment from './Comment'
 
 const initialState = {
-    newComment: null
+    newComment: null,
+    commentsJSX: null
 }
 
 class Comments extends Component {
@@ -21,6 +22,7 @@ class Comments extends Component {
         super(props)
         this.addText = this.addText.bind(this)
         this.postComment = this.postComment.bind(this)
+        this.getCommentsJSX = this.getCommentsJSX.bind(this)
         this.close = this.close.bind(this)
     }
 
@@ -29,12 +31,37 @@ class Comments extends Component {
     }
 
     postComment() {
-        axios.post(`${baseApiUrl}/posts/post/${this.props.id}/comment`)
-            .catch( err => notify(err, 'error'))
+        const comment = [{}]
+        comment[0].userId = this.props.user.id
+        comment[0].text = this.state.newComment
+        comment[0].date = new Date().toISOString()
+        axios.post(`${baseApiUrl}/posts/post/${this.props.id}/comment`, comment)
+            .then(_ => {
+                this.getCommentsJSX(comment)
+            })
+            .catch(err => notify(err, 'error'))
+    }
+
+    getCommentsJSX(comments) {
+        const commentsJSX = this.state.commentsJSX || []
+        commentsJSX.reverse()
+        comments.foreach(comment => {
+            axios.get(`${baseApiUrl}/users/${comment.userId}`)
+                .then(res => {
+                    const commentJSX = <Comment text={comment.text} date={comments.date} author={res.data} />
+                    commentsJSX.unshift(commentJSX)
+                })
+                .catch(err => notify(err, 'error'))
+        })//confira se não precisa de async await
+        this.setState({ commentsJSX })
     }
 
     close() {
         this.props.close && this.props.close()
+    }
+
+    componentDidMount() {
+        this.getCommentsJSX(JSON.parse(this.props.comments))
     }
 
     render() {
@@ -45,10 +72,12 @@ class Comments extends Component {
                         <FontAwesomeIcon icon={faTimes} />
                     </button>
                     <div className="new-comment">
-                        <textarea  maxLength="300" className="new-comment-text" value={ this.state.newComment || '' } placeholder="Make a comment" onChange={this.addText} ></textarea>
+                        <textarea maxLength="300" className="new-comment-text" value={this.state.newComment || ''} placeholder="Make a comment" onChange={this.addText} ></textarea>
                         <button className="btn btn-primary post-button" onClick={this.postComment} >Post</button>
                     </div>
-                    <Comment />
+                    <ul>
+                        {this.state.commentsJSX || 'Comments'}
+                    </ul>
                 </div>
             </div>
         )
