@@ -12,6 +12,15 @@
 
 .comments {
     border: solid;
+    height: 70vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.comments-list {
+    flex-grow: 1;
+    overflow-y: scroll;
 }
 
 .new-comment {

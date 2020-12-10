@@ -42,24 +42,36 @@ class Comments extends Component {
                 this.setState({ newComment: null })
             })
             .catch(err => notify(err, 'error'))
-    }// arruma para os posts mais recentes aparecerem antes
+    }// arrume para os posts mais recentes aparecerem antes
 
-    getCommentsJSX(comments) {
+    async getCommentsJSX(comments) {
         const commentsJSX = this.state.commentsJSX
+        console.log('start', commentsJSX.length)
         commentsJSX.reverse()
-        comments.forEach(comment => {
-            axios.get(`${baseApiUrl}/users/${comment.userId}`)
+
+        for (let i = 0; i < comments.length; i++) {
+            const comment = comments[i]
+            await axios.get(`${baseApiUrl}/users/${comment.userId}`)
                 .then(res => {
-                    const commentJSX = <Comment text={comment.text} date={comments.date} author={res.data} />
+                    const commentJSX = <Comment text={comment.text} date={comment.date} author={res.data} key={i} />
                     commentsJSX.unshift(commentJSX)
                 })
                 .catch(err => notify(err, 'error'))
-        })
-        //confira se não precisa de async await
+        }
+       /* comments.forEach(async (comment, index) => {
+            await axios.get(`${baseApiUrl}/users/${comment.userId}`)
+                .then(res => {
+                    const commentJSX = <Comment text={comment.text} date={comment.date} author={res.data} key={index} />
+                    commentsJSX.unshift(commentJSX)
+                })
+                .catch(err => notify(err, 'error'))
+        })*/
+        console.log('end', commentsJSX.length)
         this.setState({ commentsJSX })
     }
 
-    close() {
+    async close() {
+        await this.setState({ commentsJSX: [] })
         this.props.close && this.props.close()
     }
 
@@ -78,9 +90,9 @@ class Comments extends Component {
                         <textarea maxLength="300" className="new-comment-text" value={this.state.newComment || ''} placeholder="Make a comment" onChange={this.addText} ></textarea>
                         <button className="btn btn-primary post-button" onClick={this.postComment} >Post</button>
                     </div>
-                    <ul>
+                    <div className='comments-list' >
                         {this.state.commentsJSX.length === 0 ? 'Comments' : this.state.commentsJSX}
-                    </ul>
+                    </div>
                 </div>
             </div>
         )
