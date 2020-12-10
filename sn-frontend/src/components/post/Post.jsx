@@ -110,7 +110,7 @@ class Post extends Component {
                         {this.props.image && <img src={this.props.image} alt="post" className="image" />}
                     </div>
                 </div>
-                { this.state.showComments && <Comments close={this.altShowComments} id={this.props.id} comments={this.props.comments} />}
+                { this.state.showComments && <Comments close={this.altShowComments} id={this.props.id} comments={this.props.comments} key={this.props.id} />}
             </div>
         )
     }//tentar usar as bibliotecas do bootstrap ao invés do link no index.html, se não for usar, remover as dependências

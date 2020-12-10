@@ -46,36 +46,25 @@ class Comments extends Component {
 
     async getCommentsJSX(comments) {
         const commentsJSX = this.state.commentsJSX
-        console.log('start', commentsJSX.length)
         commentsJSX.reverse()
-
         for (let i = 0; i < comments.length; i++) {
             const comment = comments[i]
             await axios.get(`${baseApiUrl}/users/${comment.userId}`)
                 .then(res => {
-                    const commentJSX = <Comment text={comment.text} date={comment.date} author={res.data} key={i} />
+                    const commentJSX = <Comment text={comment.text} date={comment.date} author={res.data} key={`${comment.date}-${comment.id}${comment.userId}`} />
                     commentsJSX.unshift(commentJSX)
                 })
                 .catch(err => notify(err, 'error'))
         }
-       /* comments.forEach(async (comment, index) => {
-            await axios.get(`${baseApiUrl}/users/${comment.userId}`)
-                .then(res => {
-                    const commentJSX = <Comment text={comment.text} date={comment.date} author={res.data} key={index} />
-                    commentsJSX.unshift(commentJSX)
-                })
-                .catch(err => notify(err, 'error'))
-        })*/
-        console.log('end', commentsJSX.length)
         this.setState({ commentsJSX })
     }
 
-    async close() {
-        await this.setState({ commentsJSX: [] })
+    close() {
         this.props.close && this.props.close()
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        await this.setState({ commentsJSX: [] })
         this.getCommentsJSX(JSON.parse(this.props.comments))
     }
 
@@ -102,4 +91,3 @@ class Comments extends Component {
 const mapStateToProps = store => ({ user: store.userState.user })
 
 export default connect(mapStateToProps)(Comments)
-//talvez colocar isso no component post
