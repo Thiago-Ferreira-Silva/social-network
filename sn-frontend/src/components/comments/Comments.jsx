@@ -70,7 +70,6 @@ class Comments extends Component {
         await this.setState({ commentsJSX: [] })
         this.getCommentsJSX(JSON.parse(this.props.comments))
     }
-
     render() {
         return (
             <div className="comments-container">

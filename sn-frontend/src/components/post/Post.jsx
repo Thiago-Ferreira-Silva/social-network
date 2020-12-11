@@ -46,7 +46,6 @@ class Post extends Component {
                 this.props.dispatch(saveUser({ ...this.props.user, likedPosts }))
             })
             .catch(err => notify(err, 'error'))
-        //faça o componente de comments
     }
 
     getUserData() {
@@ -119,3 +118,6 @@ class Post extends Component {
 const mapStateToProps = store => ({ user: store.userState.user })
 
 export default connect(mapStateToProps)(Post)
+
+//talvez fazer a parte de deletar e começar a trabalhar no chat e o componente home
+//devo fazer uma busca de usuários?
