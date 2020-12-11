@@ -42,16 +42,19 @@ class Comments extends Component {
                 this.setState({ newComment: null })
             })
             .catch(err => notify(err, 'error'))
-    }// arrume para os posts mais recentes aparecerem antes
+    }
+    // quando faz um comentário, as props não atualizam e, se sair dos comentários e entrar de novo sem atualizar, ele não aparece
 
     async getCommentsJSX(comments) {
         const commentsJSX = this.state.commentsJSX
-        commentsJSX.reverse()
+        comments.reverse()
         for (let i = 0; i < comments.length; i++) {
             const comment = comments[i]
             await axios.get(`${baseApiUrl}/users/${comment.userId}`)
                 .then(res => {
-                    const commentJSX = <Comment text={comment.text} date={comment.date} author={res.data} key={`${comment.date}-${comment.id}${comment.userId}`} />
+                    const date = new Date(comment.date).toLocaleString()
+                    const commentJSX = <Comment text={comment.text} date={date} author={res.data}
+                        key={`${comment.date}-${comment.id}${comment.userId}`} />
                     commentsJSX.unshift(commentJSX)
                 })
                 .catch(err => notify(err, 'error'))

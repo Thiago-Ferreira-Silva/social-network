@@ -11,8 +11,10 @@
 }
 
 .comments {
-    border: solid;
-    height: 70vh;
+    position: relative;
+    height: 85vh;
+    width: 78vw;
+    background-color: #a0a0a0;
 
     display: flex;
     flex-direction: column;
@@ -24,21 +26,36 @@
 }
 
 .new-comment {
-    border: solid blueviolet;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.new-comment-text, .new-comment-text:focus {
+    resize: none;
+    border: none;
+    outline: none;
+    background-color: #fffd;
+
+    margin: 5px;
+    width: 90%;
+    height: 17vh;
 }
 
 .comment {
-    border: solid yellowgreen;
+    padding: 4px;
     word-wrap: break-word;
     font-size: 2rem;
-    width: 60vw;
-    max-height: 60vh;
-    overflow-y: scroll;
 }
 
 .close-button, .close-button:focus {
+    position: absolute;
+    top: 3px;
+    right: 3px;
     background-color: transparent;
+    color: #444;
     border: none;
     outline: none;
-    border: solid salmon;
 }
