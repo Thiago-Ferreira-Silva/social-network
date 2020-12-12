@@ -39,6 +39,7 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .get(app.api.post.getById)
         .put(app.api.post.save)
+        .delete(app.api.post.remove)
 
     app.route('/posts/post/like/:id/:addOrRemove/:userId')
         .all(app.config.passport.authenticate())

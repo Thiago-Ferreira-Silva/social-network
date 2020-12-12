@@ -32,7 +32,7 @@ class Home extends Component {
                 //ajustar o quanto da data vai aparecer
                 const posts = res.data.map(post => {
                     const date = new Date(post.date).toLocaleString()
-                    return post ? <Post text={post.text} image={post.image} date={date} likes={post.likes} comments={post.comments} userId={post.user_id} id={post.id} key={post.id} /> : ''
+                    return post ? <Post text={post.text} image={post.image} date={date} likes={post.likes} comments={post.comments} userId={post.user_id} id={post.id} delete={this.getPosts} key={post.id} /> : ''
                 })
                 this.setState({ posts })
                 this.setState({ loading: false })

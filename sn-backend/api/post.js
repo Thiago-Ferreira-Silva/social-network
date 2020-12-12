@@ -10,7 +10,6 @@ module.exports = app => {
             .then(_ => res.status(204).send())
             .catch(err => res.status(500).send(err))
     } //também deve ser possível atualizar um post
-    //está atualizando na hora errada
     //deve ser possível para o autor excluir um post
 
     const getById = async (req, res) => {
@@ -43,6 +42,16 @@ module.exports = app => {
         })
 
         res.json(posts)
+    }//adicionar a paginação e criar um método para buscar os posts mais recentes na home
+
+    const remove = (req, res) => {
+        const id = req.params.id
+        
+        app.db('posts')
+            .where({ id })
+            .del()
+            .then(_ => res.status(204).send())
+            .catch(err => res.status(500).send(err))
     }
 
     const likePost = async (req, res) => {
@@ -82,7 +91,6 @@ module.exports = app => {
             .update({ likes: likesNumber })
             .then(_ => res.status(204).send())
             .catch(err => res.status(500).send(err))
-        //e se dois usuários derem like no exato mesmo momento?
     }
 
     const saveComment = async (req, res) => {
@@ -108,5 +116,5 @@ module.exports = app => {
             .catch( err => res.status(500).send(err))
     }
 
-    return { save, getById, getByUserId, likePost, saveComment }
+    return { save, getById, getByUserId, remove, likePost, saveComment }
 }

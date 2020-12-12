@@ -27,6 +27,7 @@ class Post extends Component {
         this.like = this.like.bind(this)
         this.altShowComments = this.altShowComments.bind(this)
         this.checkIfLiked = this.checkIfLiked.bind(this)
+        this.removePost = this.removePost.bind(this)
     }
 
     like() {
@@ -55,7 +56,7 @@ class Post extends Component {
     }
 
     altShowComments() {
-        this.state.showComments ? 
+        this.state.showComments ?
             document.body.classList.remove('show-comments') :
             document.body.classList.add('show-comments')
         this.setState({ showComments: !this.state.showComments })
@@ -63,10 +64,19 @@ class Post extends Component {
     }
 
     checkIfLiked() {
-        const likedPosts =  this.props.user.likedPosts
+        const likedPosts = this.props.user.likedPosts
         const liked = likedPosts[this.props.id] ? true : false
         this.setState({ liked })
     }
+
+    removePost() {
+        axios.delete(`${baseApiUrl}/posts/post/${this.props.id}`)
+            .then(_ => {
+                this.props.delete && this.props.delete()
+                notify('Deleted')
+            })
+            .catch(err => notify(err, 'error'))
+    }//ajustar o design para esse botão
 
     componentDidMount() {
         this.getUserData()
@@ -89,6 +99,8 @@ class Post extends Component {
                             state: { ...this.state.user, small: false }
                         }}>{this.state.user.name}</Link>}
                     <div className="date">{this.props.date}</div>
+                    {this.props.user.id === this.props.userId && <button className="btn btn-danger"
+                        onClick={this.removePost}>Delete</button>}
                     <div className="interactions">
                         <div className="likes-container">
                             <div className="likes">
