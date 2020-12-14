@@ -12,6 +12,25 @@ module.exports = app => {
     } //também deve ser possível atualizar um post
     //deve ser possível para o autor excluir um post
 
+    const getPosts = async (req, res) => {
+        let posts = await app.db('posts')
+            .select('*')
+            .orderBy('id', 'desc')
+            .limit(req.query.limit)
+            .offset(req.query.offset)
+            .catch(err => res.status(500).send(err))
+
+        posts = posts.map((post) => {
+            if (post.image) {
+                const image = app.api.imageHandler.arrayToStringChar(post.image)
+                return { ...post, image }
+            }
+            return post
+        })
+
+        res.json(posts)
+    }
+
     const getById = async (req, res) => {
         const id = req.params.id
 
@@ -24,7 +43,7 @@ module.exports = app => {
             post.image = app.api.imageHandler.arrayToStringChar(post.image)
         }
 
-        res.send(post)
+        res.send(post)// eu uso isso?
     }
 
     const getByUserId = async (req, res) => {
@@ -46,7 +65,7 @@ module.exports = app => {
 
     const remove = (req, res) => {
         const id = req.params.id
-        
+
         app.db('posts')
             .where({ id })
             .del()
@@ -56,16 +75,16 @@ module.exports = app => {
 
     const likePost = async (req, res) => {
         const likes = await app.db('posts')
-                            .select('likes')
-                            .where({ id: req.params.id })
-                            .first()
-                            .catch(err => res.status(500).send(err))
+            .select('likes')
+            .where({ id: req.params.id })
+            .first()
+            .catch(err => res.status(500).send(err))
 
         const likedPosts = await app.db('users')
-                                .select('likedPosts')
-                                .where({ id: req.params.userId })
-                                .first()
-                                .catch(err => res.status(500).send(err))
+            .select('likedPosts')
+            .where({ id: req.params.userId })
+            .first()
+            .catch(err => res.status(500).send(err))
 
         let likesNumber = likes.likes
 
@@ -101,10 +120,10 @@ module.exports = app => {
         if (!comment.text || comment.text.length === 0) return res.status(400).send('Write something')
 
         const commentsString = await app.db('posts')
-                            .select('comments')
-                            .where({ id })
-                            .first()
-                            .catch(err => res.status(500).send(err))
+            .select('comments')
+            .where({ id })
+            .first()
+            .catch(err => res.status(500).send(err))
 
         const comments = JSON.parse(commentsString.comments)
         comments.unshift(comment)
@@ -113,8 +132,8 @@ module.exports = app => {
             .where({ id })
             .update({ comments: JSON.stringify(comments) })
             .then(_ => res.status(204).send())
-            .catch( err => res.status(500).send(err))
+            .catch(err => res.status(500).send(err))
     }
 
-    return { save, getById, getByUserId, remove, likePost, saveComment }
+    return { save, getPosts, getById, getByUserId, remove, likePost, saveComment }
 }

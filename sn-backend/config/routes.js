@@ -33,6 +33,7 @@ module.exports = app => {
 
     app.route('/posts')
         .all(app.config.passport.authenticate())
+        .get(app.api.post.getPosts)
         .post(app.api.post.save)
 
     app.route('/posts/post/:id')

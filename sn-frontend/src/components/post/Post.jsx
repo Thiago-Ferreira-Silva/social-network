@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { saveUser } from '../../redux/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbsUp as thumbsUpSolid } from '@fortawesome/free-solid-svg-icons'
+import { faThumbsUp as thumbsUpSolid, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { faThumbsUp as thumbsUpRegular } from '@fortawesome/free-regular-svg-icons'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
@@ -76,7 +76,7 @@ class Post extends Component {
                 notify('Deleted')
             })
             .catch(err => notify(err, 'error'))
-    }//ajustar o design para esse botão
+    }
 
     componentDidMount() {
         this.getUserData()
@@ -84,7 +84,7 @@ class Post extends Component {
         this.setState({ likes: this.props.likes })
     }
 
-    render() {
+    render() { //comments precisa de ajustes no estilo
         return (
             <div className="post">
                 <div className="profile-picture">
@@ -99,8 +99,8 @@ class Post extends Component {
                             state: { ...this.state.user, small: false }
                         }}>{this.state.user.name}</Link>}
                     <div className="date">{this.props.date}</div>
-                    {this.props.user.id === this.props.userId && <button className="btn btn-danger"
-                        onClick={this.removePost}>Delete</button>}
+                    {this.props.user.id === this.props.userId && <button className="button-delete-post"
+                        onClick={this.removePost}><FontAwesomeIcon icon={faTrashAlt} /></button>}
                     <div className="interactions">
                         <div className="likes-container">
                             <div className="likes">
