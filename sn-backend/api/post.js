@@ -9,8 +9,7 @@ module.exports = app => {
             .insert(post)
             .then(_ => res.status(204).send())
             .catch(err => res.status(500).send(err))
-    } //também deve ser possível atualizar um post
-    //deve ser possível para o autor excluir um post
+    }
 
     const getPosts = async (req, res) => {
         let posts = await app.db('posts')
@@ -51,6 +50,9 @@ module.exports = app => {
 
         let posts = await app.db('posts')
             .where({ user_id: id })
+            .orderBy('id', 'desc')
+            .limit(req.query.limit)
+            .offset(req.query.offset)
             .catch(err => res.status(500).send(err))
         posts = posts.map((post) => {
             if (post.image) {
@@ -61,7 +63,7 @@ module.exports = app => {
         })
 
         res.json(posts)
-    }//adicionar a paginação e criar um método para buscar os posts mais recentes na home
+    }
 
     const remove = (req, res) => {
         const id = req.params.id

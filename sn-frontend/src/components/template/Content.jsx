@@ -33,7 +33,6 @@ class Content extends Component {
                     <Route path='/user' exact={true} render={(props) =>
                         <Home {...props} anotherUser={true} />} />
                     <Route path='/profile' exact={true} render={() => <Profile />} />
-                    {/* refazer o componente Home para que ele possa ser o Home de fato, o componente no qual o usuário vê seus posts e o componente para ver os posts de outro usuário; o paginador também deve ser em parte configurado por aqui */}
                 </Switch>
             </div>
         )

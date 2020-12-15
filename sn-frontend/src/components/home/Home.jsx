@@ -12,7 +12,8 @@ import AnotherUseProfile from '../profile/AnotherUseProfile'
 const initialState = {
     posts: [],
     loading: true,
-    offset: 0
+    offset: 0,
+    loadMore: true
 }
 
 class Home extends Component {
@@ -23,11 +24,12 @@ class Home extends Component {
         super(props)
         this.getPosts = this.getPosts.bind(this)
         this.loadMore = this.loadMore.bind(this)
+        this.loadTenMore = this.loadTenMore.bind(this)
+        this.loadOneMore = this.loadOneMore.bind(this)
     }
 
-    getPosts() {
-        console.log('get posts')
-        axios.get(`${baseApiUrl}/posts?limit=10&offset=0`)
+    getPosts(url) {
+        axios.get(url)
             .then(res => {
                 const posts = res.data.map(post => {
                     const date = new Date(post.date).toLocaleString()
@@ -43,26 +45,37 @@ class Home extends Component {
             .catch(err => notify(err, 'error'))
     }
 
-    loadMore() {//como fazer para carregar apenas mais 1?
-        axios.get(`${baseApiUrl}/posts?limit=10&offset=${this.state.offset}`)
+    loadMore(limit = 10, offset = 0) {
+        axios.get(`${baseApiUrl}/posts?limit=${limit}&offset=${offset}`)
             .then( res => {
                 const posts = this.state.posts
                 const newPosts = res.data.map(post => {
                     const date = new Date(post.date).toLocaleString()
                     return post ? <Post text={post.text} image={post.image} date={date} likes={post.likes} comments={post.comments} userId={post.user_id} id={post.id} delete={this.getPosts} key={post.id} /> : ''
                 })
-                newPosts.forEach(post => posts.push(post))
+                if (newPosts.length < limit) this.setState({ loadMore: false })
+                newPosts.forEach(post => limit === 1 ? posts.unshift(post) : posts.push(post))
                 this.setState({
                     posts,
-                    offset: this.state.offset + 10
+                    offset: this.state.offset + limit
                 })
             })
             .catch(err => notify(err, 'error'))
     }
 
-    componentDidMount() {
-        this.getPosts()
+    loadTenMore() {
+        this.loadMore(10, this.state.offset)
     }
+
+    loadOneMore() {
+        this.loadMore(1)
+    }
+
+    componentDidMount() {
+        if (this.props.home) this.getPosts(`${baseApiUrl}/posts?limit=10&offset=0`)
+        if (this.props.yourPosts) this.getPosts(`${baseApiUrl}/posts/${this.props.user.id}?limit=10&offset=0`)
+        if (this.props.anotherUser) this.getPosts(`${baseApiUrl}/posts/${this.props.location.state.id}?limit=10&offset=0`)
+    }//precisa atualizar quando muda a função e refazer o loadMore para se adaptar aos novos casos
 
     render() {
         return (
@@ -72,16 +85,17 @@ class Home extends Component {
                     <div className="home">
                         {this.props.anotherUser ?
                         <AnotherUseProfile { ...this.props.location.state } />:
-                        <NewPost update={this.loadMore} />
+                        <NewPost update={this.loadOneMore} />
                         }
                         <ul>{this.state.posts}</ul>
-                        <button className="load-more" onClick={this.loadMore} >Load more</button>{/*está dando muita merda */}
+                        {this.state.loadMore && 
+                            <button className="load-more" onClick={this.loadTenMore} >Load more</button> }
                     </div>
                 }
             </div>
         )
-    }//não está buscando os posts quando vai do perfil de alguém para a home
-}//arrumo o estilo
+    }
+}
 
 const mapStateToProps = store => ({
     user: store.userState.user
@@ -90,6 +104,3 @@ const mapStateToProps = store => ({
 export default connect(mapStateToProps)(Home)
 
 //use o redux para alguma coisa e faça o chat com socket logo
-//isso vai precisar de uma lógica bem complexa para mostrar os posts
-//e também deve ter meios de selecionar quais irão aparecer
-//crie um schdule para atualizar periodicamente likes e comentários nos posts, os posts no home, ou qualquer outra coisa na qual isso pareça caber

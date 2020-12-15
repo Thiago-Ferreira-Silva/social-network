@@ -11,4 +11,12 @@
     flex-direction: column;
     align-items: center;
 }
+
+.load-more, .load-more:focus {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.3rem;
+    margin: 15px;
+}
 /* precisa de muita coisa, os componentes não estão alinhados */
