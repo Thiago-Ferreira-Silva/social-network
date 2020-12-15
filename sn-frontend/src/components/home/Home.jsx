@@ -26,6 +26,7 @@ class Home extends Component {
     }
 
     getPosts() {
+        console.log('get posts')
         axios.get(`${baseApiUrl}/posts?limit=10&offset=0`)
             .then(res => {
                 const posts = res.data.map(post => {
@@ -34,30 +35,33 @@ class Home extends Component {
                 })
                 this.setState({ 
                     posts,
-                    loading: false 
+                    loading: false ,
+                    offset: 10
                 })
                 
             })
             .catch(err => notify(err, 'error'))
     }
 
-    loadMore(limit = 10) {
-        axios.get(`${baseApiUrl}/posts?limit=${limit}&offset=${this.state.offset}`)
+    loadMore() {//como fazer para carregar apenas mais 1?
+        axios.get(`${baseApiUrl}/posts?limit=10&offset=${this.state.offset}`)
             .then( res => {
+                const posts = this.state.posts
                 const newPosts = res.data.map(post => {
                     const date = new Date(post.date).toLocaleString()
                     return post ? <Post text={post.text} image={post.image} date={date} likes={post.likes} comments={post.comments} userId={post.user_id} id={post.id} delete={this.getPosts} key={post.id} /> : ''
                 })
+                newPosts.forEach(post => posts.push(post))
                 this.setState({
-                    posts: this.state.posts + newPosts,
-                    offset: this.state.offset + limit
+                    posts,
+                    offset: this.state.offset + 10
                 })
             })
             .catch(err => notify(err, 'error'))
     }
 
     componentDidMount() {
-        this.getPosts()//faça funcionar
+        this.getPosts()
     }
 
     render() {
@@ -68,7 +72,7 @@ class Home extends Component {
                     <div className="home">
                         {this.props.anotherUser ?
                         <AnotherUseProfile { ...this.props.location.state } />:
-                        <NewPost update={this.loadMore(1)} />
+                        <NewPost update={this.loadMore} />
                         }
                         <ul>{this.state.posts}</ul>
                         <button className="load-more" onClick={this.loadMore} >Load more</button>{/*está dando muita merda */}
