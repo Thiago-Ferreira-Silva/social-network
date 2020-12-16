@@ -1,4 +1,4 @@
-import './Home.css'
+import './Main.css'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
@@ -26,8 +26,8 @@ class Home extends Component {
         this.loadMore = this.loadMore.bind(this)
         this.loadTenMore = this.loadTenMore.bind(this)
         this.loadOneMore = this.loadOneMore.bind(this)
-        this.refresh = this.refresh.bind(this)
         this.deletePost = this.deletePost.bind(this)
+        this.mountMain = this.mountMain.bind(this)
     }
 
     getPosts(url) {
@@ -49,8 +49,8 @@ class Home extends Component {
             .catch(err => notify(err, 'error'))
     }
 
-    loadMore(limit = 10, offset = 0) {
-        axios.get(`${baseApiUrl}/posts?limit=${limit}&offset=${offset}`)
+    loadMore(limit = 10, offset = 0, id = null) {
+        axios.get(`${baseApiUrl}/posts${id ? `/${id}` : ''}?limit=${limit}&offset=${offset}`)
             .then(res => {
                 const posts = this.state.posts
                 const newPosts = res.data.map(post => {
@@ -70,18 +70,22 @@ class Home extends Component {
     }
 
     loadTenMore() {
-        this.loadMore(10, this.state.offset)
+        switch (this.props.usingFor) {
+            case 'home' :
+                this.loadMore(10, this.state.offset)
+                break
+            case 'yourPosts' :
+                this.loadMore(10, this.state.offset, this.props.user.id)
+                break
+            case 'anotherUser' :
+                this.loadMore(10, this.state.offset, this.props.location.state.id)
+                break
+            default:
+        }
     }
 
     loadOneMore() {
         this.loadMore(1)
-    }
-
-    refresh() {
-        console.log('refresh')
-        this.props.home ?
-            this.getPosts(`${baseApiUrl}/posts?limit=10&offset=0`) :
-            this.getPosts(`${baseApiUrl}/posts/${this.props.location.state.id}?limit=10&offset=0`)
     }
 
     async deletePost() {
@@ -91,19 +95,36 @@ class Home extends Component {
         this.setState({ loading: false })
     }
 
+    mountMain() {
+        switch (this.props.usingFor) {
+            case 'home' :
+                this.getPosts(`${baseApiUrl}/posts?limit=10&offset=0`)
+                break
+            case 'yourPosts' :
+                this.getPosts(`${baseApiUrl}/posts/${this.props.user.id}?limit=10&offset=0`)
+                break
+            case 'anotherUser' :
+                this.getPosts(`${baseApiUrl}/posts/${this.props.location.state.id}?limit=10&offset=0`)
+                break
+            default:
+        }
+    }
+
     componentDidMount() {
-        if (this.props.home) this.getPosts(`${baseApiUrl}/posts?limit=10&offset=0`)
-        if (this.props.yourPosts) this.getPosts(`${baseApiUrl}/posts/${this.props.user.id}?limit=10&offset=0`)
-        if (this.props.anotherUser) this.getPosts(`${baseApiUrl}/posts/${this.props.location.state.id}?limit=10&offset=0`)
-    }//precisa atualizar quando muda a função e refazer o loadMore para se adaptar aos novos casos
+        this.mountMain()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.usingFor !== this.props.usingFor) this.mountMain()
+    }
 
     render() {
         return (
-            <div className="home-container">
+            <div className="main-container">
                 {this.state.loading ?
                     <Loading /> :
-                    <div className="home">
-                        {this.props.anotherUser ?
+                    <div className="main">
+                        {this.props.usingFor === 'anotherUser' ?
                             <AnotherUseProfile {...this.props.location.state} /> :
                             <NewPost update={this.loadOneMore} />
                         }

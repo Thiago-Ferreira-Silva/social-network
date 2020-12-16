@@ -5,7 +5,7 @@ import axios from 'axios'
 import { baseApiUrl } from '../../global'
 
 import './Template.css'
-import Home from '../home/Home'
+import Main from '../main/Main'
 import Auth from '../auth/Auth'
 import Profile from '../profile/Profile'
 
@@ -27,11 +27,11 @@ class Content extends Component {
                 <Switch>
                     <Route path='/auth' exact={true} render={() => <Auth />} />
                     <Route path='/' exact={true} render={(props) =>
-                        <Home {...props} home={true} />} />
+                        <Main {...props} usingFor={'home'} />} />
                     <Route path='/your-posts' exact={true} render={(props) =>
-                        <Home {...props} yourPosts={true} />} />
+                        <Main {...props} usingFor={'yourPosts'} />} />
                     <Route path='/user' exact={true} render={(props) =>
-                        <Home {...props} anotherUser={true} />} />
+                        <Main {...props} usingFor={'anotherUser'} />} />
                     <Route path='/profile' exact={true} render={() => <Profile />} />
                 </Switch>
             </div>

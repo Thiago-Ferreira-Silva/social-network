@@ -112,7 +112,7 @@ class Profile extends Component {
                             ref={imageInput => this.imageInput = imageInput} />
                     </div>
                     <div className="name">{user.name}</div>
-                    <div className="your-posts"><Link to='/'>Yours posts</Link></div>
+                    <div className="your-posts"><Link to='/your-posts'>Yours posts</Link></div>
                     <div className="bio">
                         {this.state.changingBio ?
                             <button className="bio-button" alt="save bio" onClick={this.saveBio} ><FontAwesomeIcon icon={faSave} /></button> :
@@ -128,7 +128,7 @@ class Profile extends Component {
             </div>
         )
     }
-}
+}// decida se vai trabalhar no chat, no css, ou na busca de usuários
 
 const mapStateToProps = store => ({ user: store.userState.user })
 

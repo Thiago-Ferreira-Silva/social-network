@@ -93,7 +93,7 @@ class Post extends Component {
                         <img src={pictureDefault} alt="profile" />}
                 </div>
                 <div className="aside">
-                    {this.state.user && <Link /*onClick={this.props.refresh && this.props.refresh()}*/ className="name" to={
+                    {this.state.user && <Link className="name" to={
                         this.state.user.id === this.props.user.id ? '/profile' : {
                             pathname: '/user',
                             state: { ...this.state.user, small: false }
@@ -113,7 +113,7 @@ class Post extends Component {
                         <button className="open-comments" onClick={this.altShowComments} >Comments</button>
                     </div>
                 </div>
-                <div className="main">
+                <div className="post-main">
                     <div className="text">
                         {this.props.text}
                     </div>
@@ -131,5 +131,4 @@ const mapStateToProps = store => ({ user: store.userState.user })
 
 export default connect(mapStateToProps)(Post)
 
-//talvez fazer a parte de deletar e começar a trabalhar no chat e o componente home
 //devo fazer uma busca de usuários?
