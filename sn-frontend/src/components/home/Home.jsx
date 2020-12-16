@@ -26,6 +26,8 @@ class Home extends Component {
         this.loadMore = this.loadMore.bind(this)
         this.loadTenMore = this.loadTenMore.bind(this)
         this.loadOneMore = this.loadOneMore.bind(this)
+        this.refresh = this.refresh.bind(this)
+        this.deletePost = this.deletePost.bind(this)
     }
 
     getPosts(url) {
@@ -33,31 +35,35 @@ class Home extends Component {
             .then(res => {
                 const posts = res.data.map(post => {
                     const date = new Date(post.date).toLocaleString()
-                    return post ? <Post text={post.text} image={post.image} date={date} likes={post.likes} comments={post.comments} userId={post.user_id} id={post.id} delete={this.getPosts} key={post.id} /> : ''
+                    return post ? <Post text={post.text} image={post.image}
+                        date={date} likes={post.likes} comments={post.comments} userId={post.user_id}
+                        id={post.id} refresh={this.refresh} delete={this.deletePost} key={post.id} /> : ''
                 })
-                this.setState({ 
+                this.setState({
                     posts,
-                    loading: false ,
-                    offset: 10
+                    loading: false,
+                    offset: posts.length
                 })
-                
+
             })
             .catch(err => notify(err, 'error'))
     }
 
     loadMore(limit = 10, offset = 0) {
         axios.get(`${baseApiUrl}/posts?limit=${limit}&offset=${offset}`)
-            .then( res => {
+            .then(res => {
                 const posts = this.state.posts
                 const newPosts = res.data.map(post => {
                     const date = new Date(post.date).toLocaleString()
-                    return post ? <Post text={post.text} image={post.image} date={date} likes={post.likes} comments={post.comments} userId={post.user_id} id={post.id} delete={this.getPosts} key={post.id} /> : ''
+                    return post ? <Post text={post.text} image={post.image}
+                        date={date} likes={post.likes} comments={post.comments} userId={post.user_id}
+                        id={post.id} refresh={this.refresh} delete={this.deletePost} key={post.id} /> : ''
                 })
                 if (newPosts.length < limit) this.setState({ loadMore: false })
                 newPosts.forEach(post => limit === 1 ? posts.unshift(post) : posts.push(post))
                 this.setState({
                     posts,
-                    offset: this.state.offset + limit
+                    offset: this.state.offset + newPosts.length
                 })
             })
             .catch(err => notify(err, 'error'))
@@ -69,6 +75,20 @@ class Home extends Component {
 
     loadOneMore() {
         this.loadMore(1)
+    }
+
+    refresh() {
+        console.log('refresh')
+        this.props.home ?
+            this.getPosts(`${baseApiUrl}/posts?limit=10&offset=0`) :
+            this.getPosts(`${baseApiUrl}/posts/${this.props.location.state.id}?limit=10&offset=0`)
+    }
+
+    async deletePost() {
+        const offset = this.state.offset
+        await this.setState({ ...initialState, posts: [] })
+        await this.loadMore(offset, 0)
+        this.setState({ loading: false })
     }
 
     componentDidMount() {
@@ -84,12 +104,12 @@ class Home extends Component {
                     <Loading /> :
                     <div className="home">
                         {this.props.anotherUser ?
-                        <AnotherUseProfile { ...this.props.location.state } />:
-                        <NewPost update={this.loadOneMore} />
+                            <AnotherUseProfile {...this.props.location.state} /> :
+                            <NewPost update={this.loadOneMore} />
                         }
                         <ul>{this.state.posts}</ul>
-                        {this.state.loadMore && 
-                            <button className="load-more" onClick={this.loadTenMore} >Load more</button> }
+                        {this.state.loadMore &&
+                            <button className="load-more" onClick={this.loadTenMore} >Load more</button>}
                     </div>
                 }
             </div>

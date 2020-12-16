@@ -93,7 +93,7 @@ class Post extends Component {
                         <img src={pictureDefault} alt="profile" />}
                 </div>
                 <div className="aside">
-                    {this.state.user && <Link className="name" to={
+                    {this.state.user && <Link /*onClick={this.props.refresh && this.props.refresh()}*/ className="name" to={
                         this.state.user.id === this.props.user.id ? '/profile' : {
                             pathname: '/user',
                             state: { ...this.state.user, small: false }
