@@ -82,12 +82,12 @@ class Comments extends Component {
                         <button className="btn btn-primary post-button" onClick={this.postComment} >Post</button>
                     </div>
                     <div className='comments-list' >
-                        {this.state.commentsJSX.length === 0 ? 'Comments' : this.state.commentsJSX}
+                        {this.state.commentsJSX.length > 0 && this.state.commentsJSX}
                     </div>
                 </div>
             </div>
         )
-    }
+    }// talvez adicionar a funcionalidade de responder comentários
 }
 
 const mapStateToProps = store => ({ user: store.userState.user })

@@ -129,6 +129,8 @@ class Profile extends Component {
         )
     }
 }// decida se vai trabalhar no chat, no css, ou na busca de usuários
+//por enquanto, faça o css e o chat em um projeto à parte
+//pense em como integras o chat ao design atual
 
 const mapStateToProps = store => ({ user: store.userState.user })
 
@@ -136,4 +138,3 @@ export default connect(mapStateToProps)(Profile)
 
 //deve ser possível mandar mensagem
 //tente deixar o design mais responsivo
-//faça com que não tenha mensagens de erro desnecessárias, por exemplo, quando está o token é inválido mas ocorre um erro antes de redirecionar para o /auth

@@ -84,7 +84,7 @@ class Post extends Component {
         this.setState({ likes: this.props.likes })
     }
 
-    render() { //comments precisa de ajustes no estilo
+    render() {
         return (
             <div className="post">
                 <div className="profile-picture">
