@@ -171,3 +171,10 @@
     position: relative;
     top: 50px;
 }
+
+.chat {
+    z-index: 100;
+    position: fixed;
+    top: 40%;
+    left: 40%;
+}

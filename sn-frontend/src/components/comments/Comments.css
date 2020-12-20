@@ -85,3 +85,8 @@
     border: none;
     outline: none;
 }
+
+.name a, .name a:hover {
+    color: #000;
+    text-decoration: none;
+}

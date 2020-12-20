@@ -1,8 +1,11 @@
 const app = require('express')()
+const server = require('http').createServer(app)
+const io = require('socket.io')(server)
 const db = require('./config/db')
 const consign = require('consign')
 const port = 8081
 
+app.io = io
 app.db = db
 
 consign()
@@ -12,6 +15,6 @@ consign()
     .then('./config/routes.js')
     .into(app)
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log('Running on port: ' + port)
 })

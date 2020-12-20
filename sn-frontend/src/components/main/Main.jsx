@@ -145,3 +145,4 @@ const mapStateToProps = store => ({
 export default connect(mapStateToProps)(Home)
 
 //use o redux para alguma coisa e faça o chat com socket logo
+//talvez usar mais o cache para diminuir os carregmentos
