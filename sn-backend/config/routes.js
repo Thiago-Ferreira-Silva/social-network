@@ -53,4 +53,6 @@ module.exports = app => {
     app.route('/posts/:userId')
         .all(app.config.passport.authenticate())
         .get(app.api.post.getByUserId)
+
+    
 }

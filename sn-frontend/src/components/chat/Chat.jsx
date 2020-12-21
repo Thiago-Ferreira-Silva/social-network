@@ -2,12 +2,13 @@ import './Chat.css'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { io } from 'socket.io-client'
-import { baseApiUrl } from '../../global'
+//import socketIoClient from 'socket.io-client'
+//import { baseApiUrl } from '../../global'
+//import { socket } from '../../global'
 //não é assim
 
+//let socket
 const initialState = {
-    socket: io(baseApiUrl),
     message: ''
 }
 
@@ -27,8 +28,11 @@ class Chat extends Component {
 
     send() {
         console.log(this.state.message)
-        this.state.socket.emit('message', this.state.message)
         this.setState({ message: '' })
+    }
+
+    componentDidMount() {
+        //socket.emit('message', 'This is a message')
     }
 
     render () {
