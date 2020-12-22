@@ -1,4 +1,23 @@
+/*import React, { useEffect } from 'react'
+import socketIoClient from 'socket.io-client'
+import { baseApiUrl } from '../../global'
 import './Chat.css'
+
+export default function Chat() {
+    useEffect(() => {
+        const socket = socketIoClient(baseApiUrl)
+        socket.on('hello', msg => console.log(msg))
+    }, [])
+
+    return (
+        <div className="chat">
+            <input type="text"  />
+            <button >Send</button>
+        </div>
+    )
+}*/
+
+/*import './Chat.css'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
@@ -49,3 +68,4 @@ const mapStateToProps = store => ({ user: store.userState.user })
 
 export default connect(mapStateToProps)(Chat)
 //adicionar notificações
+*/

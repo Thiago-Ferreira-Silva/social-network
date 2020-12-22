@@ -90,7 +90,6 @@ class AnotherUserProfile extends Component {
                             <textarea maxLength="500" disabled={true} className='bio-text' value={this.props.bio || ''} placeholder='Bio' />
                         </div>
                     }
-                    <Chat className='chat' />
                 </div>
             </div>
         )//deixar tudo responsivo, mesmo no celular, e implementar o estilo para user-small de forma que fique compacto e caibam vários na mesma linha

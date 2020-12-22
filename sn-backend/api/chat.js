@@ -1,4 +1,4 @@
-module.exports = app => {
+/*module.exports = app => {
     app.io.on('connection', socket => {
         //console.log('An user has connected')
         app.io.emit('hello', 'hello')
@@ -9,7 +9,7 @@ module.exports = app => {
             //console.log('An user has disconnected')
         })
     })
-}
+}*/
 
 /*
 Não está nem perto de funcionar.
