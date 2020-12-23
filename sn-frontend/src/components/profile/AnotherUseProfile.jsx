@@ -91,6 +91,7 @@ class AnotherUserProfile extends Component {
                         </div>
                     }
                 </div>
+                <Chat />
             </div>
         )//deixar tudo responsivo, mesmo no celular, e implementar o estilo para user-small de forma que fique compacto e caibam vários na mesma linha
     }

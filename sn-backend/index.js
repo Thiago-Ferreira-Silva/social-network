@@ -16,12 +16,12 @@ io.on('connection', socket => {
 app.io = io
 app.db = db
 
-/*consign()
+consign()
     .include('./config/passport.js')
     .then('./config/middlewares.js')
     .then('./api')
     .then('./config/routes.js')
-    .into(app)*/
+    .into(app)
 
 server.listen(port, () => {
     console.log('Running on port: ' + port)

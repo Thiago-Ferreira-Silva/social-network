@@ -17,16 +17,21 @@ export default function Chat() {
     )
 }*/
 
-/*import './Chat.css'
+import './Chat.css'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-//import socketIoClient from 'socket.io-client'
+import io from 'socket.io-client'
 //import { baseApiUrl } from '../../global'
 //import { socket } from '../../global'
 //não é assim
 
 //let socket
+
+const socket = io('http://localhost:8082')
+socket.on('hello', msg => console.log(msg))
+socket.emit('message', 'Hello world!')
+
 const initialState = {
     message: ''
 }
@@ -68,4 +73,3 @@ const mapStateToProps = store => ({ user: store.userState.user })
 
 export default connect(mapStateToProps)(Chat)
 //adicionar notificações
-*/
