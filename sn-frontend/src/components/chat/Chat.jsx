@@ -1,13 +1,23 @@
-/*import React, { useEffect } from 'react'
-import socketIoClient from 'socket.io-client'
-import { baseApiUrl } from '../../global'
+import React, { useEffect } from 'react'
+import io from 'socket.io-client'
+//import { baseApiUrl } from '../../global'
 import './Chat.css'
 
 export default function Chat() {
+
+    const ENDPOINT = 'http://localhost:8082'
+
     useEffect(() => {
-        const socket = socketIoClient(baseApiUrl)
+        const socket = io(ENDPOINT)
         socket.on('hello', msg => console.log(msg))
-    }, [])
+
+        socket.emit('message', 'This is a message')
+
+        return () => {
+            socket.disconnect()
+        }
+
+    }, [ENDPOINT])
 
     return (
         <div className="chat">
@@ -15,9 +25,9 @@ export default function Chat() {
             <button >Send</button>
         </div>
     )
-}*/
+}
 
-import './Chat.css'
+/*import './Chat.css'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
@@ -73,3 +83,4 @@ const mapStateToProps = store => ({ user: store.userState.user })
 
 export default connect(mapStateToProps)(Chat)
 //adicionar notificações
+*/
