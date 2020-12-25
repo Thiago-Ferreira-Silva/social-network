@@ -1,17 +1,9 @@
 const app = require('express')()
 const server = require('http').createServer(app)
-const io = require('socket.io')(server)
+const io = require('socket.io')(server ,{ cors: {origin: 'http://localhost:3000'}})
 const db = require('./config/db')
 const consign = require('consign')
 const port = 8081
-
-io.on('connection', socket => {
-    //console.log('An user has connected')
-    io.emit('hello', 'hello')
-    socket.on('message', msg => {
-        console.log(msg)
-    })
-})
 
 app.io = io
 app.db = db

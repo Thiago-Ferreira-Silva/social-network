@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+/*import React, { useEffect } from 'react'
 import io from 'socket.io-client'
-//import { baseApiUrl } from '../../global'
+import { baseApiUrl } from '../../global'
 import './Chat.css'
 
 export default function Chat() {
 
-    const ENDPOINT = 'http://localhost:8082'
+    const ENDPOINT = baseApiUrl
 
     useEffect(() => {
         const socket = io(ENDPOINT)
@@ -25,22 +25,15 @@ export default function Chat() {
             <button >Send</button>
         </div>
     )
-}
+}*/
 
-/*import './Chat.css'
+import './Chat.css'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
-//import { baseApiUrl } from '../../global'
-//import { socket } from '../../global'
-//não é assim
-
-//let socket
-
-const socket = io('http://localhost:8082')
-socket.on('hello', msg => console.log(msg))
-socket.emit('message', 'Hello world!')
+import { baseApiUrl } from '../../global'
+const socket = io(baseApiUrl)
 
 const initialState = {
     message: ''
@@ -61,12 +54,16 @@ class Chat extends Component {
     }
 
     send() {
-        console.log(this.state.message)
+        socket.emit('message', this.state.message)
         this.setState({ message: '' })
     }
 
     componentDidMount() {
-        //socket.emit('message', 'This is a message')
+        //agora faça o chat
+    }
+
+    componentWillUnmount() {
+        socket.disconnect()
     }
 
     render () {
@@ -83,4 +80,3 @@ const mapStateToProps = store => ({ user: store.userState.user })
 
 export default connect(mapStateToProps)(Chat)
 //adicionar notificações
-*/
