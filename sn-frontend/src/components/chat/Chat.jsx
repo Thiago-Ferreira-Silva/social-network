@@ -38,9 +38,6 @@ class Chat extends Component {
     }
 
     render () {
-        socket.on('message', (msg, userId) => {
-            console.log(userId, msg)
-        })
         return (
             <div className="chat">
                 <input type="text" value={this.state.message} onChange={this.inputMessage} />

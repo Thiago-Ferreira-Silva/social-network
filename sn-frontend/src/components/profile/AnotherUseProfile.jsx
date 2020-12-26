@@ -52,7 +52,7 @@ class AnotherUserProfile extends Component {
         return (
             <div className={this.props.small ? 'user-container-small' : 'another-user-container'}>
                 <div className={this.props.small ? 'user-small' : 'user'} >
-                    {this.props.user.friends[this.props.id] ?
+                    {this.props.user.friends && this.props.user.friends[this.props.id] ?
                         <div className="friends-button">
                             <button className="btn btn-danger" onClick={this.removeFriend}>Remove</button>
                         </div> :
@@ -93,7 +93,7 @@ class AnotherUserProfile extends Component {
                 </div>
                 <Chat />
             </div>
-        )//deixar tudo responsivo, mesmo no celular, e implementar o estilo para user-small de forma que fique compacto e caibam vários na mesma linha
+        )//deixar tudo responsivo, mesmo no celular
     }
 }
 

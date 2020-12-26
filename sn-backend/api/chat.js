@@ -9,6 +9,7 @@ module.exports = app => {
         })
         socket.on('message', (msg, userId) => {
             console.log(msg)
+            socket.join(userId)
             socket.to(userId).emit('message', msg, usersOnline[socket.id])
         })
         socket.on('disconnect', () => {
@@ -16,3 +17,5 @@ module.exports = app => {
         })
     })
 }
+
+// vai precisar de banco de dados; talvez criar uma tabela para mensagens e outra para mensagens não vistas, mas eu não sei como fazer isso, façã o chat depois que cuidar dos comentários a da responsividade

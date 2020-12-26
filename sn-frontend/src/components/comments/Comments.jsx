@@ -87,7 +87,7 @@ class Comments extends Component {
                 </div>
             </div>
         )
-    }// talvez adicionar a funcionalidade de responder comentários
+    }
 }
 
 const mapStateToProps = store => ({ user: store.userState.user })
