@@ -16,15 +16,6 @@ import Footer from './components/template/Footer'
 
 import { BrowserRouter } from 'react-router-dom'
 import Loading from './components/template/Loading'
-/*
-import { io } from 'socket.io-client'
-import { baseApiUrl } from './global'
-
-const socket = io(baseApiUrl)
-socket.connect()
-socket.on('hello', msg => console.log(msg))
-socket.emit('message', 'Hello world!')
-console.log(socket)*/
 
 const setToken = () => {
   axios.defaults.headers.common['Authorization'] = `bearer ${Store.getState().userState.user.token}`

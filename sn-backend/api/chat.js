@@ -1,11 +1,18 @@
 module.exports = app => {
+
+    const usersOnline = {}
+
     app.io.on('connection', socket => {
-        app.io.emit('hello', 'hello')
-        socket.on('message', msg => {
+        socket.on('online', id => {
+            usersOnline[socket.id] = id
+            socket.join(id)
+        })
+        socket.on('message', (msg, userId) => {
             console.log(msg)
+            socket.to(userId).emit('message', msg, usersOnline[socket.id])
         })
         socket.on('disconnect', () => {
-            console.log('An user has disconnected')
+            delete usersOnline[socket.id]
         })
     })
 }

@@ -1,32 +1,3 @@
-/*import React, { useEffect } from 'react'
-import io from 'socket.io-client'
-import { baseApiUrl } from '../../global'
-import './Chat.css'
-
-export default function Chat() {
-
-    const ENDPOINT = baseApiUrl
-
-    useEffect(() => {
-        const socket = io(ENDPOINT)
-        socket.on('hello', msg => console.log(msg))
-
-        socket.emit('message', 'This is a message')
-
-        return () => {
-            socket.disconnect()
-        }
-
-    }, [ENDPOINT])
-
-    return (
-        <div className="chat">
-            <input type="text"  />
-            <button >Send</button>
-        </div>
-    )
-}*/
-
 import './Chat.css'
 
 import React, { Component } from 'react'
@@ -54,12 +25,12 @@ class Chat extends Component {
     }
 
     send() {
-        socket.emit('message', this.state.message)
+        socket.emit('message', this.state.message, this.props.user.id)
         this.setState({ message: '' })
     }
 
     componentDidMount() {
-        //agora faça o chat
+        socket.emit('online', this.props.user.id)
     }
 
     componentWillUnmount() {
@@ -67,6 +38,9 @@ class Chat extends Component {
     }
 
     render () {
+        socket.on('message', (msg, userId) => {
+            console.log(userId, msg)
+        })
         return (
             <div className="chat">
                 <input type="text" value={this.state.message} onChange={this.inputMessage} />

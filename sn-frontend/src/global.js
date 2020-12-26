@@ -1,13 +1,8 @@
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-//import { io } from 'socket.io-client'
 
 toast.configure()
 export const baseApiUrl = 'http://localhost:8081'
-
-//export const socket = io(baseApiUrl)
-//socket.emit('message', 'message')
-//console.log(socket)
 
 export const notify = (msg, type) => {
     if (type === 'error') {
