@@ -83,6 +83,13 @@
     cursor: default;
 }
 
+.link-small, .link-small:hover {
+    color: #222;
+    text-decoration: none;
+    cursor: default;
+    display: none;
+}
+
 .content {
     background-color: #a0a0a0;
 
@@ -141,3 +148,35 @@
         transform: rotate(360deg);
     }
 }
+
+@media (max-width: 370px)
+{
+    .header {
+        margin-bottom: 7.5vh;
+    }
+    .link {
+        display: none;
+    }
+    .link-small {
+        display: inline;
+    }
+    .user-button {
+        display: none;
+    }
+    .user-dropdown-content {
+        background-color: #a0a0ac;
+        visibility: visible;
+        opacity: 1;
+        right: 100%;
+        top: 10vh;
+        width: 100vw;
+        height: 7.5vh;
+        flex-direction: row;
+        padding: 0;
+    }
+    .dropdown-link {
+        padding: 0;
+        width: 50%;
+    }
+}
+/* Ajustar as cores, procurar um meio de reconhecer se a tela é touch, limitar o tamanho mínimo, e fazer a responsividade do resto */
