@@ -26,9 +26,9 @@ class UserDropDown extends Component {
                     <span className="name">{name}</span>
                     <FontAwesomeIcon icon={faAngleDown} />
                 </div>
-                <div className="user-dropdown-content">
-                    <Link to='/profile' className="dropdown-link" ><FontAwesomeIcon icon={faCogs} />    My profile</Link>
-                    <div className="dropdown-link" onClick={this.logout}><FontAwesomeIcon icon={faSignOutAlt} />    Logout</div>
+                <div className={`user-dropdown-content ${this.props.isTouch ? 'is-touch' : ''} `}>
+                    <Link to='/profile' className={`dropdown-link ${this.props.isTouch ? 'is-touch' : ''} `} ><FontAwesomeIcon icon={faCogs} />    My profile</Link>
+                    <div className={`dropdown-link ${this.props.isTouch ? 'is-touch' : ''} `} onClick={this.logout}><FontAwesomeIcon icon={faSignOutAlt} />    Logout</div>
                 </div>
             </div>
         )
@@ -36,7 +36,8 @@ class UserDropDown extends Component {
 }
 
 const mapStateToProps = store => ({
-    user: store.userState.user
+    user: store.userState.user,
+    isTouch: store.isTouchState.isTouch
 })
 
 export default connect(mapStateToProps)(UserDropDown)

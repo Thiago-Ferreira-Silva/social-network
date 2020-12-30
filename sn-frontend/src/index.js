@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Store, persistor } from './redux/store'
+import { checkIfIsTouch } from './redux/actions'
 import axios from 'axios'
 
 import './index.css'
@@ -33,7 +34,11 @@ ReactDOM.render(
       </BrowserRouter>
     </PersistGate>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
+  () => {
+    const isTouch = 'ontouchstart' in document.documentElement;
+    Store.dispatch(checkIfIsTouch(isTouch))
+  }
 );
 
 
