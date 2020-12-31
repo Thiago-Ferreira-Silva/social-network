@@ -139,7 +139,11 @@
     outline: none;
 }
 
-@media (max-width: 830px) 
+.date-small {
+    display: none;
+}
+
+@media (max-width: 860px) 
 { /* O NewPost está quebrando quando adiciona imagem; as mensagens de sucesso estão ficando irritantes */
     .interactions {
         flex-direction: column;
@@ -150,5 +154,14 @@
 
 @media (max-width: 670px)
 {
-    /* Talvez fazer a responsividade aqui com o bootstrap; encontre alguma forma bonita de se faer isso */
+    .date {
+        display: none;
+    }
+    .date-small {
+        display: inline;
+    }
+    .post .profile-picture img {
+        width: 30px;
+        border-radius: 50%;
+    }
 }

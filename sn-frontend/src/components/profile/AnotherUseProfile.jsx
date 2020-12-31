@@ -24,7 +24,7 @@ class AnotherUserProfile extends Component {
     addFriend() {
         axios.post(`${baseApiUrl}/users/${this.props.user.id}/friends`, { friendId: this.props.id })
             .then(_ => {
-                const friends = this.props.user.friends
+                const friends = this.props.user.friends || {}
                 friends[this.props.id] = this.props.id
                 this.props.dispatch(saveUser({ ...this.props.user, friends }))
                 notify()

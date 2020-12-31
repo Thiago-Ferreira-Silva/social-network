@@ -99,6 +99,7 @@ class Post extends Component {
                             state: { ...this.state.user, small: false }
                         }}>{this.state.user.name}</Link>}
                     <div className="date">{this.props.date}</div>
+                    <div className="date-small">{this.props.date.slice(0, 10)}</div>
                     {this.props.user.id === this.props.userId && <button className="button-delete-post"
                         onClick={this.removePost}><FontAwesomeIcon icon={faTrashAlt} /></button>}
                     <div className="interactions">
