@@ -4,6 +4,7 @@
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 8px;
+    background-color: #fffc;
 }
 
 .new-post-text, .new-post-text:focus {
@@ -12,23 +13,20 @@
     border: none;
     width: 100%;
     height: 24vh;
-
-    background-color: #fffc;
 }
 
 .new-post-image-container {
-    width: 100%;
-    background-color: #fffc;
-
+    width: 90%;
+    margin-left: 5%;
     display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
 }
 
 .image {
     max-width: 100%;
     max-height: 48vh;
-    margin-right: auto;
+    margin: 20px 0;
 }
 
 .image-button, .image-button:focus {
@@ -56,10 +54,11 @@
 
     display: grid;
     grid-template-columns: 20% 1fr ;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto 1fr 1fr;
 
     grid-template-areas: 'picture main'
-                         'aside main';
+                         'aside main'
+                         'interactions main';
 }
 
 .profile-picture {
@@ -92,7 +91,7 @@
 }
 
 .interactions {
-    flex-grow: 1;
+    grid-area: interactions;
     display: flex;
     align-items: flex-end;
 }
@@ -139,10 +138,6 @@
     outline: none;
 }
 
-.date-small {
-    display: none;
-}
-
 @media (max-width: 860px) 
 { /* O NewPost está quebrando quando adiciona imagem; as mensagens de sucesso estão ficando irritantes */
     .interactions {
@@ -150,18 +145,41 @@
         align-items: flex-start;
         justify-content: flex-end;
     }
+    .open-comments {
+        margin-left: 0;
+        padding-left: 0;
+    }
 }
 
 @media (max-width: 670px)
 {
+    .post {
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas: 'picture aside'
+                             'main main'
+                             'interactions interactions';
+    }
+    .aside {
+        margin-left: 15px;
+        width: 100% !important ;
+        flex-direction: row !important ;
+        justify-content: space-between;
+    }
+    .interactions {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .post-main {
+        border-left: none;
+        border-top: solid 1px #000;
+        margin-top: 20px;
+    }
     .date {
         display: none;
     }
-    .date-small {
-        display: inline;
-    }
     .post .profile-picture img {
-        width: 30px;
+        width: 40px;
         border-radius: 50%;
     }
 }

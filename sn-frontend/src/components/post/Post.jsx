@@ -99,20 +99,19 @@ class Post extends Component {
                             state: { ...this.state.user, small: false }
                         }}>{this.state.user.name}</Link>}
                     <div className="date">{this.props.date}</div>
-                    <div className="date-small">{this.props.date.slice(0, 10)}</div>
                     {this.props.user.id === this.props.userId && <button className="button-delete-post"
                         onClick={this.removePost}><FontAwesomeIcon icon={faTrashAlt} /></button>}
-                    <div className="interactions">
-                        <div className="likes-container">
-                            <div className="likes">
-                                {this.state.likes}
-                            </div>
-                            <button className='like-button' onClick={this.like} >
-                                <FontAwesomeIcon icon={this.state.liked ? thumbsUpSolid : thumbsUpRegular} size='lg' />
-                            </button>
+                </div>
+                <div className="interactions">
+                    <div className="likes-container">
+                        <div className="likes">
+                            {this.state.likes}
                         </div>
-                        <button className="open-comments" onClick={this.altShowComments} >Comments</button>
+                        <button className='like-button' onClick={this.like} >
+                            <FontAwesomeIcon icon={this.state.liked ? thumbsUpSolid : thumbsUpRegular} size='lg' />
+                        </button>
                     </div>
+                    <button className="open-comments" onClick={this.altShowComments} >Comments</button>
                 </div>
                 <div className="post-main">
                     <div className="text">

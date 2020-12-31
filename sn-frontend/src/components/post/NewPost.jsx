@@ -57,13 +57,13 @@ class NewPost extends Component {
                 <div className="new-post-image-container">
                     <input type="file" className="input-file" onChange={this.addImage}
                         ref={imageInput => this.imageInput = imageInput} />
-                    {this.state.image ?
-                        <button className="image-button" onClick={this.removeImage}><FontAwesomeIcon icon={faTrash} /></button> :
-                        <button className="image-button" onClick={() => this.imageInput.click()}><FontAwesomeIcon icon={faImage} /></button>
-                    }
                     {this.state.image && <img src={this.state.image} alt="" className="image" />}
-                    <button className="btn btn-primary post-button" onClick={this.post}>Post</button>
                 </div>
+                {this.state.image ?
+                    <button className="image-button" onClick={this.removeImage}><FontAwesomeIcon icon={faTrash} /></button> :
+                    <button className="image-button" onClick={() => this.imageInput.click()}><FontAwesomeIcon icon={faImage} /></button>
+                }
+                <button className="btn btn-primary post-button" onClick={this.post}>Post</button>
             </div>
         )
     }
