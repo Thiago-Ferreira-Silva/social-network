@@ -128,9 +128,7 @@ class Profile extends Component {
             </div>
         )
     }
-}// decida se vai trabalhar no chat, no css, ou na busca de usuários
-//por enquanto, faça o css e o chat em um projeto à parte
-//pense em como integras o chat ao design atual
+}// media query com 440px para colocar apenas um amigo por linha e centralizado
 
 const mapStateToProps = store => ({ user: store.userState.user })
 
