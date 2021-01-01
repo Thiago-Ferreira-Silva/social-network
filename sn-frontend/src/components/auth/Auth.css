@@ -9,7 +9,7 @@
 
 .auth-form {
     background-color: #fff;
-    width: 350px;
+    width: 340px;
     padding: 35px;
     box-shadow: 0 1px 5px #00000026;
 
@@ -19,7 +19,7 @@
 }
 
 .auth-title {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 100;
     margin-bottom: 15px;
 }

@@ -97,6 +97,7 @@
 .is-touch .user-dropdown-content .dropdown-link {
     padding: 10px;
     width: 50%;
+    cursor: pointer;
 }
 
 .title {
@@ -176,7 +177,7 @@
     }
 }
 
-@media (max-width: 370px)
+@media (max-width: 425px)
 {
     .header {
         margin-bottom: 7.5vh;
@@ -205,4 +206,8 @@
         padding: 10px;
         width: 50%;
     }
+}
+
+.is-auth {
+    margin-bottom: 0;
 }

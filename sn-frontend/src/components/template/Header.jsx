@@ -9,7 +9,8 @@ class Header extends Component {
     render() {
         const user = this.props.user
         return (
-            <div className={`header ${user.name ? '': 'center'} ${this.props.isTouch ? 'is-touch-header' : ''} `}>
+            <div className={`header ${user.name ? '': 'center'} ${this.props.isTouch ? 'is-touch-header' : ''}
+             ${ window.location.pathname === '/auth' ? 'is-auth' : ''} `}>
                 <div className={`empty ${user.name ? '': 'hidden'} `} ></div>
                 <h1 className="title">
                     <Link className='link' to='/'>Social Network</Link>
@@ -20,8 +21,7 @@ class Header extends Component {
         )
     }
 }
-// comece com a responsividade por aqui
-// mudar de social network para sn e transformar o dropdown em dois botões fixos para telas menores 
+
 const mapStateToProps = store => ({
     user: store.userState.user,
     isTouch: store.isTouchState.isTouch
