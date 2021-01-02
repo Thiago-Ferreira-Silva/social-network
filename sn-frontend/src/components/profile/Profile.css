@@ -15,7 +15,7 @@
 
 .user {
     width: 90%;
-    margin: 10px 0;
+    margin-top: 20px;
 
     display: grid;
     grid-template-columns: 180px 1fr 100px;
@@ -28,7 +28,7 @@
 .user-container-small {
     width: 190px;
     height: 215px;
-    margin: 15px;
+    margin: 0 0 15px 15px;
 }
 
 .user-small {
@@ -43,7 +43,6 @@
 .user-small:hover {
     background-color: #0007;
     box-shadow: 0px 0px 14px 3px rgba(0,0,0,0.6);
-    /* talvez transformar o componente inteiro em um link (menos o botão) */
 }
 
 .user .profile-picture {
@@ -53,6 +52,7 @@
 }
 
 .user .image {
+    margin: 0;
     min-height: 100%;
     min-width: 100%;
     position: absolute;
@@ -177,4 +177,38 @@
     position: fixed;
     top: 40%;
     left: 40%;
+}
+
+@media (max-width: 440px)
+{
+    .user-container .friends {
+        margin-top: 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .user {
+        grid-template-columns: 180px 1fr;
+        grid-template-rows: 50px 130px 1fr;
+    
+        grid-template-areas: " picture aside "
+                             " picture name "
+                             " bio bio ";
+    }
+
+    .user .your-posts, .user .friends-button {
+        justify-content: flex-end;
+        padding: 18px 0;
+    }
+
+    .user .name {
+        padding: 0 8px;
+        margin-left: 0;
+        font-size: 1.2rem;
+    }
+
+    .user .bio {
+        margin-top: 10px;
+        min-height: 130px;
+    }
 }

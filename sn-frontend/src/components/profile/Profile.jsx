@@ -95,7 +95,6 @@ class Profile extends Component {
         const user = this.props.user
         return (
             <div className="user-container">
-
                 <div className="user">
                     <div className="profile-picture">
                         <button className="img-button" alt="change profile picture" onClick={() => this.imageInput.click()}><FontAwesomeIcon icon={faCamera} /></button>
@@ -124,7 +123,6 @@ class Profile extends Component {
                 {this.state.loadingFriends ? <Loading /> :
                     <div className="friends">{this.state.friends || <div>Your friends</div>}</div>
                 }
-
             </div>
         )
     }

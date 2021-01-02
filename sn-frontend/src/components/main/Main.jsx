@@ -128,7 +128,7 @@ class Home extends Component {
                             <AnotherUseProfile {...this.props.location.state} /> :
                             <NewPost update={this.loadOneMore} />
                         }
-                        <ul>{this.state.posts}</ul>
+                        <div className="posts-list" >{this.state.posts}</div>
                         {this.state.loadMore &&
                             <button className="load-more" onClick={this.loadTenMore} >Load more</button>}
                     </div>
