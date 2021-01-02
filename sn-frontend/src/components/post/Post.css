@@ -160,7 +160,7 @@
                              'main main'
                              'interactions interactions';
     }
-    .aside {
+    .post-aside {
         margin-left: 15px;
         width: 100% !important ;
         flex-direction: row !important ;

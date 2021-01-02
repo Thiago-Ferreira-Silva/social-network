@@ -8,6 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
 .comments {
@@ -49,7 +50,6 @@
     padding: 4px;
     margin: 6px 0;
     display: flex;
-    height: 27vh;
     min-height: 140px;
     
     background-color: #888;
@@ -60,6 +60,7 @@
     min-width: 95px;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .comment .profile-picture img {
@@ -89,4 +90,18 @@
 .name a, .name a:hover {
     color: #000;
     text-decoration: none;
+}
+
+/* agora é a vez desse */
+@media (max-width: 770px)
+{
+    .comment {
+        min-height: 50px;
+    }
+    .comment .aside {
+      width: 100px;
+    }
+    .comment .aside .profile-picture {
+        display: none;
+    }
 }
