@@ -54,7 +54,7 @@ class Comments extends Component {
                 .then(res => {
                     const date = new Date(comment.date).toLocaleString()
                     const commentJSX = <Comment text={comment.text} date={date} author={res.data}
-                        key={`${comment.date}-${comment.id}${comment.userId}`} />
+                        close={this.close} key={`${comment.date}-${comment.id}${comment.userId}`} />
                     commentsJSX.unshift(commentJSX)
                 })
                 .catch(err => notify(err, 'error'))

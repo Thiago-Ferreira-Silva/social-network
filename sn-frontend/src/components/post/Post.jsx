@@ -60,7 +60,6 @@ class Post extends Component {
             document.body.classList.remove('show-comments') :
             document.body.classList.add('show-comments')
         this.setState({ showComments: !this.state.showComments })
-        //problemas em dispositivos apple
     }
 
     checkIfLiked() {
@@ -124,11 +123,9 @@ class Post extends Component {
                 { this.state.showComments && <Comments close={this.altShowComments} id={this.props.id} comments={this.props.comments} key={this.props.id} />}
             </div>
         )
-    }//tentar usar as bibliotecas do bootstrap ao invés do link no index.html, se não for usar, remover as dependências
+    }
 }
 
 const mapStateToProps = store => ({ user: store.userState.user })
 
 export default connect(mapStateToProps)(Post)
-
-//devo fazer uma busca de usuários?

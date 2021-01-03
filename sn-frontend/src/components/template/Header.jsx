@@ -29,4 +29,3 @@ const mapStateToProps = store => ({
 
 export default connect(mapStateToProps)(Header)
 //também parece ser uma boa disponibilizar mais coisas offline
-//veja se dá para fazer sem usar uma div vazia

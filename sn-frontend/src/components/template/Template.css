@@ -65,13 +65,13 @@
     opacity: 1;
 }
 
-.user-dropdown-content .dropdown-link {
+.dropdown-link {
     text-decoration: none;
     color: #000;
     padding: 10px;
 }
 
-.user-dropdown-content .dropdown-link:hover {
+.dropdown-link:hover {
     text-decoration: none;
     color: #000;
     background-color: #ededed;
@@ -94,7 +94,8 @@
     padding: 0;
 }
 
-.is-touch .user-dropdown-content .dropdown-link {
+.is-touch .user-dropdown-content .dropdown-link, .is-touch .user-dropdown-content .dropdown-link:hover {
+    background-color: transparent;
     padding: 10px;
     width: 50%;
     cursor: pointer;
@@ -202,7 +203,8 @@
         flex-direction: row;
         padding: 0;
     }
-    .dropdown-link {
+    .dropdown-link, .dropdown-link:hover {
+        background-color: transparent;
         padding: 10px;
         width: 50%;
     }

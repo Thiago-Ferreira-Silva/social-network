@@ -5,6 +5,16 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 export default class Comment extends Component {
+
+    constructor(props) {
+        super(props)
+        this.close = this.close.bind(this)
+    }
+
+    close() {
+        this.props.close && this.props.close()
+    }
+    
     render() {
         return (
             <div className="comment">
@@ -16,7 +26,7 @@ export default class Comment extends Component {
                         }
                     </div>
                     <div className="name">
-                        <Link onClick={document.body.classList.remove('show-comments')} to={{
+                        <Link onClick={this.close} to={{
                             pathname: '/user',
                             state: {
                                 id: this.props.author.id,
