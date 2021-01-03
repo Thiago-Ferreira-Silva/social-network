@@ -85,7 +85,6 @@
 }
 
 .name, .name:hover {
-    font-size: 1.2rem;
     color: #111;
     text-decoration: none;
 }
@@ -101,7 +100,7 @@
 }
 
 .likes {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
 }
 
 .open-comments, .open-comments:focus {
@@ -120,7 +119,6 @@
 }
 
 .post .text {
-    font-size: 1.2rem;
     margin-bottom: 5px;
     word-wrap: break-word;
 }
