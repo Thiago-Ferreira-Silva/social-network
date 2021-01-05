@@ -51,3 +51,5 @@ const mapStateToProps = store => ({ user: store.userState.user })
 
 export default connect(mapStateToProps)(Chat)
 //adicionar notificações
+//comece fazendo um chat simples entre dois usuários e deixe para cuidar do armazenamento e das mensagens offline depois
+//deixe os bugs e os ajustes de design para o final
