@@ -91,9 +91,9 @@ class AnotherUserProfile extends Component {
                         </div>
                     }
                 </div>
-                <Chat />
+                { this.props.small ? '' : <Chat place='anotherUser' userId={this.props.id} />}
             </div>
-        )//deixar tudo responsivo, mesmo no celular
+        )
     }
 }
 

@@ -25,12 +25,13 @@ class Chat extends Component {
     }
 
     send() {
-        socket.emit('message', this.state.message, this.props.user.id)
+        socket.emit('message', this.state.message, this.props.place === 'anotherUser' ? this.props.userId : null)
         this.setState({ message: '' })
     }
 
     componentDidMount() {
         socket.emit('online', this.props.user.id)
+        socket.on('message', msg => console.log(msg))
     }
 
     componentWillUnmount() {

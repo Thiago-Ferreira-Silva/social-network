@@ -9,6 +9,7 @@ module.exports = app => {
         })
         socket.on('message', (msg, userId) => {
             console.log(msg)
+            console.log(userId)
             socket.join(userId)
             socket.to(userId).emit('message', msg, usersOnline[socket.id])
         })
