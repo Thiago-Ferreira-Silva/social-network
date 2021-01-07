@@ -25,7 +25,8 @@ class Chat extends Component {
     }
 
     send() {
-        socket.emit('message', this.state.message, this.props.place === 'anotherUser' ? this.props.userId : null)
+        socket.emit('message', this.state.message, this.props.place === 'anotherUser' ? this.props.userId : null,
+         this.props.user.id)
         this.setState({ message: '' })
     }
 
