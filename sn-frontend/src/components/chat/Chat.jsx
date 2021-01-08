@@ -7,7 +7,8 @@ import { baseApiUrl } from '../../global'
 const socket = io(baseApiUrl)
 
 const initialState = {
-    message: ''
+    message: '',
+    messages: []
 }
 
 class Chat extends Component {
@@ -17,6 +18,7 @@ class Chat extends Component {
     constructor(props) {
         super(props)
         this.inputMessage = this.inputMessage.bind(this)
+        this.addMessage = this.addMessage.bind(this)
         this.send = this.send.bind(this)
     }
 
@@ -24,30 +26,46 @@ class Chat extends Component {
         this.setState({ message: event.target.value })
     }
 
+    addMessage(msg) {
+        console.log(msg)
+        const messages = this.state.messages
+        const message = <div className="message" key={msg} >{msg}</div>
+        messages.push(message)
+        this.setState({ messages })
+    }
+
     send() {
         socket.emit('message', this.state.message, this.props.place === 'anotherUser' ? this.props.userId : null,
-         this.props.user.id)
+        this.props.user.id)
+        this.addMessage(this.state.message)
         this.setState({ message: '' })
     }
 
     componentDidMount() {
-        socket.emit('online', this.props.user.id)
-        socket.on('message', msg => console.log(msg))
+        socket.connect()
+        socket.emit('online', this.props.user.id, this.props.user.name)
+        socket.on('message', msg => this.addMessage(msg))
     }
 
     componentWillUnmount() {
         socket.disconnect()
     }
 
+    componentDidUpdate() {
+        socket.connect()
+    }
+
     render () {
         return (
             <div className="chat">
+                <div className="messages">{this.state.messages}</div>
                 <input type="text" value={this.state.message} onChange={this.inputMessage} />
                 <button onClick={this.send} >Send</button>
             </div>
         )
     }
-}
+}// talvez, só talvez, usar o redux com redux persirst para armazenar as mensagens
+// primeiro cuidar do armazenamento e recuperação das mensagens para depois cuidar do resto
 
 const mapStateToProps = store => ({ user: store.userState.user })
 
