@@ -9,7 +9,9 @@ const socket = io(baseApiUrl)
 
 const initialState = {
     message: '',
-    chats: []
+    chats: [],
+    chatsJSX: {},
+    messages: [] //temporário
 }
 
 class Chat extends Component {
@@ -37,19 +39,38 @@ class Chat extends Component {
 
     send() {
         socket.emit('message', this.state.message, this.props.place === 'anotherUser' ? this.props.userId : null,
-        this.props.user.id)
+            this.props.user.id)
         this.addMessage(this.state.message)
         this.setState({ message: '' })
     }
 
     componentDidMount() {
+        let chats = []
+        const chatsJSX = {}
+
         axios.get(`${baseApiUrl}/chats/${this.props.user.id}`)
-            .then(res => this.setState({ chats: res.data }))
+            .then(res => chats = res.data)
             .catch(err => notify(err, 'error'))
+
+        chats.forEach(chat => {
+            const messages = chat.messages.map(message => {
+                return <div key={Math.random()} className={`message 
+                ${message.userId === this.props.user.id ? '' : 'another-user-message'}`}>
+                    {message.text}</div>
+            })
+            chatsJSX[chat.name] = <div key={`${chat.id1}${chat.id2}`} className="chat">
+                <div className="messages">{messages}</div>
+                <input type="text" value={this.state.message} onChange={this.inputMessage} />
+                <button onClick={this.send} >Send</button>
+            </div>
+        })
+
+        this.setState({ chats, chatsJSX })
+
         socket.connect()
         socket.emit('online', this.props.user.id, this.props.user.name)
         socket.on('message', msg => this.addMessage(msg))
-    }
+    }// precisa ser possível atualizar as mensagens diretamente no dom; me parece uma boa colocar isso em métodos separados para despoluir o componentDidMount
 
     componentWillUnmount() {
         socket.disconnect()
@@ -59,11 +80,11 @@ class Chat extends Component {
         socket.connect()
     }
 
-    render () {
+    render() {
         return (
             <div className="chat-container">
                 <div className="chats">
-
+                    {Object.values(this.state.chatsJSX)}
                 </div>
                 <div className="messages">{this.state.messages}</div>
                 <input type="text" value={this.state.message} onChange={this.inputMessage} />
