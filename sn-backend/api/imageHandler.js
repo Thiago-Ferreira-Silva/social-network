@@ -13,9 +13,14 @@ module.exports = app => {
             .first()
             .catch(err => res.status(500).send(err))
 
+        const user = await app.db('users')
+            .select('name')
+            .where({ id: user_id })
+            .first()
+
         if (picture) {
             picture.image = arrayToStringChar(picture.image)
-            return picture.image
+            return [picture.image, user.name]
         } else {
             return null
         }

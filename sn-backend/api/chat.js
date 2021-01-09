@@ -13,6 +13,24 @@ module.exports = app => {
             delete usersOnline[socket.id]
         })
     })
-}
 
-// vai precisar de banco de dados; talvez criar uma tabela para mensagens e outra para mensagens não vistas, mas eu não sei como fazer isso, faça o chat depois que cuidar dos comentários e da responsividade
+    const getChats = async (req, res) => {
+        let chats = await app.db('chats')
+                            .where({ id1: req.params.id })
+                            .orWhere({ id2: req.params.id })
+                            .catch(err => res.status(500).send(err))
+
+        const promisses = chats.map(async chat => {
+            const [profilePicture, name ] = await app.api.imageHandler.pickProfilePicture(req.params.id === chat.id1 ? id2 : id1)
+            const messages = JSON.parse(chat.messages)
+
+            return { ...chat, messages, profilePicture, name }
+        })
+
+        chats = await Promise.all(promisses)
+
+        res.send(chats)
+    }
+
+    return { getChats }
+}

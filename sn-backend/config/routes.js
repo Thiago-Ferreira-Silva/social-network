@@ -18,7 +18,7 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .post(app.api.user.saveProfilePicture)
         .put(app.api.user.saveProfilePicture)
-        .get(app.api.user.getProfilePicture)
+        //.get(app.api.user.getProfilePicture)
 
     app.route('/users/:id/bio')
         .all(app.config.passport.authenticate())
@@ -54,5 +54,7 @@ module.exports = app => {
         .all(app.config.passport.authenticate())
         .get(app.api.post.getByUserId)
 
-    
+    app.route('/chats/:id')
+        .all(app.config.passport.authenticate())
+        .get(app.api.chat.getChats)
 }

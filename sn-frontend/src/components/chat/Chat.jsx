@@ -3,12 +3,13 @@ import './Chat.css'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
-import { baseApiUrl } from '../../global'
+import axios from 'axios'
+import { baseApiUrl, notify } from '../../global'
 const socket = io(baseApiUrl)
 
 const initialState = {
     message: '',
-    messages: []
+    chats: []
 }
 
 class Chat extends Component {
@@ -42,6 +43,9 @@ class Chat extends Component {
     }
 
     componentDidMount() {
+        axios.get(`${baseApiUrl}/chats/${this.props.user.id}`)
+            .then(res => this.setState({ chats: res.data }))
+            .catch(err => notify(err, 'error'))
         socket.connect()
         socket.emit('online', this.props.user.id, this.props.user.name)
         socket.on('message', msg => this.addMessage(msg))
@@ -57,7 +61,10 @@ class Chat extends Component {
 
     render () {
         return (
-            <div className="chat">
+            <div className="chat-container">
+                <div className="chats">
+
+                </div>
                 <div className="messages">{this.state.messages}</div>
                 <input type="text" value={this.state.message} onChange={this.inputMessage} />
                 <button onClick={this.send} >Send</button>
@@ -73,3 +80,4 @@ export default connect(mapStateToProps)(Chat)
 //adicionar notificações
 //comece fazendo um chat simples entre dois usuários e deixe para cuidar do armazenamento e das mensagens offline depois
 //deixe os bugs e os ajustes de design para o final
+// chat = { profilepicture, name, id1, id2, messages } message: { date, text, userid }

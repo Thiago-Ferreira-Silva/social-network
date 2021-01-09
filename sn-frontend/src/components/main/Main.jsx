@@ -7,7 +7,7 @@ import NewPost from '../post/NewPost'
 import Post from '../post/Post'
 import Loading from '../template/Loading'
 import { baseApiUrl, notify } from '../../global'
-import AnotherUseProfile from '../profile/AnotherUseProfile'
+import AnotherUserProfile from '../profile/AnotherUserProfile'
 
 const initialState = {
     posts: [],
@@ -125,7 +125,7 @@ class Home extends Component {
                     <Loading /> :
                     <div className="main">
                         {this.props.usingFor === 'anotherUser' ?
-                            <AnotherUseProfile {...this.props.location.state} /> :
+                            <AnotherUserProfile {...this.props.location.state} /> :
                             <NewPost update={this.loadOneMore} />
                         }
                         <div className="posts-list" >{this.state.posts}</div>

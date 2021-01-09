@@ -52,7 +52,8 @@ module.exports = app => {
             .first()
             .catch(err => res.status(500).send(err))
 
-        user.profilePicture = await app.api.imageHandler.pickProfilePicture(req.params.id)
+        const [profilePicture, ] = await app.api.imageHandler.pickProfilePicture(req.params.id)
+        user.profilePicture = profilePicture
         res.send(user)
     }
 
@@ -88,7 +89,7 @@ module.exports = app => {
         }
     }
 
-    const getProfilePicture = async (req, res) => {
+    /*const getProfilePicture = async (req, res) => {
         const picture = await app.api.imageHandler.pickProfilePicture(req.params.id)
         const userName = await app.db('users')
                             .select('name')
@@ -98,7 +99,7 @@ module.exports = app => {
         const name = userName.name
         res.send({ picture, name })
         //provavelmente não será necessário
-    }
+    }*/
 
     const saveBio = async (req, res) => {
         app.db('users')
@@ -149,8 +150,8 @@ module.exports = app => {
                         .where({ id })
                         .first()
                         .catch(err => res.status(500).send(err))
-                const picture = await app.api.imageHandler.pickProfilePicture(id)
-    
+                const [picture, ] = await app.api.imageHandler.pickProfilePicture(id)
+            
                 if (picture) friend.profilePicture = picture
                 return friend
             })
@@ -185,5 +186,5 @@ module.exports = app => {
     //melhore o tratamento de erros e as mensagens de sucesso
     //vai precisar de paginação para os amigos
 
-    return { save, get, getById, remove, saveProfilePicture, getProfilePicture, saveBio, saveFriend, getFriends, removeFriend }
+    return { save, get, getById, remove, saveProfilePicture,/* getProfilePicture,*/ saveBio, saveFriend, getFriends, removeFriend }
 }

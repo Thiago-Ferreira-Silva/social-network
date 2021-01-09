@@ -10,7 +10,7 @@ import { saveUser } from '../../redux/actions'
 import { resizeImage } from '../../utils/imageHandler'
 import { Link } from 'react-router-dom'
 import Loading from '../template/Loading'
-import AnotherUserProfile from './AnotherUseProfile'
+import AnotherUserProfile from './AnotherUserProfile'
 import Chat from '../chat/Chat'
 
 const initialState = {
