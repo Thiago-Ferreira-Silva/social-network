@@ -10,8 +10,7 @@ const socket = io(baseApiUrl)
 const initialState = {
     message: '',
     chats: [],
-    chatsJSX: {},
-    messages: [] //temporário
+    chatsJSX: {}
 }
 
 class Chat extends Component {
@@ -31,11 +30,13 @@ class Chat extends Component {
     }
 
     addMessage(msg) {
-        console.log(msg)
-        const messages = this.state.messages
-        const message = <div className="message" key={msg} >{msg}</div>
-        messages.push(message)
-        this.setState({ messages })
+        //const chats = this.state.chatsJSX
+        //const message = <div className="message" key={msg} >{msg}</div>
+        //messages.push(message)
+        //this.setState({ messages })
+        //criar um método updateChatsJSX(name, id1, id2, messages)
+        //deve adicionar as mensagens passadas às que ja tem se for o caso
+        //talzez seja necessário colocar as mensagens separadamente
     }
 
     getChats() {
@@ -43,23 +44,23 @@ class Chat extends Component {
         const chatsJSX = {}
 
         axios.get(`${baseApiUrl}/chats/${this.props.user.id}`)
-            .then(res => chats = res.data)
-            .catch(err => notify(err, 'error'))
-
-        chats.forEach(chat => {
-            const messages = chat.messages.map(message => {
-                return <div key={Math.random()} className={`message 
-                ${message.userId === this.props.user.id ? '' : 'another-user-message'}`}>
-                    {message.text}</div>
+            .then(res => {
+                chats = res.data
+                chats.forEach(chat => {
+                    const messages = chat.messages.map(message => {
+                        return <div key={Math.random()} className={`message 
+                        ${message.userId === this.props.user.id ? '' : 'another-user-message'}`}>
+                            {message.text}</div>
+                    })
+                    chatsJSX[chat.name] = <div key={`${chat.id1}${chat.id2}`} className="chat">
+                        <div className="messages">{messages}</div>
+                        <input type="text" value={this.state.message} onChange={this.inputMessage} />
+                        <button onClick={this.send} >Send</button>
+                    </div>
+                })
+                this.setState({ chats, chatsJSX })
             })
-            chatsJSX[chat.name] = <div key={`${chat.id1}${chat.id2}`} className="chat">
-                <div className="messages">{messages}</div>
-                <input type="text" value={this.state.message} onChange={this.inputMessage} />
-                <button onClick={this.send} >Send</button>
-            </div>
-        })
-
-        this.setState({ chats, chatsJSX })
+            .catch(err => notify(err, 'error'))
     }
 
     send() {

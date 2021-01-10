@@ -24,7 +24,6 @@ module.exports = app => {
 
         const promisses = chats.map(async chat => {
             const [profilePicture, name] = await app.api.imageHandler.pickProfilePicture(req.params.id === chat.id1 ? chat.id2 : chat.id1)
-            console.log(chat.messages)
             const messages = JSON.parse(chat.messages)
 
             return { ...chat, messages, profilePicture, name }
