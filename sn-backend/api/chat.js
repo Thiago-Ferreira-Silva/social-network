@@ -23,31 +23,44 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
 
         const promisses = chats.map(async chat => {
-            const [profilePicture, name] = await app.api.imageHandler.pickProfilePicture(req.params.id === chat.id1 ? id2 : id1)
+            const [profilePicture, name] = await app.api.imageHandler.pickProfilePicture(req.params.id === chat.id1 ? chat.id2 : chat.id1)
+            console.log(chat.messages)
             const messages = JSON.parse(chat.messages)
 
             return { ...chat, messages, profilePicture, name }
         })
 
         chats = await Promise.all(promisses)
-
         res.send(chats)
     }
 
     const addMessage = async (id1, id2, text) => {
-        const chat = await app.db('chats')
+        let newChat = false
+        let chat = await app.db('chats')
             .where({ id1, id2 })
             .orWhere({ id1: id2, id2: id1 })
             .first()
 
-        const messages = chat && chat.messages ? JSON.parse(chat.messages) : []
-        messages.push({ userId: id1, text })
-        //precisa criar o chat antes de mexer nele
+        if (!chat) {
+            chat = { id1, id2, messages: "[]" }
+            newChat = true
+        }
 
-        app.db('chats')
-            .where({ id1, id2 })
-            .orWhere({ id1: id2, id2: id1 })
-            .update({ messages: JSON.stringify(messages) })
+        const messages = JSON.parse(chat.messages)
+        messages.push({ userId: id1, text })
+        chat.messages = JSON.stringify(messages)
+
+        if (newChat) {
+            app.db('chats')
+                .insert(chat)
+                .then()
+        } else {
+            app.db('chats')
+                .where({ id1, id2 })
+                .orWhere({ id1: id2, id2: id1 })
+                .update({ messages: JSON.stringify(messages) })
+                .then()
+        }
     }
 
     return { getChats }

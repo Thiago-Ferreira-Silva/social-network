@@ -22,6 +22,7 @@ class Chat extends Component {
         super(props)
         this.inputMessage = this.inputMessage.bind(this)
         this.addMessage = this.addMessage.bind(this)
+        this.getChats = this.getChats.bind(this)
         this.send = this.send.bind(this)
     }
 
@@ -37,14 +38,7 @@ class Chat extends Component {
         this.setState({ messages })
     }
 
-    send() {
-        socket.emit('message', this.state.message, this.props.place === 'anotherUser' ? this.props.userId : null,
-            this.props.user.id)
-        this.addMessage(this.state.message)
-        this.setState({ message: '' })
-    }
-
-    componentDidMount() {
+    getChats() {
         let chats = []
         const chatsJSX = {}
 
@@ -66,6 +60,17 @@ class Chat extends Component {
         })
 
         this.setState({ chats, chatsJSX })
+    }
+
+    send() {
+        socket.emit('message', this.state.message, this.props.place === 'anotherUser' ? this.props.userId : null,
+            this.props.user.id)
+        this.addMessage(this.state.message)
+        this.setState({ message: '' })
+    }
+
+    componentDidMount() {
+        this.getChats()
 
         socket.connect()
         socket.emit('online', this.props.user.id, this.props.user.name)
