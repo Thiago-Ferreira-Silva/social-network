@@ -26,6 +26,7 @@ class Chat extends Component {
     }
 
     inputMessage(event) {
+        console.log(event.target.value)
         this.setState({ message: event.target.value })
     }
 
@@ -41,6 +42,8 @@ class Chat extends Component {
         chatsJSX[chatId] = chat
 
         this.setState({ chatsJSX })
+
+        setTimeout(() => console.log(this.state.chatsJSX), 5000)
     }
 
     getChats() {
@@ -50,6 +53,20 @@ class Chat extends Component {
         axios.get(`${baseApiUrl}/chats/${this.props.user.id}`)
             .then(res => {
                 chats = res.data
+                if (chats.length < 1) {
+                    chatsJSX[this.props.user.id] = <div key={Math.random()} className="chat">
+                        <div className="messages">{[]}</div>
+                        <input type="text" value={this.state.message} onChange={this.inputMessage} />
+                        <button onClick={this.send} >Send</button>
+                        </div>
+                }
+
+
+
+                //Provavelmente temporário; tem que ser capaz de atualizar a página
+
+
+
                 chats.forEach(chat => {
                     const chatId = chat.id1 = this.props.user.id ? chat.id2 : chat.id1
                     const messages = chat.messages.map(message => {
@@ -97,14 +114,10 @@ class Chat extends Component {
                 <div className="chats">
                     {Object.values(this.state.chatsJSX)}
                 </div>
-                <div className="messages">{this.state.messages}</div>
-                <input type="text" value={this.state.message} onChange={this.inputMessage} />
-                <button onClick={this.send} >Send</button>
             </div>
         )
     }
-}// talvez, só talvez, usar o redux com redux persirst para armazenar as mensagens
-// primeiro cuidar do armazenamento e recuperação das mensagens para depois cuidar do resto
+}
 
 const mapStateToProps = store => ({ user: store.userState.user })
 
