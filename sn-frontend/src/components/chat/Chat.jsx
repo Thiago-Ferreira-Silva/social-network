@@ -20,7 +20,7 @@ class Chat extends Component {
     constructor(props) {
         super(props)
         this.inputMessage = this.inputMessage.bind(this)
-        this.addMessage = this.addMessage.bind(this)
+        this.updateChatsJSX = this.updateChatsJSX.bind(this)
         this.getChats = this.getChats.bind(this)
         this.send = this.send.bind(this)
     }
@@ -29,14 +29,18 @@ class Chat extends Component {
         this.setState({ message: event.target.value })
     }
 
-    addMessage(msg) {
-        //const chats = this.state.chatsJSX
-        //const message = <div className="message" key={msg} >{msg}</div>
-        //messages.push(message)
-        //this.setState({ messages })
-        //criar um método updateChatsJSX(name, id1, id2, messages)
-        //deve adicionar as mensagens passadas às que ja tem se for o caso
-        //talzez seja necessário colocar as mensagens separadamente
+    updateChatsJSX(msg, chatId, anotherUser = false) {
+        const message = <div key={Math.random()} className={`message 
+                            ${anotherUser ? '' : 'another-user-message'}`}>
+                        {msg}</div>
+
+        const chatsJSX = this.state.chatsJSX
+        const chat = chatsJSX[chatId]
+
+        chat.props.children[0].props.children.push(message)
+        chatsJSX[chatId] = chat
+
+        this.setState({ chatsJSX })
     }
 
     getChats() {
@@ -47,12 +51,13 @@ class Chat extends Component {
             .then(res => {
                 chats = res.data
                 chats.forEach(chat => {
+                    const chatId = chat.id1 = this.props.user.id ? chat.id2 : chat.id1
                     const messages = chat.messages.map(message => {
                         return <div key={Math.random()} className={`message 
                         ${message.userId === this.props.user.id ? '' : 'another-user-message'}`}>
                             {message.text}</div>
                     })
-                    chatsJSX[chat.name] = <div key={`${chat.id1}${chat.id2}`} className="chat">
+                    chatsJSX[chatId] = <div key={`${chat.id1}${chat.id2}`} className="chat">
                         <div className="messages">{messages}</div>
                         <input type="text" value={this.state.message} onChange={this.inputMessage} />
                         <button onClick={this.send} >Send</button>
@@ -66,7 +71,7 @@ class Chat extends Component {
     send() {
         socket.emit('message', this.state.message, this.props.place === 'anotherUser' ? this.props.userId : null,
             this.props.user.id)
-        this.addMessage(this.state.message)
+        this.updateChatsJSX(this.state.message, this.props.userId)
         this.setState({ message: '' })
     }
 
@@ -75,7 +80,7 @@ class Chat extends Component {
 
         socket.connect()
         socket.emit('online', this.props.user.id, this.props.user.name)
-        socket.on('message', msg => this.addMessage(msg))
+        socket.on('message', (msg, chatId) => this.updateChatsJSX(msg, chatId, true))
     }// precisa ser possível atualizar as mensagens diretamente no dom; me parece uma boa colocar isso em métodos separados para despoluir o componentDidMount
 
     componentWillUnmount() {
