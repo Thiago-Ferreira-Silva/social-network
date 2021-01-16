@@ -7,6 +7,7 @@ module.exports = app => {
             usersOnline[id] = socket.id
         })
         socket.on('message', (msg, userId, senderId) => {
+            console.log(msg)
             addMessage(senderId, userId, msg)
             socket.to(usersOnline[userId]).emit('message', msg, senderId)
             //dá pra melhorar; se mensagens forem enviadas em momentos muito próximos, elas podem ter a ordem trocada

@@ -25,6 +25,7 @@ class Chat extends Component {
     send() {
         //precisa de muitas atualizações
         this.props.send && this.props.send(this.state.message)
+        //não funciona, talvez precise conectar o socket em cada chat
         this.setState({ message: '' })
     }
 
