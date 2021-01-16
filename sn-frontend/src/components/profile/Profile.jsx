@@ -11,7 +11,7 @@ import { resizeImage } from '../../utils/imageHandler'
 import { Link } from 'react-router-dom'
 import Loading from '../template/Loading'
 import AnotherUserProfile from './AnotherUserProfile'
-import Chat from '../chat/Chat'
+import Chats from '../chat/Chats'
 
 const initialState = {
     changingBio: false,
@@ -124,7 +124,7 @@ class Profile extends Component {
                 {this.state.loadingFriends ? <Loading /> :
                     <div className="friends">{this.state.friends || <div>Your friends</div>}</div>
                 }
-                <Chat place='profile' />
+                <Chats place='profile' />
             </div>
         )
     }

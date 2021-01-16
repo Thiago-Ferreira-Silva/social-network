@@ -11,7 +11,7 @@ import { baseApiUrl, notify } from '../../global'
 import { saveUser } from '../../redux/actions'
 
 //temporário
-import Chat from '../chat/Chat'
+import Chats from '../chat/Chats'
 
 class AnotherUserProfile extends Component {
 
@@ -91,7 +91,7 @@ class AnotherUserProfile extends Component {
                         </div>
                     }
                 </div>
-                { this.props.small ? '' : <Chat place='anotherUser' userId={this.props.id} />}
+                { this.props.small ? '' : <Chats place='anotherUser' userId={this.props.id} />}
             </div>
         )
     }
