@@ -32,7 +32,7 @@ class Auth extends Component {
             .then(() => {
                 this.signIn()
             })
-            .catch( err => notify(err, 'error'))
+            .catch(err => notify(err, 'error'))
     }
 
     signIn() {
@@ -42,31 +42,30 @@ class Auth extends Component {
                 this.props.dispatch(saveUser(res.data))
                 this.setState({ toHome: true })
             })
-            .catch( err => notify(err, 'error'))
-            this.setState({ loading: false })
+            .catch(err => notify(err, 'error'))
     }
 
     altShowSignUp() {
         const showSignUp = !this.state.showSignUp
-        this.setState({showSignUp})
+        this.setState({ showSignUp })
     }
 
     onInput(event) {
         const user = this.state.user
         switch (event.target.name) {
-            case 'name' :
+            case 'name':
                 user.name = event.target.value
                 this.setState({ user })
                 break
-            case 'email' :
+            case 'email':
                 user.email = event.target.value
                 this.setState({ user })
                 break
-            case 'password' :
+            case 'password':
                 user.password = event.target.value
                 this.setState({ user })
                 break
-            case 'confirmPassword' :
+            case 'confirmPassword':
                 user.confirmPassword = event.target.value
                 this.setState({ user })
                 break
@@ -81,21 +80,21 @@ class Auth extends Component {
         return (
             <div className="auth">
                 { this.state.loading ?
-                <Loading /> :
-                <div className="auth-form">
-                    {this.state.showSignUp && <div className="auth-title">Signup</div>}
-                    {!this.state.showSignUp && <div className="auth-title">Signin</div>}
-                    {this.state.showSignUp && <input name="name" type="text" placeholder="Name" onChange={this.onInput} value={this.state.user.name || ''} />}
-                    <input name="email" id="email" type="email" placeholder="Email" onChange={this.onInput} value={this.state.user.email || ''} />
-                    <input name="password" type="password" placeholder="Password" onChange={this.onInput} value={this.state.user.password || ''} />
-                    {this.state.showSignUp && <input name="confirmPassword" type="password" placeholder="Confirm password" onChange={this.onInput} value={this.state.user.confirmPassword || ''} />}
-                    {this.state.showSignUp && <button className="btn btn-primary" onClick={this.signUp} >Signup</button>}
-                    {!this.state.showSignUp && <button className="btn btn-primary" onClick={this.signIn} >Signin</button>}
-                    <div  className="link" onClick={this.altShowSignUp}>
-                        {this.state.showSignUp && <span>Already have an account? Signin</span>}
-                        {!this.state.showSignUp && <span>Don't have an account? Signup</span>}
-                    </div>
-                </div>}
+                    <Loading /> :
+                    <div className="auth-form">
+                        {this.state.showSignUp && <div className="auth-title">Signup</div>}
+                        {!this.state.showSignUp && <div className="auth-title">Signin</div>}
+                        {this.state.showSignUp && <input name="name" type="text" placeholder="Name" onChange={this.onInput} value={this.state.user.name || ''} />}
+                        <input name="email" id="email" type="email" placeholder="Email" onChange={this.onInput} value={this.state.user.email || ''} />
+                        <input name="password" type="password" placeholder="Password" onChange={this.onInput} value={this.state.user.password || ''} />
+                        {this.state.showSignUp && <input name="confirmPassword" type="password" placeholder="Confirm password" onChange={this.onInput} value={this.state.user.confirmPassword || ''} />}
+                        {this.state.showSignUp && <button className="btn btn-primary" onClick={this.signUp} >Signup</button>}
+                        {!this.state.showSignUp && <button className="btn btn-primary" onClick={this.signIn} >Signin</button>}
+                        <div className="link" onClick={this.altShowSignUp}>
+                            {this.state.showSignUp && <span>Already have an account? Signin</span>}
+                            {!this.state.showSignUp && <span>Don't have an account? Signup</span>}
+                        </div>
+                    </div>}
             </div>
         )
     }

@@ -18,5 +18,3 @@ consign()
 server.listen(port, () => {
     console.log('Running on port: ' + port)
 })
-
-//ainda nada

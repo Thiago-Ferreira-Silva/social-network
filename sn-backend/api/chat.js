@@ -16,7 +16,7 @@ module.exports = app => {
             delete usersOnline[socket.id]
         })
     })
-
+    
     const getChats = async (req, res) => {
         let chats = await app.db('chats')
             .where({ id1: req.params.id })
