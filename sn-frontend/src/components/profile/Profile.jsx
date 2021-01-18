@@ -128,11 +128,8 @@ class Profile extends Component {
             </div>
         )
     }
-}// media query com 440px para colocar apenas um amigo por linha e centralizado
+}
 
 const mapStateToProps = store => ({ user: store.userState.user })
 
 export default connect(mapStateToProps)(Profile)
-
-//deve ser possível mandar mensagem
-//tente deixar o design mais responsivo
