@@ -89,17 +89,10 @@ module.exports = app => {
         }
     }
 
-    /*const getProfilePicture = async (req, res) => {
+    const getProfilePicture = async (req, res) => {
         const picture = await app.api.imageHandler.pickProfilePicture(req.params.id)
-        const userName = await app.db('users')
-                            .select('name')
-                            .where({ id: req.params.id })
-                            .first()
-                            .catch(err => res.status(500).send(err))
-        const name = userName.name
-        res.send({ picture, name })
-        //provavelmente não será necessário
-    }*/
+        res.send(picture)
+    }
 
     const saveBio = async (req, res) => {
         app.db('users')
@@ -186,5 +179,5 @@ module.exports = app => {
     //melhore o tratamento de erros e as mensagens de sucesso
     //vai precisar de paginação para os amigos
 
-    return { save, get, getById, remove, saveProfilePicture,/* getProfilePicture,*/ saveBio, saveFriend, getFriends, removeFriend }
+    return { save, get, getById, remove, saveProfilePicture, getProfilePicture, saveBio, saveFriend, getFriends, removeFriend }
 }

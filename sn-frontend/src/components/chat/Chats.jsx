@@ -22,15 +22,9 @@ class Chats extends Component {
 
     constructor(props) {
         super(props)
-        this.inputMessage = this.inputMessage.bind(this)
         this.updateChatsJSX = this.updateChatsJSX.bind(this)
         this.getChats = this.getChats.bind(this)
         this.send = this.send.bind(this)
-    }
-
-    inputMessage(event) {
-        console.log(event.target.value)
-        this.setState({ message: event.target.value })
     }
 
     updateChatsJSX(msg, chatId, anotherUser = false) {
@@ -39,35 +33,39 @@ class Chats extends Component {
             {msg}</div>
 
         const chatsJSX = this.state.chatsJSX
-        const chat = chatsJSX[chatId] || <div key={Math.random()} className="chat">
-                <div className="messages">{[]}</div>
-                <input type="text" value={this.state.message} onChange={this.inputMessage} />
-                <button onClick={this.send} >Send</button>
-            </div>
-
-        chat.props.children[0].props.children.push(message)
+        const chat = chatsJSX[chatId]
+        console.log(chat)
+        chat.props.messages.push(message)
         chatsJSX[chatId] = chat
 
         this.setState({ chatsJSX })
     }
 
     getChats() {
-        let chats = []
-        const chatsJSX = {}
-
         axios.get(`${baseApiUrl}/chats/${this.props.user.id}`)
-            .then(res => {
-                chats = res.data
-                
+            .then(async res => {
+                const chats = res.data
+
                 if (chats.length < 1) {
-                    chatsJSX[this.props.user.id] = <Chat id1={this.props.user.id} 
-                    id2={this.props.place === 'anotherUser' ? this.props.userId : 0 /* resolver isso */} 
-                    messages={[]} />
+                    await axios.get(`${baseApiUrl}/users/${this.props.userId}/picture`)
+                        .then( res => {
+                            const [picture, name] = res.data
+                            chats[0] = { 
+                                            id1: this.props.user.id,
+                                            id2: this.props.userId,
+                                            messages: [], 
+                                            picture, 
+                                            name 
+                                        }
+                        })
+                        .catch(err => notify(err, 'error'))
                 }
 
+                const chatsJSX = this.state.chatsJSX
                 chats.forEach(chat => {
                     const chatId = chat.id1 === this.props.user.id ? chat.id2 : chat.id1
-                    chatsJSX[chatId] = <Chat id1={chat.id1} id2={chat.id2} messages={chat.messages} send={msg => this.send(msg)} />
+                    chatsJSX[chatId] = <Chat id1={this.props.user.id} id2={chatId} messages={chat.messages}
+                        picture={chat.picture} name={chat.name} send={msg => this.send(msg)} />
                 })
                 this.setState({ chats, chatsJSX })
             })

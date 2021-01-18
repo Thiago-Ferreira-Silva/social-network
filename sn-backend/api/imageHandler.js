@@ -11,7 +11,6 @@ module.exports = app => {
         const picture = await app.db('profile_pictures')
             .where({ user_id })
             .first()
-            .catch(err => res.status(500).send(err))
 
         const user = await app.db('users')
             .select('name')
