@@ -34,7 +34,6 @@ class Chats extends Component {
 
         const chatsJSX = this.state.chatsJSX
         const chat = chatsJSX[chatId]
-        console.log(chat)
         chat.props.messages.push(message)
         chatsJSX[chatId] = chat
 
@@ -48,19 +47,18 @@ class Chats extends Component {
 
                 if (chats.length < 1) {
                     await axios.get(`${baseApiUrl}/users/${this.props.userId}/picture`)
-                        .then( res => {
+                        .then(res => {
                             const [picture, name] = res.data
-                            chats[0] = { 
-                                            id1: this.props.user.id,
-                                            id2: this.props.userId,
-                                            messages: [], 
-                                            picture, 
-                                            name 
-                                        }
+                            chats[0] = {
+                                id1: this.props.user.id,
+                                id2: this.props.userId,
+                                messages: [],
+                                picture,
+                                name
+                            }
                         })
                         .catch(err => notify(err, 'error'))
                 }
-
                 const chatsJSX = this.state.chatsJSX
                 chats.forEach(chat => {
                     const chatId = chat.id1 === this.props.user.id ? chat.id2 : chat.id1
@@ -73,7 +71,7 @@ class Chats extends Component {
     }
 
     send(msg) {
-        socket.emit('message', this.state.message, this.props.place === 'anotherUser' ? this.props.userId : null,
+        socket.emit('message', msg, this.props.place === 'anotherUser' ? this.props.userId : null,
             this.props.user.id)
     }
 
@@ -82,7 +80,10 @@ class Chats extends Component {
 
         socket.connect()
         socket.emit('online', this.props.user.id, this.props.user.name)
-        socket.on('message', (msg, chatId) => this.updateChatsJSX(msg, chatId, true))
+        socket.on('message', (msg, chatId) => {
+            console.log(msg)
+            this.updateChatsJSX(msg, chatId, true)
+        })
     }
 
     componentWillUnmount() {
@@ -99,6 +100,7 @@ class Chats extends Component {
                 <div className="chats">
                     {/*Object.values(this.state.chatsJSX[1])*/}
                     {this.state.chatsJSX[1]}
+                    {this.state.chatsJSX[2]}
                 </div>
             </div>
         )
