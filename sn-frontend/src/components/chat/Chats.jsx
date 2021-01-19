@@ -44,7 +44,6 @@ class Chats extends Component {
         axios.get(`${baseApiUrl}/chats/${this.props.user.id}`)
             .then(async res => {
                 const chats = res.data
-
                 if (chats.length < 1) {
                     await axios.get(`${baseApiUrl}/users/${this.props.userId}/picture`)
                         .then(res => {
@@ -61,8 +60,14 @@ class Chats extends Component {
                 }
                 const chatsJSX = this.state.chatsJSX
                 chats.forEach(chat => {
+                    const messages = chat.messages.map(message => {
+                        return <div key={Math.random()} className={`message 
+                        ${this.props.user.id = message.userId ? '' : 'another-user-message'}`}>
+                        {message.text}</div>
+                    })
+
                     const chatId = chat.id1 === this.props.user.id ? chat.id2 : chat.id1
-                    chatsJSX[chatId] = <Chat id1={this.props.user.id} id2={chatId} messages={chat.messages}
+                    chatsJSX[chatId] = <Chat id1={this.props.user.id} id2={chatId} messages={messages}
                         picture={chat.picture} name={chat.name} send={msg => this.send(msg)} />
                 })
                 this.setState({ chats, chatsJSX })
@@ -73,6 +78,7 @@ class Chats extends Component {
     send(msg) {
         socket.emit('message', msg, this.props.place === 'anotherUser' ? this.props.userId : null,
             this.props.user.id)
+        //por algum motivo, this.props.user.id é uma string vazia aqui
     }
 
     componentDidMount() {
@@ -82,6 +88,7 @@ class Chats extends Component {
         socket.emit('online', this.props.user.id, this.props.user.name)
         socket.on('message', (msg, chatId) => {
             console.log(msg)
+            console.log(chatId)
             this.updateChatsJSX(msg, chatId, true)
         })
     }

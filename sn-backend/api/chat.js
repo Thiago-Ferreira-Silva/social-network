@@ -8,9 +8,10 @@ module.exports = app => {
         })
         socket.on('message', (msg, userId, senderId) => {
             console.log(msg)
+            console.log(senderId)
             addMessage(senderId, userId, msg)
             socket.to(usersOnline[userId]).emit('message', msg, senderId)
-            //dá pra melhorar; se mensagens forem enviadas em momentos muito próximos, elas podem ter a ordem trocada
+            //dá pra melhorar; se mensagens forem enviadas em momentos muito próximos, elas podem ter a ordem trocada (testar isso)
         })
         socket.on('disconnect', () => {
             delete usersOnline[socket.id]

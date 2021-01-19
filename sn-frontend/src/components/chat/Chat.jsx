@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 const initialState = {
-    messages: [],
     message: ''
 }
 
@@ -32,7 +31,7 @@ class Chat extends Component {
     render() {
         return (
             <div key={`${this.props.id1}${this.props.id2}`} className="chat">
-                <div className="messages"></div>
+                <div className="messages">{ this.props.messages }</div>
                 <input type="text" value={this.state.message} onChange={this.inputMessage} />
                 <button onClick={this.send} >Send</button>
             </div>
