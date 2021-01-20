@@ -27,7 +27,7 @@ class Chats extends Component {
         this.send = this.send.bind(this)
     }
 
-    updateChatsJSX(msg, chatId, anotherUser = false) {
+    updateChatsJSX(msg, chatId, anotherUser = false) {//não está atualizando no outro componente
         const message = <div key={Math.random()} className={`message 
                             ${anotherUser ? '' : 'another-user-message'}`}>
             {msg}</div>
