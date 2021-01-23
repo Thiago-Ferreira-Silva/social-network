@@ -72,7 +72,7 @@ class Chats extends Component {
                     
                     chatsObject[chatId] = chat
 
-                    chatsJSX.push(<Chat chatId={chatId} key={`${chat.id1}-${chat.id2}`} />)
+                    chatsJSX.push(<Chat chatId={chatId} key={`${chat.id1}-${chat.id2}`} send={msg => this.send(msg)} />)
                 })
 
                 this.props.dispatch(updateChats(chatsObject))
@@ -81,6 +81,7 @@ class Chats extends Component {
     }
 
     send(msg) {
+        console.log('send', msg)
         socket.emit('message', msg, this.props.place === 'anotherUser' ? this.props.userId : null,
             this.props.user.id)
         this.addMessageToChat(msg, this.props.userId)

@@ -22,22 +22,25 @@ class Chat extends Component {
     }
 
     send() {
-        //precisa de muitas atualizações
         this.props.send && this.props.send(this.state.message)
         this.setState({ message: '' })
     }
 
     render() {
+        const chat = this.props.chats[this.props.chatId]
         return (
-            <div key={`${this.props.id1}${this.props.id2}`} className="chat">
-                <div className="messages">{ this.props.messages }</div>
+            <div className="chat">
+                <div className="messages">{ chat.messages }</div>
                 <input type="text" value={this.state.message} onChange={this.inputMessage} />
                 <button onClick={this.send} >Send</button>
             </div>
         )
     }
 }
-
-const mapStateToProps = store => ({ user: store.userState.user })
+//ainda não está atualizando
+const mapStateToProps = store => ({ 
+    user: store.userState.user,
+    chats: store.chatsState.chats
+ })
 
 export default connect(mapStateToProps)(Chat)
