@@ -5,16 +5,15 @@ import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import axios from 'axios'
 import { baseApiUrl, notify } from '../../global'
+import { updateChats } from '../../redux/actions/index'
 
 import Chat from './Chat'
 
-const socket = io(baseApiUrl)
-
 const initialState = {
-    message: '',
-    chats: [],
-    chatsJSX: {}
+    chatsJSX: []
 }
+
+const socket = io(baseApiUrl)
 
 class Chats extends Component {
 
@@ -22,28 +21,31 @@ class Chats extends Component {
 
     constructor(props) {
         super(props)
-        this.updateChatsJSX = this.updateChatsJSX.bind(this)
+        this.addMessageToChat = this.addMessageToChat.bind(this)
         this.getChats = this.getChats.bind(this)
         this.send = this.send.bind(this)
     }
 
-    updateChatsJSX(msg, chatId, anotherUser = false) {//não está atualizando no outro componente
+    addMessageToChat(msg, chatId, anotherUser = false) {
         const message = <div key={Math.random()} className={`message 
                             ${anotherUser ? '' : 'another-user-message'}`}>
             {msg}</div>
 
-        const chatsJSX = this.state.chatsJSX
-        const chat = chatsJSX[chatId]
-        chat.props.messages.push(message)
-        chatsJSX[chatId] = chat
-        console.log(chatsJSX[chatId])
-        this.setState({ chatsJSX })
+        const chats = this.props.chats
+        const chat = chats[chatId]
+        chat.messages.push(message)
+        chats[chatId] = chat
+
+        this.props.dispatch(updateChats(chats))
     }
 
     getChats() {
         axios.get(`${baseApiUrl}/chats/${this.props.user.id}`)
             .then(async res => {
                 const chats = res.data
+                const chatsObject = {}
+                const chatsJSX = this.state.chatsJSX
+
                 if (chats.length < 1) {
                     await axios.get(`${baseApiUrl}/users/${this.props.userId}/picture`)
                         .then(res => {
@@ -58,18 +60,22 @@ class Chats extends Component {
                         })
                         .catch(err => notify(err, 'error'))
                 }
-                const chatsJSX = this.state.chatsJSX
                 chats.forEach(chat => {
                     const messages = chat.messages.map(message => {
                         return <div key={Math.random()} className={`message 
                         ${this.props.user.id === message.userId ? '' : 'another-user-message'}`}>
                         {message.text}</div>
                     })
+                    chat.messages = messages
+
                     const chatId = chat.id1 === this.props.user.id ? chat.id2 : chat.id1
-                    chatsJSX[chatId] = <Chat id1={this.props.user.id} id2={chatId} messages={messages}
-                        picture={chat.picture} name={chat.name} send={msg => this.send(msg)} />
+                    
+                    chatsObject[chatId] = chat
+
+                    chatsJSX.push(<Chat chatId={chatId} key={`${chat.id1}-${chat.id2}`} />)
                 })
-                this.setState({ chats, chatsJSX })
+
+                this.props.dispatch(updateChats(chatsObject))
             })
             .catch(err => notify(err, 'error'))
     }
@@ -77,6 +83,7 @@ class Chats extends Component {
     send(msg) {
         socket.emit('message', msg, this.props.place === 'anotherUser' ? this.props.userId : null,
             this.props.user.id)
+        this.addMessageToChat(msg, this.props.userId)
     }
 
     componentDidMount() {
@@ -85,7 +92,7 @@ class Chats extends Component {
         socket.connect()
         socket.emit('online', this.props.user.id, this.props.user.name)
         socket.on('message', (msg, chatId) => {
-            this.updateChatsJSX(msg, chatId, true)
+            this.addMessageToChat(msg, chatId, true)
         })
     }
 
@@ -101,19 +108,20 @@ class Chats extends Component {
         return (
             <div className="chat-container">
                 <div className="chats">
-                    {/*Object.values(this.state.chatsJSX[1])*/}
-                    {this.state.chatsJSX[1]}
-                    {this.state.chatsJSX[2]}
+                    {this.state.chatsJSX}
                 </div>
             </div>
         )
     }
 }
 
-const mapStateToProps = store => ({ user: store.userState.user })
+const mapStateToProps = store => ({ 
+    user: store.userState.user,
+    chats: store.chatsState.chats 
+})
 
 export default connect(mapStateToProps)(Chats)
-//talvez colocar esse componente em sua própri rota, não no profile
+//talvez colocar esse componente em sua própria rota, não no profile
 //adicionar notificações
 //comece fazendo um chat simples entre dois usuários e deixe para cuidar do armazenamento e das mensagens offline depois
 //deixe os bugs e os ajustes de design para o final
