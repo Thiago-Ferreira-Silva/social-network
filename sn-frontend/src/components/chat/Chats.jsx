@@ -36,7 +36,7 @@ class Chats extends Component {
         const chat = chatsJSX[chatId]
         chat.props.messages.push(message)
         chatsJSX[chatId] = chat
-
+        console.log(chatsJSX[chatId])
         this.setState({ chatsJSX })
     }
 
@@ -113,6 +113,7 @@ class Chats extends Component {
 const mapStateToProps = store => ({ user: store.userState.user })
 
 export default connect(mapStateToProps)(Chats)
+//talvez colocar esse componente em sua própri rota, não no profile
 //adicionar notificações
 //comece fazendo um chat simples entre dois usuários e deixe para cuidar do armazenamento e das mensagens offline depois
 //deixe os bugs e os ajustes de design para o final

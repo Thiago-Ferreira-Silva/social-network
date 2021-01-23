@@ -1,0 +1,14 @@
+.chat-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat {
+    background-color: #0003;
+}
+
+.chat .messages {
+    max-height: 35vh;
+    overflow-y: scroll;
+}
