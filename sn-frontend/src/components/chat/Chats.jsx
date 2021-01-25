@@ -46,6 +46,7 @@ class Chats extends Component {
                 const chatsObject = {}
                 const chatsJSX = this.state.chatsJSX
 
+                //remover isso
                 if (chats.length < 1) {
                     await axios.get(`${baseApiUrl}/users/${this.props.userId}/picture`)
                         .then(res => {
@@ -81,7 +82,6 @@ class Chats extends Component {
     }
 
     send(msg) {
-        console.log('send', msg)
         socket.emit('message', msg, this.props.place === 'anotherUser' ? this.props.userId : null,
             this.props.user.id)
         this.addMessageToChat(msg, this.props.userId)
@@ -91,8 +91,10 @@ class Chats extends Component {
         this.getChats()
 
         socket.connect()
-        socket.emit('online', this.props.user.id, this.props.user.name)
+        socket.emit('online', this.props.user.id)
         socket.on('message', (msg, chatId) => {
+            console.log(msg, chatId)
+            //talvez tenha que adicionar uma coluna de id aos chats
             this.addMessageToChat(msg, chatId, true)
         })
     }

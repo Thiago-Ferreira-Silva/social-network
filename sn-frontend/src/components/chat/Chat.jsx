@@ -41,6 +41,6 @@ class Chat extends Component {
 const mapStateToProps = store => ({ 
     user: store.userState.user,
     chats: store.chatsState.chats
- })
+})
 
 export default connect(mapStateToProps)(Chat)

@@ -57,4 +57,5 @@ module.exports = app => {
     app.route('/chats/:id')
         .all(app.config.passport.authenticate())
         .get(app.api.chat.getChats)
+        .post(app.api.chat.createChat)
 }
