@@ -1,17 +1,13 @@
-/*
-Tente achar um nome melhor para esse componente.
-*/
 import './Profile.css'
 import pictureDefault from '../../assets/profile_default.png'
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCommentAlt } from '@fortawesome/free-solid-svg-icons'
 import { baseApiUrl, notify } from '../../global'
 import { saveUser } from '../../redux/actions'
-
-//temporário
-import Chats from '../chat/Chats'
 
 class AnotherUserProfile extends Component {
 
@@ -70,28 +66,44 @@ class AnotherUserProfile extends Component {
                         </div>
                     </div>
                     {this.props.small ?
-                        <Link className='name-small-link' to={{
-                            pathname: '/user',
-                            state: {
-                                id: this.props.id,
-                                name: this.props.name,
-                                bio: this.props.bio,
-                                profilePicture: this.props.profilePicture,
-                                small: false
-                            }
-                        }} >
-                            <div className="name-small">
+                        <div className="name-small">
+                            <Link className='name-small-link' to={{
+                                pathname: '/user',
+                                state: {
+                                    id: this.props.id,
+                                    name: this.props.name,
+                                    bio: this.props.bio,
+                                    profilePicture: this.props.profilePicture,
+                                    small: false
+                                }
+                            }} >
                                 {this.props.name}
-                            </div></Link>
+                            </Link>
+                            <Link className='chat-link' to={{
+                                pathname: '/chat',
+                                state: {
+                                    id1: this.props.id,
+                                    id2: this.props.user.id
+                                }
+                            }}><FontAwesomeIcon icon={faCommentAlt} /></Link>
+                        </div>
                         :
-                        <div className='name'>{this.props.name}</div>}
+                        <div className='name'>
+                            {this.props.name}
+                            <Link className='chat-link' to={{
+                                pathname: '/chat',
+                                state: {
+                                    id1: this.props.id,
+                                    id2: this.props.user.id
+                                }
+                            }}><FontAwesomeIcon icon={faCommentAlt} /></Link>
+                        </div>}
                     {this.props.small ? '' :
                         <div className='bio'>
                             <textarea maxLength="500" disabled={true} className='bio-text' value={this.props.bio || ''} placeholder='Bio' />
                         </div>
                     }
                 </div>
-                { this.props.small ? '' : <Chats place='anotherUser' userId={this.props.id} />}
             </div>
         )
     }

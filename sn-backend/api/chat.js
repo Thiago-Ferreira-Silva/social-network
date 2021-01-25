@@ -6,9 +6,9 @@ module.exports = app => {
         socket.on('online', (id) => {
             usersOnline[id] = socket.id
         })
-        socket.on('message', (msg, userId, senderId) => {
-            addMessage(senderId, userId, msg)
-            socket.to(usersOnline[userId]).emit('message', msg, senderId)
+        socket.on('message', (msg, chatId, senderId) => {
+            const userId = addMessage( chatId, senderId, msg)
+            socket.to(usersOnline[userId]).emit('message', msg, chatId)
             //dá pra melhorar; se mensagens forem enviadas em momentos muito próximos,
             //elas podem ter a ordem trocada (testar isso)
         })
@@ -34,19 +34,27 @@ module.exports = app => {
         res.send(chats)
     }
     //é melhor chamar esses métodos através do socket?
-    const createChat = (req, res) => {
+    const createChat = async (req, res) => {
         const newChat = { ...req.body }
 
-        app.db('chats')
+        await app.db('chats')
             .insert(newChat)
-            .then(chat => res.send(chat))
             .catch(err => res.status(500).send(err))
+
+        const chat = await app.db('chats')
+            .where(newChat)
+            .first()
+            .catch(err => res.status(500).send(err))
+
+        const [profilePicture, name] = await app.api.imageHandler.pickProfilePicture(req.params.id === chat.id1 ? chat.id2 : chat.id1)
+
+        res.send({ ...chat, profilePicture, name })
+        //tenho quase certeza que dá pra melhorar isso
     }
     // mover a parte de newChat para getChats e criar o getChatById ou algo do tipo (ou talvez um createChat)
-    const addMessage = async (id1, id2, text) => {
+    const addMessage = async (chatId, senderId, text) => {
         let chat = await app.db('chats')
-            .where({ id1, id2 })
-            .orWhere({ id1: id2, id2: id1 })
+            .where({ chatId })
             .first()
 
         const messages = JSON.parse(chat.messages)
@@ -54,10 +62,11 @@ module.exports = app => {
         chat.messages = JSON.stringify(messages)
 
         app.db('chats')
-            .where({ id1, id2 })
-            .orWhere({ id1: id2, id2: id1 })
+            .where({ chatId })
             .update({ messages: JSON.stringify(messages) })
             .then()
+
+        return chat.id1 = senderId ? chat.id2 : chat.id1
     }
 
     return { getChats, createChat }

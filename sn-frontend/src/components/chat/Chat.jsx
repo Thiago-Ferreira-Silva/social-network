@@ -22,7 +22,7 @@ class Chat extends Component {
     }
 
     send() {
-        this.props.send && this.props.send(this.state.message)
+        this.props.send && this.props.send(this.state.message, this.props.chatId)
         this.setState({ message: '' })
     }
 

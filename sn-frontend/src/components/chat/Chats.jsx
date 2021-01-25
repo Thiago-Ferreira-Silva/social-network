@@ -46,18 +46,10 @@ class Chats extends Component {
                 const chatsObject = {}
                 const chatsJSX = this.state.chatsJSX
 
-                //remover isso
                 if (chats.length < 1) {
-                    await axios.get(`${baseApiUrl}/users/${this.props.userId}/picture`)
+                    await axios.post(`${baseApiUrl}/chats/${this.props.userId}`, this.props.location.state)
                         .then(res => {
-                            const [picture, name] = res.data
-                            chats[0] = {
-                                id1: this.props.user.id,
-                                id2: this.props.userId,
-                                messages: [],
-                                picture,
-                                name
-                            }
+                            chats.push(res.data)
                         })
                         .catch(err => notify(err, 'error'))
                 }
@@ -68,12 +60,11 @@ class Chats extends Component {
                         {message.text}</div>
                     })
                     chat.messages = messages
-
-                    const chatId = chat.id1 === this.props.user.id ? chat.id2 : chat.id1
                     
-                    chatsObject[chatId] = chat
+                    chatsObject[chat.chatId] = chat
 
-                    chatsJSX.push(<Chat chatId={chatId} key={`${chat.id1}-${chat.id2}`} send={msg => this.send(msg)} />)
+                    chatsJSX.push(<Chat chatId={chat.chatId} key={`${chat.id1}-${chat.id2}`} 
+                        send={(msg, chatId) => this.send(msg, chatId)} />)
                 })
 
                 this.props.dispatch(updateChats(chatsObject))
@@ -81,10 +72,10 @@ class Chats extends Component {
             .catch(err => notify(err, 'error'))
     }
 
-    send(msg) {
-        socket.emit('message', msg, this.props.place === 'anotherUser' ? this.props.userId : null,
+    send(msg, chatId) {
+        socket.emit('message', msg, chatId,
             this.props.user.id)
-        this.addMessageToChat(msg, this.props.userId)
+        this.addMessageToChat(msg, chatId)
     }
 
     componentDidMount() {
@@ -94,7 +85,6 @@ class Chats extends Component {
         socket.emit('online', this.props.user.id)
         socket.on('message', (msg, chatId) => {
             console.log(msg, chatId)
-            //talvez tenha que adicionar uma coluna de id aos chats
             this.addMessageToChat(msg, chatId, true)
         })
     }

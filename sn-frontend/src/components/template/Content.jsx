@@ -8,6 +8,7 @@ import './Template.css'
 import Main from '../main/Main'
 import Auth from '../auth/Auth'
 import Profile from '../profile/Profile'
+import Chats from '../chat/Chats'
 
 const initialState = { isAuthenticated: false }
 
@@ -33,6 +34,7 @@ class Content extends Component {
                     <Route path='/user' exact={true} render={(props) =>
                         <Main {...props} usingFor={'anotherUser'} />} />
                     <Route path='/profile' exact={true} render={() => <Profile />} />
+                    <Route path='/chat' exact={true} render={(props) => <Chats {...props} />} />
                 </Switch>
             </div>
         )

@@ -77,20 +77,27 @@
     padding: 8px;
     margin-left: 20px;
     font-size: 1.1rem;
-
 }
 
-.name-small-link, .name-small-link:hover {
+.chat-link {
+    margin-left: 15px;
+    color: #111 !important;
+}
+
+.name-small {
     width: 100%;
     font-size: 1.1rem;
     font-weight: 400;
-    color: #111;
-    text-decoration: none;
     position: absolute;
     bottom: 4px;
     z-index: 1;
     display: flex;
     justify-content: center;
+}
+
+.name-small-link, .name-small-link:hover {
+    color: #111;
+    text-decoration: none;
 }
 
 .user .your-posts, .user .friends-button {
@@ -170,13 +177,6 @@
 .loading {
     position: relative;
     top: 50px;
-}
-
-.chat {
-    z-index: 100;
-    position: fixed;
-    top: 40%;
-    left: 40%;
 }
 
 @media (max-width: 440px)
