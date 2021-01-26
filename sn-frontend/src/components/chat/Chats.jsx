@@ -10,7 +10,9 @@ import { updateChats } from '../../redux/actions/index'
 import Chat from './Chat'
 
 const initialState = {
-    chatsJSX: []
+    chatsJSX: {},
+    selectedChat: null,
+    chatsList: []
 }
 
 const socket = io(baseApiUrl)
@@ -23,6 +25,7 @@ class Chats extends Component {
         super(props)
         this.addMessageToChat = this.addMessageToChat.bind(this)
         this.getChats = this.getChats.bind(this)
+        this.setSelected = this.setSelected.bind(this)
         this.send = this.send.bind(this)
     }
 
@@ -35,7 +38,7 @@ class Chats extends Component {
         const chat = chats[chatId]
         chat.messages.push(message)
         chats[chatId] = chat
-
+        console.log(chats) /////////////////////////////////////////////////////////////////////////////
         this.props.dispatch(updateChats(chats))
     }
 
@@ -44,9 +47,12 @@ class Chats extends Component {
             .then(async res => {
                 const chats = res.data
                 const chatsObject = {}
-                const chatsJSX = this.state.chatsJSX
+                const chatsJSX = {}
+                const chatsList = []
+                //confira se você não está alterando o state da forma errada em mais lugares
 
                 if (chats.length < 1) {
+                    //mudar isso para criar um novo chat quando ele não existir e não apenas quando não há nenhum chat
                     await axios.post(`${baseApiUrl}/chats/${this.props.userId}`, this.props.location.state)
                         .then(res => {
                             chats.push(res.data)
@@ -57,19 +63,31 @@ class Chats extends Component {
                     const messages = chat.messages.map(message => {
                         return <div key={Math.random()} className={`message 
                         ${this.props.user.id === message.userId ? '' : 'another-user-message'}`}>
-                        {message.text}</div>
+                            {message.text}</div>
                     })
                     chat.messages = messages
-                    
+
                     chatsObject[chat.chatId] = chat
 
-                    chatsJSX.push(<Chat chatId={chat.chatId} key={`${chat.id1}-${chat.id2}`} 
-                        send={(msg, chatId) => this.send(msg, chatId)} />)
-                })
+                    chatsJSX[chat.chatId] = <Chat chatId={chat.chatId} key={`${chat.id1}-${chat.id2}`}
+                        send={(msg, chatId) => this.send(msg, chatId)} />
 
+                    chatsList.push(<div onClick={this.setSelected(chat.chatId)} className='select-chat' key={chat.chatId} >
+                        <div className="name">
+                        {chat.name}
+                        </div>
+                        <img src={chat.profilePicture} alt=""/>
+                    </div>)
+                })
+                
                 this.props.dispatch(updateChats(chatsObject))
+                this.setState({ selectedChat: chats[0].chatId, chatsJSX, chatsList})
             })
             .catch(err => notify(err, 'error'))
+    }
+
+    setSelected(chatId) {
+        this.setState({ selectedChat: chatId })
     }
 
     send(msg, chatId) {
@@ -84,7 +102,6 @@ class Chats extends Component {
         socket.connect()
         socket.emit('online', this.props.user.id)
         socket.on('message', (msg, chatId) => {
-            console.log(msg, chatId)
             this.addMessageToChat(msg, chatId, true)
         })
     }
@@ -93,29 +110,19 @@ class Chats extends Component {
         socket.disconnect()
     }
 
-    componentDidUpdate() {
-        socket.connect()
-    }
-
     render() {
         return (
             <div className="chat-container">
-                <div className="chats">
-                    {this.state.chatsJSX}
-                </div>
+                {this.state.chatsList}
+                {this.state.selectedChat ? this.state.chatsJSX[this.state.selectedChat] : ''}
             </div>
         )
     }
 }
 
-const mapStateToProps = store => ({ 
+const mapStateToProps = store => ({
     user: store.userState.user,
-    chats: store.chatsState.chats 
+    chats: store.chatsState.chats
 })
 
 export default connect(mapStateToProps)(Chats)
-//talvez colocar esse componente em sua própria rota, não no profile
-//adicionar notificações
-//comece fazendo um chat simples entre dois usuários e deixe para cuidar do armazenamento e das mensagens offline depois
-//deixe os bugs e os ajustes de design para o final
-// chat = { profilepicture, name, id1, id2, messages } message: { date, text, userid }

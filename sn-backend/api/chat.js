@@ -6,11 +6,9 @@ module.exports = app => {
         socket.on('online', (id) => {
             usersOnline[id] = socket.id
         })
-        socket.on('message', (msg, chatId, senderId) => {
-            const userId = addMessage( chatId, senderId, msg)
+        socket.on('message', async (msg, chatId, senderId) => {
+            const userId = await addMessage( chatId, senderId, msg)
             socket.to(usersOnline[userId]).emit('message', msg, chatId)
-            //dá pra melhorar; se mensagens forem enviadas em momentos muito próximos,
-            //elas podem ter a ordem trocada (testar isso)
         })
         socket.on('disconnect', () => {
             delete usersOnline[socket.id]
@@ -58,7 +56,7 @@ module.exports = app => {
             .first()
 
         const messages = JSON.parse(chat.messages)
-        messages.push({ userId: id1, text })
+        messages.push({ userId: senderId, text })
         chat.messages = JSON.stringify(messages)
 
         app.db('chats')

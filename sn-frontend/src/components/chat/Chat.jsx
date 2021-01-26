@@ -37,7 +37,7 @@ class Chat extends Component {
         )
     }
 }
-//ainda não está atualizando
+
 const mapStateToProps = store => ({ 
     user: store.userState.user,
     chats: store.chatsState.chats

@@ -12,3 +12,14 @@
     max-height: 35vh;
     overflow-y: scroll;
 }
+
+/*mudar o nome dessa classe*/
+.select-chat {
+    display: flex;
+}
+
+.select-chat img {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+}
