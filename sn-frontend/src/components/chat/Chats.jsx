@@ -51,9 +51,20 @@ class Chats extends Component {
                 const chatsList = []
                 //confira se você não está alterando o state da forma errada em mais lugares
 
-                if (chats.length < 1) {
-                    //mudar isso para criar um novo chat quando ele não existir e não apenas quando não há nenhum chat
-                    await axios.post(`${baseApiUrl}/chats/${this.props.userId}`, this.props.location.state)
+                let newChat = false
+
+                chats.forEach(chat => {
+                    //está muito bugado
+                    if (chat.id1 !== this.props.location.state.id1 && chat.id2 !== this.props.location.state.id1) {
+                        console.log('id1', chat.id1, 'id2', chat.id2)
+                        newChat = true
+                    } else {
+                        newChat = false
+                    }
+                })
+
+                if (newChat) {
+                    await axios.post(`${baseApiUrl}/chats/${this.props.location.state.id1}`, this.props.location.state)
                         .then(res => {
                             chats.push(res.data)
                         })
