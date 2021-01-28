@@ -7,7 +7,7 @@ module.exports = app => {
             usersOnline[id] = socket.id
         })
         socket.on('message', async (msg, chatId, senderId) => {
-            const userId = await addMessage( chatId, senderId, msg)
+            const userId = await addMessage(chatId, senderId, msg)
             socket.to(usersOnline[userId]).emit('message', msg, chatId)
         })
         socket.on('disconnect', () => {
@@ -22,7 +22,7 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
 
         const promisses = chats.map(async chat => {
-            const [profilePicture, name] = await app.api.imageHandler.pickProfilePicture(req.params.id === chat.id1 ? chat.id2 : chat.id1)
+            const [profilePicture, name] = await app.api.imageHandler.pickProfilePicture(req.params.id == chat.id1 ? chat.id2 : chat.id1)
             const messages = JSON.parse(chat.messages)
 
             return { ...chat, messages, profilePicture, name }
@@ -49,7 +49,7 @@ module.exports = app => {
         res.send({ ...chat, profilePicture, name })
         //tenho quase certeza que dá pra melhorar isso
     }
-    // mover a parte de newChat para getChats e criar o getChatById ou algo do tipo (ou talvez um createChat)
+
     const addMessage = async (chatId, senderId, text) => {
         let chat = await app.db('chats')
             .where({ chatId })

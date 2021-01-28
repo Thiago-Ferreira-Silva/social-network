@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import axios from 'axios'
 import { baseApiUrl, notify } from '../../global'
-import { updateChats } from '../../redux/actions/index'
 
 import Chat from './Chat'
 
@@ -23,30 +22,14 @@ class Chats extends Component {
 
     constructor(props) {
         super(props)
-        this.addMessageToChat = this.addMessageToChat.bind(this)
         this.getChats = this.getChats.bind(this)
         this.setSelected = this.setSelected.bind(this)
-        this.send = this.send.bind(this)
-    }
-
-    addMessageToChat(msg, chatId, anotherUser = false) {
-        const message = <div key={Math.random()} className={`message 
-                            ${anotherUser ? '' : 'another-user-message'}`}>
-            {msg}</div>
-
-        const chats = this.props.chats
-        const chat = chats[chatId]
-        chat.messages.push(message)
-        chats[chatId] = chat
-        console.log(chats) /////////////////////////////////////////////////////////////////////////////
-        this.props.dispatch(updateChats(chats))
     }
 
     getChats() {
         axios.get(`${baseApiUrl}/chats/${this.props.user.id}`)
             .then(async res => {
                 const chats = res.data
-                const chatsObject = {}
                 const chatsJSX = {}
                 const chatsList = []
                 //confira se você não está alterando o state da forma errada em mais lugares
@@ -75,10 +58,8 @@ class Chats extends Component {
                     })
                     chat.messages = messages
 
-                    chatsObject[chat.chatId] = chat
-
-                    chatsJSX[chat.chatId] = <Chat chatId={chat.chatId} key={`${chat.id1}-${chat.id2}`}
-                        send={(msg, chatId) => this.send(msg, chatId)} />
+                    chatsJSX[chat.chatId] = <Chat chatId={chat.chatId} socket={socket} messages={messages}
+                        key={`${chat.id1}-${chat.id2}`} />
 
                     chatsList.push(<button onClick={e => this.setSelected(e)} value={chat.chatId}
                         className='select-chat' key={chat.chatId} >
@@ -86,7 +67,6 @@ class Chats extends Component {
                     </button>)
                 })
 
-                this.props.dispatch(updateChats(chatsObject))
                 this.setState({ selectedChat: chats[0].chatId, chatsJSX, chatsList })
             })
             .catch(err => notify(err, 'error'))
@@ -96,20 +76,11 @@ class Chats extends Component {
         this.setState({ selectedChat: e.target.value })
     }
 
-    send(msg, chatId) {
-        socket.emit('message', msg, chatId,
-            this.props.user.id)
-        this.addMessageToChat(msg, chatId)
-    }
-
     componentDidMount() {
         this.getChats()
 
         socket.connect()
         socket.emit('online', this.props.user.id)
-        socket.on('message', (msg, chatId) => {
-            this.addMessageToChat(msg, chatId, true)
-        })
     }
 
     componentWillUnmount() {
@@ -127,8 +98,7 @@ class Chats extends Component {
 }
 
 const mapStateToProps = store => ({
-    user: store.userState.user,
-    chats: store.chatsState.chats
+    user: store.userState.user
 })
 
 export default connect(mapStateToProps)(Chats)

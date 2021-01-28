@@ -4,7 +4,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 const initialState = {
-    message: ''
+    message: '',
+    messages: []
 }
 
 class Chat extends Component {
@@ -13,8 +14,21 @@ class Chat extends Component {
 
     constructor(props) {
         super(props)
+        this.addMessageToChat = this.addMessageToChat.bind(this)
         this.inputMessage = this.inputMessage.bind(this)
         this.send = this.send.bind(this)
+    }
+
+    addMessageToChat(msg, anotherUser = false) {
+        const message = <div key={Math.random()} className={`message 
+                            ${anotherUser ? '' : 'another-user-message'}`}>
+            {msg}</div>
+
+        const messages = this.state.messages
+
+        messages.push(message)
+
+        this.setState({ messages })
     }
 
     inputMessage(event) {
@@ -22,15 +36,26 @@ class Chat extends Component {
     }
 
     send() {
-        this.props.send && this.props.send(this.state.message, this.props.chatId)
+        this.props.socket.emit('message', this.state.message, this.props.chatId,
+            this.props.user.id)
+
+        this.addMessageToChat(this.state.message)
+
         this.setState({ message: '' })
     }
 
+    componentDidMount() {
+        this.setState({messages: this.props.messages })
+
+        this.props.socket.on('message', (msg, chatId) => {
+            if (chatId === this.props.chatId) this.addMessageToChat(msg, true)
+        })
+    }
+
     render() {
-        const chat = this.props.chats[this.props.chatId]
         return (
             <div className="chat">
-                <div className="messages">{ chat.messages }</div>
+                <div className="messages">{ this.state.messages }</div>
                 <input type="text" value={this.state.message} onChange={this.inputMessage} />
                 <button onClick={this.send} >Send</button>
             </div>
@@ -38,9 +63,8 @@ class Chat extends Component {
     }
 }
 
-const mapStateToProps = store => ({ 
-    user: store.userState.user,
-    chats: store.chatsState.chats
+const mapStateToProps = store => ({
+    user: store.userState.user
 })
 
 export default connect(mapStateToProps)(Chat)
