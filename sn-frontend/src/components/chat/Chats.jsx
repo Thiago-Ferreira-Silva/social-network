@@ -51,14 +51,10 @@ class Chats extends Component {
                 const chatsList = []
                 //confira se você não está alterando o state da forma errada em mais lugares
 
-                let newChat = false
+                let newChat = true
 
                 chats.forEach(chat => {
-                    //está muito bugado
-                    if (chat.id1 !== this.props.location.state.id1 && chat.id2 !== this.props.location.state.id1) {
-                        console.log('id1', chat.id1, 'id2', chat.id2)
-                        newChat = true
-                    } else {
+                    if (chat.id1 === this.props.location.state.id1 || chat.id2 === this.props.location.state.id1) {
                         newChat = false
                     }
                 })
@@ -70,6 +66,7 @@ class Chats extends Component {
                         })
                         .catch(err => notify(err, 'error'))
                 }
+
                 chats.forEach(chat => {
                     const messages = chat.messages.map(message => {
                         return <div key={Math.random()} className={`message 
@@ -83,22 +80,20 @@ class Chats extends Component {
                     chatsJSX[chat.chatId] = <Chat chatId={chat.chatId} key={`${chat.id1}-${chat.id2}`}
                         send={(msg, chatId) => this.send(msg, chatId)} />
 
-                    chatsList.push(<div onClick={this.setSelected(chat.chatId)} className='select-chat' key={chat.chatId} >
-                        <div className="name">
+                    chatsList.push(<button onClick={e => this.setSelected(e)} value={chat.chatId}
+                        className='select-chat' key={chat.chatId} >
                         {chat.name}
-                        </div>
-                        <img src={chat.profilePicture} alt=""/>
-                    </div>)
+                    </button>)
                 })
-                
+
                 this.props.dispatch(updateChats(chatsObject))
-                this.setState({ selectedChat: chats[0].chatId, chatsJSX, chatsList})
+                this.setState({ selectedChat: chats[0].chatId, chatsJSX, chatsList })
             })
             .catch(err => notify(err, 'error'))
     }
 
-    setSelected(chatId) {
-        this.setState({ selectedChat: chatId })
+    setSelected(e) {
+        this.setState({ selectedChat: e.target.value })
     }
 
     send(msg, chatId) {
