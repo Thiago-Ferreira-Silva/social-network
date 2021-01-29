@@ -45,7 +45,7 @@ class Chat extends Component {
     }
 
     componentDidMount() {
-        this.setState({messages: this.props.messages })
+        this.setState({ messages: this.props.messages })
 
         this.props.socket.on('message', (msg, chatId) => {
             if (chatId === this.props.chatId) this.addMessageToChat(msg, true)
@@ -55,9 +55,11 @@ class Chat extends Component {
     render() {
         return (
             <div className="chat">
-                <div className="messages">{ this.state.messages }</div>
-                <input type="text" value={this.state.message} onChange={this.inputMessage} />
-                <button onClick={this.send} >Send</button>
+                <div className="messages">{this.state.messages}</div>
+                <div className="chat-form">
+                    <input type="text" value={this.state.message} onChange={this.inputMessage} />
+                    <button className='btn btn-primary' onClick={this.send} >Send</button>
+                </div>
             </div>
         )
     }
