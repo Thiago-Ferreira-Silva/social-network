@@ -32,7 +32,6 @@ class Chats extends Component {
                 const chats = res.data
                 const chatsJSX = {}
                 const chatsList = []
-                //confira se você não está alterando o state da forma errada em mais lugares
 
                 let newChat = true
 
@@ -60,8 +59,7 @@ class Chats extends Component {
 
                     chatsJSX[chat.chatId] = <Chat chatId={chat.chatId} socket={socket} messages={messages}
                         key={`${chat.id1}-${chat.id2}`} />
-
-                    chatsList.push(<button onClick={e => this.setSelected(e)} value={chat.chatId}
+                    chatsList.push(<button onClick={e => this.setSelected(e)} value={chat.chatId} id={chat.chatId}
                         className='select-chat' key={chat.chatId} >
                         {chat.name}
                     </button>)
@@ -73,7 +71,9 @@ class Chats extends Component {
     }
 
     setSelected(e) {
+        document.getElementById(this.state.selectedChat).classList.remove('selected')
         this.setState({ selectedChat: e.target.value })
+        document.getElementById(e.target.value).classList.add('selected')
     }
 
     componentDidMount() {
@@ -90,7 +90,9 @@ class Chats extends Component {
     render() {
         return (
             <div className="chat-container">
-                {this.state.chatsList}
+                <div className="chats-list">
+                    {this.state.chatsList}
+                </div>
                 {this.state.selectedChat ? this.state.chatsJSX[this.state.selectedChat] : ''}
             </div>
         )

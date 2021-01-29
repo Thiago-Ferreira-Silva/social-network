@@ -45,8 +45,9 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
 
         const [profilePicture, name] = await app.api.imageHandler.pickProfilePicture(req.params.id === chat.id1 ? chat.id2 : chat.id1)
+        const messages = JSON.parse(chat.messages)
 
-        res.send({ ...chat, profilePicture, name })
+        res.send({ ...chat, profilePicture, name, messages })
         //tenho quase certeza que dá pra melhorar isso
     }
 

@@ -1,25 +1,36 @@
 .chat-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.chat {
-    background-color: #0003;
-}
-
-.chat .messages {
-    max-height: 35vh;
-    overflow-y: scroll;
-}
-
-/*mudar o nome dessa classe*/
-.select-chat {
+    width: 100%;
+    min-height: 80vh;
     display: flex;
 }
 
-.select-chat img {
-    width: 80px;
-    height: 80px;
-    overflow: hidden;
+.chats-list {
+    min-height: 100%;
+    width: 30vw;
+    border-right: solid 1px;
+    margin-right: 5px;
+}
+
+.select-chat, .select-chat:focus {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 1.25rem;
+}
+
+.select-chat:nth-child(odd) {
+    background-color: #888;
+}
+
+.select-chat:hover {
+    background-color: #777;
+}
+
+.selected, .selected:focus {
+    background-color: #a4b4df;
+}
+
+.selected:hover {
+    background-color: #7484aa;
 }
