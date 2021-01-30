@@ -43,20 +43,59 @@
 
 .chat .messages {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    font-size: 1.11rem;
+    margin-bottom: 10px;
 }
 
 .messages .message {
-
+    align-self: flex-end;
+    margin: 5px 10px;
+    max-width: 70%;
+    overflow-wrap: break-word;
 }
 
 .messages .another-user-message {
-    
+    align-self: flex-start;
 }
 
-.chat-form input {
+.chat-form {
+    display: flex;
+}
+
+.chat-form textarea, .chat-form textarea:focus {
     height: 2.3rem;
     width: 80%;
-    margin: 0 20px;
+    margin: 0 5px;
+    resize: none;
+    outline: none;
+    border: none;
+}
+
+.chat-form .btn {
+    margin-bottom: 5px;
+}
+
+.chat-user {
+    display: flex;
+    align-items: center;
+
+    margin: 8px;
+    padding-bottom: 4px;
+    border-bottom: solid 1px;
+}
+
+.chat-user-image img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.chat-user .chat-user-name {
+    margin-left: 6px;
+    font-size: 1.2rem;
 }
 
 @media(max-width: 700px) {
@@ -73,6 +112,10 @@
     }
 
     .chat {
-        min-height: 100%;
+        flex-grow: 1;
+    }
+
+    .chat-form textarea {
+        width: 70%;
     }
 }

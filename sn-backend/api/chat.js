@@ -31,7 +31,7 @@ module.exports = app => {
         chats = await Promise.all(promisses)
         res.send(chats)
     }
-    //é melhor chamar esses métodos através do socket?
+
     const createChat = async (req, res) => {
         const newChat = { ...req.body }
 
@@ -48,7 +48,6 @@ module.exports = app => {
         const messages = JSON.parse(chat.messages)
 
         res.send({ ...chat, profilePicture, name, messages })
-        //tenho quase certeza que dá pra melhorar isso
     }
 
     const addMessage = async (chatId, senderId, text) => {

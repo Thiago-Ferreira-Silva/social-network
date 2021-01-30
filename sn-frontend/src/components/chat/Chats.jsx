@@ -58,14 +58,14 @@ class Chats extends Component {
                     chat.messages = messages
 
                     chatsJSX[chat.chatId] = <Chat chatId={chat.chatId} socket={socket} messages={messages}
-                        key={`${chat.id1}-${chat.id2}`} />
+                        name={chat.name} profilePicture={chat.profilePicture} key={`${chat.id1}-${chat.id2}`} />
                     chatsList.push(<button onClick={e => this.setSelected(e)} value={chat.chatId} id={chat.chatId}
                         className='select-chat' key={chat.chatId} >
                         {chat.name}
                     </button>)
                 })
 
-                this.setState({ selectedChat: chats[0].chatId, chatsJSX, chatsList })
+                this.setState({ selectedChat: this.props.location.state.id1, chatsJSX, chatsList })
             })
             .catch(err => notify(err, 'error'))
     }

@@ -48,6 +48,7 @@ class Chat extends Component {
         this.setState({ messages: this.props.messages })
 
         this.props.socket.on('message', (msg, chatId) => {
+            console.log(msg)
             if (chatId === this.props.chatId) this.addMessageToChat(msg, true)
         })
     }
@@ -55,9 +56,17 @@ class Chat extends Component {
     render() {
         return (
             <div className="chat">
+                <div className="chat-user">
+                    <div className="chat-user-image">
+                        <img src={this.props.profilePicture} alt="chat-user"/>
+                    </div>
+                    <div className="chat-user-name">
+                        {this.props.name}
+                    </div>
+                </div>
                 <div className="messages">{this.state.messages}</div>
                 <div className="chat-form">
-                    <input type="text" value={this.state.message} onChange={this.inputMessage} />
+                    <textarea cols="30" rows="10" value={this.state.message} onChange={this.inputMessage}></textarea>
                     <button className='btn btn-primary' onClick={this.send} >Send</button>
                 </div>
             </div>
