@@ -81,7 +81,7 @@ class Auth extends Component {
             <div className="auth">
                 { this.state.loading ?
                     <Loading /> :
-                    <div className="auth-form">
+                    <form className="auth-form">
                         {this.state.showSignUp && <div className="auth-title">Signup</div>}
                         {!this.state.showSignUp && <div className="auth-title">Signin</div>}
                         {this.state.showSignUp && <input name="name" type="text" placeholder="Name" onChange={this.onInput} value={this.state.user.name || ''} />}
@@ -94,7 +94,7 @@ class Auth extends Component {
                             {this.state.showSignUp && <span>Already have an account? Signin</span>}
                             {!this.state.showSignUp && <span>Don't have an account? Signup</span>}
                         </div>
-                    </div>}
+                    </form>}
             </div>
         )
     }

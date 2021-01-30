@@ -98,6 +98,8 @@
     font-size: 1.2rem;
 }
 
+/* o design está quebrando antes de chegar nos 700px */
+
 @media(max-width: 700px) {
     .chat-container {
         flex-direction: column-reverse;

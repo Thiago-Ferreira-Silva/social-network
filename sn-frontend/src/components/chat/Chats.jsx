@@ -34,6 +34,7 @@ class Chats extends Component {
                 const chatsList = []
 
                 let newChat = true
+                let selectedId = null
 
                 chats.forEach(chat => {
                     if (chat.id1 === this.props.location.state.id1 || chat.id2 === this.props.location.state.id1) {
@@ -63,9 +64,11 @@ class Chats extends Component {
                         className='select-chat' key={chat.chatId} >
                         {chat.name}
                     </button>)
+                    const id = this.props.location.state.id1
+                    if (chat.id1 === id || chat.id2 === id) selectedId = chat.chatId
                 })
-
-                this.setState({ selectedChat: this.props.location.state.id1, chatsJSX, chatsList })
+                console.log(selectedId)
+                this.setState({ selectedChat: selectedId, chatsJSX, chatsList })
             })
             .catch(err => notify(err, 'error'))
     }
