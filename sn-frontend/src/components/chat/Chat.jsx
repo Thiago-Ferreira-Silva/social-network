@@ -21,13 +21,16 @@ class Chat extends Component {
 
     addMessageToChat(msg, anotherUser = false) {
         const message = <div key={Math.random()} className={`message 
-                            ${anotherUser ? '' : 'another-user-message'}`}>
+                            ${anotherUser ? 'another-user-message' : '' }`}>
             {msg}</div>
 
         const messages = this.state.messages
 
-        messages.push(message)
+        messages.unshift(message)
 
+        const messagesDiv = document.getElementById('messages')
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        
         this.setState({ messages })
     }
 
@@ -64,7 +67,7 @@ class Chat extends Component {
                         {this.props.name}
                     </div>
                 </div>
-                <div className="messages">{this.state.messages}</div>
+                <div className="messages" id='messages'>{this.state.messages}</div>
                 <div className="chat-form">
                     <textarea cols="30" rows="10" value={this.state.message} onChange={this.inputMessage}></textarea>
                     <button className='btn btn-primary' onClick={this.send} >Send</button>

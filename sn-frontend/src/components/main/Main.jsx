@@ -83,7 +83,7 @@ class Home extends Component {
             default:
         }
     }
-
+    //agora leia todos os comentários, faça as otimizações e corrija os bugs
     loadOneMore() {
         this.loadMore(1)
     }

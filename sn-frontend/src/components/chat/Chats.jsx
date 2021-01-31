@@ -56,7 +56,7 @@ class Chats extends Component {
                         ${this.props.user.id === message.userId ? '' : 'another-user-message'}`}>
                             {message.text}</div>
                     })
-                    chat.messages = messages
+                    chat.messages = messages.reverse()
 
                     chatsJSX[chat.chatId] = <Chat chatId={chat.chatId} socket={socket} messages={messages}
                         name={chat.name} profilePicture={chat.profilePicture} key={`${chat.id1}-${chat.id2}`} />
@@ -67,7 +67,7 @@ class Chats extends Component {
                     const id = this.props.location.state.id1
                     if (chat.id1 === id || chat.id2 === id) selectedId = chat.chatId
                 })
-                console.log(selectedId)
+
                 this.setState({ selectedChat: selectedId, chatsJSX, chatsList })
             })
             .catch(err => notify(err, 'error'))
