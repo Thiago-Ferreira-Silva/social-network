@@ -100,7 +100,7 @@ class Chats extends Component {
             </div>
         )
     }
-}
+}//só um dos usuários está recebendo a mensagem em tempo real
 
 const mapStateToProps = store => ({
     user: store.userState.user
