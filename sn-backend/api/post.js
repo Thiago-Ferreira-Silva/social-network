@@ -30,21 +30,6 @@ module.exports = app => {
         res.json(posts)
     }
 
-    const getById = async (req, res) => {
-        const id = req.params.id
-
-        const post = await app.db('posts')
-            .where({ id: id })
-            .first()
-            .catch(err => res.status(500).send(err))
-
-        if (post.image) {
-            post.image = app.api.imageHandler.arrayToStringChar(post.image)
-        }
-
-        res.send(post)// eu uso isso?
-    }
-
     const getByUserId = async (req, res) => {
         const id = req.params.userId
 
@@ -137,5 +122,5 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    return { save, getPosts, getById, getByUserId, remove, likePost, saveComment }
+    return { save, getPosts, getByUserId, remove, likePost, saveComment }
 }

@@ -38,13 +38,6 @@ module.exports = app => {
         }
     }
 
-    const get = (req, res) => {
-        app.db('users')
-            .select('id', 'name', 'email', 'password')
-            .then(users => res.json(users))
-            .catch(err => res.status(500).send(err))
-    }//tirar isso
-
     const getById = async (req, res) => {
         const user = await app.db('users')
             .select('id', 'name', 'bio')
@@ -55,14 +48,6 @@ module.exports = app => {
         const [profilePicture, ] = await app.api.imageHandler.pickProfilePicture(req.params.id)
         user.profilePicture = profilePicture
         res.send(user)
-    }
-
-    const remove = (req, res) => {
-        app.db('users')
-            .where({ id: req.params.id })
-            .del()
-            .then(_ => res.status(204).send())
-            .catch(err => res.status(500).send(err))
     }
 
     const saveProfilePicture = async (req, res) => {
@@ -124,7 +109,6 @@ module.exports = app => {
             .update({ friends: JSON.stringify(friends) })
             .then(_ => res.status(204).send())
             .catch(err => res.status(500).send(err))
-        //talvez mudar o nome para follower
     }
 
     const getFriends = async (req, res) => {
@@ -175,9 +159,6 @@ module.exports = app => {
             .then(_ => res.status(204).send())
             .catch(err => res.status(500).send(err))
     }
-    //criar uma checagem para que o usuário que fez o request não tenha acesso indevido a informacões de outros usuários
-    //melhore o tratamento de erros e as mensagens de sucesso
-    //vai precisar de paginação para os amigos
 
-    return { save, get, getById, remove, saveProfilePicture, getProfilePicture, saveBio, saveFriend, getFriends, removeFriend }
+    return { save, getById, saveProfilePicture, getProfilePicture, saveBio, saveFriend, getFriends, removeFriend }
 }

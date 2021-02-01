@@ -4,7 +4,6 @@ exports.up = function(knex) {
         table.text('comments').defaultTo('[]')
         table.integer('likes').defaultTo(0)
     })
-//adicione a data do post e talvez algo mais, como like ou melhorar a parte de comentários
 };
 
 exports.down = function(knex) {

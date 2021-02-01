@@ -1,18 +1,15 @@
 module.exports = app => {
     app.post('/signin', app.api.auth.signin)
     app.post('/signup', app.api.user.save)
-    app.post('/validateToken', app.api.auth.validateToken)
 
     app.route('/users')
         .all(app.config.passport.authenticate())
         .post(app.api.user.save)
-        .get(app.api.user.get)
 
     app.route('/users/:id')
         .all(app.config.passport.authenticate())
         .put(app.api.user.save)
         .get(app.api.user.getById)
-        .delete(app.api.user.remove)
 
     app.route('/users/:id/picture')
         .all(app.config.passport.authenticate())
@@ -38,7 +35,6 @@ module.exports = app => {
 
     app.route('/posts/post/:id')
         .all(app.config.passport.authenticate())
-        .get(app.api.post.getById)
         .put(app.api.post.save)
         .delete(app.api.post.remove)
 

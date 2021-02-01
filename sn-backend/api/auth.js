@@ -34,7 +34,7 @@ module.exports = app => {
             id: user.id,
             name: user.name,
             iat: now,
-            exp: now + (60 * 60 * 5) // mude isso
+            exp: now + (60 * 60 * 10)
         }
 
         res.json({
@@ -47,20 +47,5 @@ module.exports = app => {
         })
     }
 
-    const validateToken = async (req, res) => {
-        const userData = req.body
-        try {
-            const token = jwt.decode(userData.token, authSecret)
-            if (new Date(token.exp * 1000) > new Date()) {
-                return res.send(true)
-            } else {
-                res.send(false)
-            }
-        }
-        catch (err) {
-            res.send(false)
-        }
-    }
-
-    return { signin, validateToken }
+    return { signin }
 }
