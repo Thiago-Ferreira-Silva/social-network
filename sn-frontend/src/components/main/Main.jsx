@@ -83,7 +83,6 @@ class Home extends Component {
             default:
         }
     }
-    //agora leia todos os comentários, faça as otimizações e corrija os bugs
     loadOneMore() {
         this.loadMore(1)
     }
@@ -143,6 +142,3 @@ const mapStateToProps = store => ({
 })
 
 export default connect(mapStateToProps)(Home)
-
-//use o redux para alguma coisa e faça o chat com socket logo
-//talvez usar mais o cache para diminuir os carregmentos

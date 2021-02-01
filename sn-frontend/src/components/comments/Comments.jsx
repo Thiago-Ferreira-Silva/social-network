@@ -43,7 +43,6 @@ class Comments extends Component {
             })
             .catch(err => notify(err, 'error'))
     }
-    // quando faz um comentário, as props não atualizam e, se sair dos comentários e entrar de novo sem atualizar, ele não aparece
 
     async getCommentsJSX(comments) {
         const commentsJSX = this.state.commentsJSX

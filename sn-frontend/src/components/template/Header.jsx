@@ -28,4 +28,3 @@ const mapStateToProps = store => ({
 })
 
 export default connect(mapStateToProps)(Header)
-//também parece ser uma boa disponibilizar mais coisas offline

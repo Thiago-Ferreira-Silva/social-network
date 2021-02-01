@@ -20,7 +20,6 @@ class Content extends Component {
         axios.post(`${baseApiUrl}/validateToken`, { token })
             .then(res => this.setState({ isAuthenticated: res.data }))
     }
-    //é possível fazer a validação do token usando o hook componentDidMount, mas eu acho que não será necessário, pois todos os componentes parecem fazer requisições para o backend (até o momento)
 
     render() {
         return (

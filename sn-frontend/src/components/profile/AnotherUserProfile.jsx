@@ -23,7 +23,6 @@ class AnotherUserProfile extends Component {
                 const friends = this.props.user.friends || {}
                 friends[this.props.id] = this.props.id
                 this.props.dispatch(saveUser({ ...this.props.user, friends }))
-                notify()
             })
             .catch(err => notify(err, 'error'))
     }
@@ -39,7 +38,6 @@ class AnotherUserProfile extends Component {
                 this.props.dispatch(saveUser({ ...this.props.user, friends }))
 
                 this.props.remove && this.props.remove()
-                //faça uma animação para remover
             })
             .catch(err => notify(err, 'error'))
     }

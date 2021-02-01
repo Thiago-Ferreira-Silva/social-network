@@ -38,7 +38,6 @@ class Profile extends Component {
         await resizeImage(event.target.files[0], 300, 300, 180, 180, this.uploadPicture)
         this.setState({ loadingProfilePicture: false })
     }
-    //o componente loading me parece desnecessário
 
     uploadPicture(image) {
         axios.post(`${baseApiUrl}/users/${this.props.user.id}/picture`, { image })
