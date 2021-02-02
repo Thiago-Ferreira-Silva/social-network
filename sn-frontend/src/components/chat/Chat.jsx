@@ -51,7 +51,6 @@ class Chat extends Component {
         this.setState({ messages: this.props.messages })
 
         this.props.socket.on('message', (msg, chatId) => {
-            console.log(msg)
             if (chatId === this.props.chatId) this.addMessageToChat(msg, true)
         })
     }

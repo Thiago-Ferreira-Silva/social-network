@@ -5,13 +5,14 @@ module.exports = app => {
     app.io.on('connection', socket => {
         socket.on('online', (id) => {
             usersOnline[id] = socket.id
+            socket.userId = id
         })
         socket.on('message', async (msg, chatId, senderId) => {
             const userId = await addMessage(chatId, senderId, msg)
             socket.to(usersOnline[userId]).emit('message', msg, chatId)
         })
         socket.on('disconnect', () => {
-            delete usersOnline[socket.id]
+            delete usersOnline[socket.userId]
         })
     })
 
@@ -64,7 +65,7 @@ module.exports = app => {
             .update({ messages: JSON.stringify(messages) })
             .then()
 
-        return chat.id1 = senderId ? chat.id2 : chat.id1
+        return chat.id1 === senderId ? chat.id2 : chat.id1
     }
 
     return { getChats, createChat }
