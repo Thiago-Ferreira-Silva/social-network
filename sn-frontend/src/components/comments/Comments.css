@@ -71,6 +71,7 @@
     width: 65vw;
     height: 100%;
     word-wrap: break-word;
+    overflow: hidden;
 
     border-left: solid 1px #999;
     padding-left: 3px;

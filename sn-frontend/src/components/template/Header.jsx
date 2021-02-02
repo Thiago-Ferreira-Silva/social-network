@@ -14,7 +14,7 @@ class Header extends Component {
                 <div className={`empty ${user.name ? '': 'hidden'} `} ></div>
                 <h1 className="title">
                     <Link className='link' to='/'>Social Network</Link>
-                    <Link className='link-small' to='/'>SN</Link>
+                    <Link className='link-small' to='/' >SN</Link>
                 </h1>
                 <UserDropDown />
             </div>
