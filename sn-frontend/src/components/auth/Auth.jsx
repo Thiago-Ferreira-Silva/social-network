@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router'
 import { connect } from 'react-redux'
-import { saveUser } from '../../redux/actions'
+import { saveUser, checkIfIsAuth } from '../../redux/actions'
 
 import { baseApiUrl, notify } from '../../global'
 import Loading from '../template/Loading'
@@ -40,6 +40,7 @@ class Auth extends Component {
         axios.post(`${baseApiUrl}/signin`, this.state.user)
             .then(res => {
                 this.props.dispatch(saveUser(res.data))
+                this.props.dispatch(checkIfIsAuth(false))
                 this.setState({ toHome: true })
             })
             .catch(err => notify(err, 'error'))
@@ -71,6 +72,10 @@ class Auth extends Component {
                 break
             default:
         }
+    }
+
+    componentDidMount() {
+        this.props.dispatch(checkIfIsAuth(true))
     }
 
     render() {

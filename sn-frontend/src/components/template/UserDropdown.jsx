@@ -37,7 +37,7 @@ class UserDropDown extends Component {
 
 const mapStateToProps = store => ({
     user: store.userState.user,
-    isTouch: store.isTouchState.isTouch
+    isTouch: store.isTouchOrAuthState.isTouch
 })
 
 export default connect(mapStateToProps)(UserDropDown)

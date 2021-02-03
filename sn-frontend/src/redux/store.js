@@ -15,7 +15,3 @@ const Store = createStore(persistedReducer)
 const persistor = persistStore(Store)
 
 export { Store, persistor }
-
-//tente melhorar a store; os reducers estão grandes e com apenas uma função para cada
-//aprenda a usar melhor o redux
-//transforme actions e reducers em arquivos únicos ao invés de pastas

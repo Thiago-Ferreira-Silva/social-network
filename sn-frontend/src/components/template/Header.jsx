@@ -10,7 +10,7 @@ class Header extends Component {
         const user = this.props.user
         return (
             <div className={`header ${user.name ? '': 'center'} ${this.props.isTouch ? 'is-touch-header' : ''}
-             ${ window.location.pathname === '/auth' ? 'is-auth' : ''} `}>
+             ${ this.props.isAuth ? 'is-auth' : ''} `}>
                 <div className={`empty ${user.name ? '': 'hidden'} `} ></div>
                 <h1 className="title">
                     <Link className='link' to='/'>Social Network</Link>
@@ -24,7 +24,8 @@ class Header extends Component {
 
 const mapStateToProps = store => ({
     user: store.userState.user,
-    isTouch: store.isTouchState.isTouch
+    isTouch: store.isTouchOrAuthState.isTouch,
+    isAuth: store.isTouchOrAuthState.isAuth
 })
 
 export default connect(mapStateToProps)(Header)
