@@ -2,7 +2,7 @@ import { IS_TOUCH, IS_AUTH } from "../actions/actionTypes"
 
 const initialState = {
     isTouch: false,
-    isAuth: true
+    isAuth: false
 }
 
 export const isTouchOrAuthReducer = ( state = initialState, action) => {

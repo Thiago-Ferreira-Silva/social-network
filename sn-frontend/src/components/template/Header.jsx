@@ -8,6 +8,7 @@ import UserDropDown from './UserDropdown'
 class Header extends Component {
     render() {
         const user = this.props.user
+        //faça esse link funcionar
         return (
             <div className={`header ${user.name ? '': 'center'} ${this.props.isTouch ? 'is-touch-header' : ''}
              ${ this.props.isAuth ? 'is-auth' : ''} `}>
