@@ -32,6 +32,16 @@
     outline: none;
 }
 
+.auth-form input#email {
+    margin-bottom: 0px;
+}
+
+.obs {
+    margin-bottom: 15px;
+    font-size: 0.8rem;
+    color: #666;
+}
+
 .btn {
     align-self: flex-end;
     padding: 5px 15px;
