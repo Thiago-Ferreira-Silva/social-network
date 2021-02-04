@@ -188,6 +188,7 @@
     }
     .link-small {
         display: inline;
+        border: solid;
     }
     .user-button {
         display: none;

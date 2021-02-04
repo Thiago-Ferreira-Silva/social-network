@@ -10,7 +10,7 @@ class Header extends Component {
         const user = this.props.user
         //faça esse link funcionar
         return (
-            <div className={`header ${user.name ? '': 'center'} ${this.props.isTouch ? 'is-touch-header' : ''}
+            <header className={`header ${user.name ? '': 'center'} ${this.props.isTouch ? 'is-touch-header' : ''}
              ${ this.props.isAuth ? 'is-auth' : ''} `}>
                 <div className={`empty ${user.name ? '': 'hidden'} `} ></div>
                 <h1 className="title">
@@ -18,7 +18,7 @@ class Header extends Component {
                     <Link className='link-small' to='/' >SN</Link>
                 </h1>
                 <UserDropDown />
-            </div>
+            </header>
         )
     }
 }
