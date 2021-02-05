@@ -43,7 +43,7 @@ module.exports = app => {
             friends: user.friends,
             likedPosts: JSON.parse(user.likedPosts),
             profilePicture: image,
-            token: jwt.encode(payload, authSecret)
+            token: jwt.encode(payload, process.env.authSecret || authSecret)
         })
     }
 
