@@ -1,4 +1,5 @@
-const { authSecret } = require('../.env')
+const { authSecret } = process.env.ENV ?
+    { authSecret: process.env.authSecret } : require('../.env')
 const bcrypt = require('bcrypt')
 const jwt = require('jwt-simple')
 
@@ -43,7 +44,7 @@ module.exports = app => {
             friends: user.friends,
             likedPosts: JSON.parse(user.likedPosts),
             profilePicture: image,
-            token: jwt.encode(payload, process.env.authSecret || authSecret)
+            token: jwt.encode(payload, authSecret)
         })
     }
 

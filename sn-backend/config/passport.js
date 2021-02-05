@@ -1,11 +1,11 @@
-const { authSecret } = require('../.env')
+const { authSecret } = process.env.ENV ?
+    { authSecret: process.env.authSecret } : require('../.env')
 const passport = require('passport')
 const passportJwt = require('passport-jwt')
 const { Strategy, ExtractJwt } = passportJwt
-
 module.exports = app => {
     const params = {
-        secretOrKey: process.env.authSecret || authSecret,
+        secretOrKey: authSecret,
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
     }
 
@@ -13,8 +13,8 @@ module.exports = app => {
         app.db('users')
             .where({ id: payload.id })
             .first()
-            .then( user => done(null, user ? { ...payload } : false))
-            .catch( err => done( err, false))
+            .then(user => done(null, user ? { ...payload } : false))
+            .catch(err => done(err, false))
     })
 
     passport.use(strategy)

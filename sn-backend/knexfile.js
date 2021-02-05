@@ -1,4 +1,4 @@
-const { db } = require('./.env')
+const { db } = process.env.ENV ? null : require('./.env')
 
 module.exports = {
   development: {
@@ -10,11 +10,7 @@ module.exports = {
   },
   production: {
     client: 'postgresql',
-    connection: {
-      database:process.env.DB_name,
-        user: process.env.DB_user,
-        password: process.env.DB_password
-    },
+    connection: process.env.DATABASE_URL,
     migrations: {
       tableName: 'knex_migrations'
     }
