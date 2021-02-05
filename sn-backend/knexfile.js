@@ -1,4 +1,4 @@
-const { db } = process.env.ENV ? null : require('./.env')
+const { db } = process.env.ENV ? { db: null} : require('./.env')
 
 module.exports = {
   development: {
