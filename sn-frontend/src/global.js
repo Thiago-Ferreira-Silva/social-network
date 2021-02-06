@@ -2,7 +2,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 toast.configure()
-export const baseApiUrl = process.env.baseApiUrl || 'http://localhost:8081'
+export const baseApiUrl = process.env.baseApiUrl //|| 'http://localhost:8081'
 
 export const notify = (msg, type) => {
     if (type === 'error') {
