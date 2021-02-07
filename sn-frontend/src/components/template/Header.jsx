@@ -8,12 +8,11 @@ import UserDropDown from './UserDropdown'
 class Header extends Component {
     render() {
         const user = this.props.user
-        //faça esse link funcionar
         return (
             <header className={`header ${user.name ? '': 'center'} ${this.props.isTouch ? 'is-touch-header' : ''}
-             ${ this.props.isAuth ? 'is-auth' : ''} `}>
+             ${ this.props.isAuth ? 'is-auth' : ''} `} >
                 <div className={`empty ${user.name ? '': 'hidden'} `} ></div>
-                <h1 className="title">
+                <h1 className="title" >
                     <Link className='link' to='/'>Social Network</Link>
                     <Link className='link-small' to='/' >SN</Link>
                 </h1>
