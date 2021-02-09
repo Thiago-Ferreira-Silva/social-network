@@ -43,7 +43,10 @@ class Auth extends Component {
                 this.props.dispatch(checkIfIsAuth(false))
                 this.setState({ toHome: true })
             })
-            .catch(err => notify(err, 'error'))
+            .catch(err => {
+                this.setState({ loading: false })
+                notify(err, 'error')
+            })
     }
 
     altShowSignUp() {
