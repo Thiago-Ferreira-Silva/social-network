@@ -11,6 +11,7 @@ export const notify = (msg, type) => {
         } else if (typeof msg === 'string') {
             toast.error(msg, { autoClose: 2000, pauseOnHover: false, hideProgressBar: true })
         } else {
+            console.log(msg)
             toast.error('An error ocurred.', { autoClose: 2000, pauseOnHover: false, hideProgressBar: true })
         }
     }
