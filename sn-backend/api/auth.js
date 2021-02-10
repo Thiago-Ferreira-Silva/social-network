@@ -7,7 +7,7 @@ module.exports = app => {
     const signin = async (req, res) => {
         if (!req.body.email) return res.status(400).send('Enter the email')
         if (!req.body.password) return res.status(400).send('Enter the password')
-
+        await app.db('users').select('id').catch(err => res.send('deu merda'))
         const user = await app.db('users')
             .where({ email: req.body.email })
             .first()
