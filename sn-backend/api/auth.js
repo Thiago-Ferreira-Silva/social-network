@@ -48,9 +48,5 @@ module.exports = app => {
         })
     }
 
-    test = (req, res) => {
-        app.db('users').select('name', 'email').then(users => res.send(users))
-    }
-
-    return { signin, test }
+    return { signin }
 }
