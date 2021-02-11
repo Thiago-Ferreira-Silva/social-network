@@ -1,4 +1,5 @@
 import './Chat.css'
+import pictureDefault from '../../assets/profile_default.png'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
@@ -21,7 +22,7 @@ class Chat extends Component {
 
     addMessageToChat(msg, anotherUser = false) {
         const message = <div key={Math.random()} className={`message 
-                            ${anotherUser ? 'another-user-message' : '' }`}>
+                            ${anotherUser ? 'another-user-message' : ''}`}>
             {msg}</div>
 
         const messages = this.state.messages
@@ -30,7 +31,7 @@ class Chat extends Component {
 
         const messagesDiv = document.getElementById('messages')
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        
+
         this.setState({ messages })
     }
 
@@ -60,7 +61,10 @@ class Chat extends Component {
             <div className="chat">
                 <div className="chat-user">
                     <div className="chat-user-image">
-                        <img src={this.props.profilePicture} alt="chat-user"/>
+                        {this.props.profilePicture ?
+                            <img src={this.props.profilePicture} alt="chat-user" /> :
+                            <img src={pictureDefault} alt="chat-user" />
+                        }
                     </div>
                     <div className="chat-user-name">
                         {this.props.name}

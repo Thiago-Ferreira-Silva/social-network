@@ -21,7 +21,7 @@ module.exports = app => {
             picture.image = arrayToStringChar(picture.image)
             return [picture.image, user.name]
         } else {
-            return null
+            return [null, user.name]
         }
     }
 

@@ -3,7 +3,7 @@ const server = require('http').createServer(app)
 const io = require('socket.io')(server, {
     cors: {
         origin:
-            process.env.frontend || 'http://localhost:3000'
+            process.env.frontend ||  'https://social-network-rho.vercel.app' //'http://localhost:3000'
     }
 })
 const db = require('./config/db')
