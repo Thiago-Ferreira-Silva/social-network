@@ -11,7 +11,7 @@ module.exports = app => {
         const user = await app.db('users')
             .where({ email: req.body.email })
             .first()
-            .catch(err => res.status(500).send(err))
+            .catch(err => res.status(500).send('Aconteceu um erro!'))
 
         if (!user) return res.status(400).send('User does not exist')
 
