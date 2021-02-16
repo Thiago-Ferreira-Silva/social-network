@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import UserDropDown from './UserDropdown'
-
+ 
 class Header extends Component {
     render() {
         const user = this.props.user
