@@ -1,6 +1,11 @@
 module.exports = app => {
     app.post('/signin', app.api.auth.signin)
     app.post('/signup', app.api.user.save)
+    app.get('/test', (req, res) => {
+        app.db('users').select('name')
+            .then(data => res.send(data)
+            .catch(err => res.status(500).send('Fudeu')))
+    })
 
     app.route('/users')
         .all(app.config.passport.authenticate())
