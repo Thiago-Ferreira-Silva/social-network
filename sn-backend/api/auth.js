@@ -8,16 +8,11 @@ module.exports = app => {
         if (!req.body.email) return res.status(400).send('Enter the email')
         if (!req.body.password) return res.status(400).send('Enter the password')
 
-        const a = await app.db('users').select('name').where({ email: req.body.email }).first().catch(err => res.status(500).send('err'))
-        console.log(a)
-
-        /*
         const user = await app.db('users')
             .where({ email: req.body.email })
             .first()
             .catch(err => res.status(500).send(err))
         
-
         if (!user) return res.status(400).send('User does not exist')
 
         const picture = await app.db('profile_pictures')
@@ -50,7 +45,7 @@ module.exports = app => {
             likedPosts: JSON.parse(user.likedPosts),
             profilePicture: image,
             token: jwt.encode(payload, authSecret)
-        })*/
+        })
     }
 
     return { signin }
