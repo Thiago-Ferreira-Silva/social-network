@@ -8,7 +8,7 @@ module.exports = app => {
         if (!req.body.email) return res.status(400).send('Enter the email')
         if (!req.body.password) return res.status(400).send('Enter the password')
 
-        const a = await app.db('users').select('name').catch(err => res.status(500).send('err'))
+        const a = await app.db('users').select('name').where({ email: req.body.email }).first().catch(err => res.status(500).send('err'))
         console.log(a)
 
         /*
